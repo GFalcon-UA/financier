@@ -43,8 +43,7 @@
     <sonar.organization>gfalcon-ua</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.login>19c1645d2d77aeeac75af727ff0387de874e7b96</sonar.login>
-
-    <spring.version>5.2.1.RELEASE</spring.version>
+    
     <tomcat.version>9.0.31</tomcat.version>
   </properties>
 
@@ -86,13 +85,10 @@
 
       <dependency>
         <groupId>org.springframework</groupId>
-        <artifactId>spring-orm</artifactId>
-        <version>${spring.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-webmvc</artifactId>
-        <version>${spring.version}</version>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>5.2.5.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <dependency>
