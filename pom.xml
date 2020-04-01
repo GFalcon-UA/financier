@@ -43,7 +43,9 @@
     <sonar.organization>gfalcon-ua</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.login>19c1645d2d77aeeac75af727ff0387de874e7b96</sonar.login>
-    
+
+    <spring.version>5.2.4.RELEASE</spring.version>
+    <spring-security.version>5.3.0.RELEASE</spring-security.version>
     <tomcat.version>9.0.31</tomcat.version>
   </properties>
 
@@ -58,17 +60,6 @@
         <groupId>javax</groupId>
         <artifactId>javaee-api</artifactId>
         <version>8.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context-support</artifactId>
-        <version>${spring.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>${spring.version}</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -154,18 +145,18 @@
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-web</artifactId>
-        <version>${spring.version}</version>
+        <version>${spring-security.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-config</artifactId>
-        <version>${spring.version}</version>
+        <version>${spring-security.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-crypto</artifactId>
-        <version>${spring.version}</version>
+        <version>${spring-security.version}</version>
       </dependency>
 
       <dependency>
@@ -176,7 +167,7 @@
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-test</artifactId>
-        <version>${spring.version}</version>
+        <version>${spring-security.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
