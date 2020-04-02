@@ -24,7 +24,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -40,71 +43,217 @@ public class SaverCalculatorTest {
 
   private static Date currentDate = new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime();
   @Parameter(value = 0)
-  public Money availableMoney;
+  public String description;
   @Parameter(value = 1)
-  public List<FinanceTarget> targets;
+  public Money availableMoney;
   @Parameter(value = 2)
+  public List<FinanceTarget> targets;
+  @Parameter(value = 3)
   public List<FinancePlanEntry> expectedResult;
+  private List<FinancePlanEntry> results;
+  private List<FinancePlanEntry> actual;
+  private List<FinancePlanEntry> expected;
 
   /**
    * Collection of test data.
    *
    * @return test data
    */
-  @Parameters
+  @Parameters(name = "{0}")
   public static Iterable<Object[]> data() {
-    return Arrays.asList(new Object[][] {
-        {
-            Money.of(100, CurrencyCode.USD.name()),
-            Arrays.asList(
-                FinanceTarget.builder()
-                    .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
-                    .setAmount(Money.of(20, CurrencyCode.USD.name()))
-                    .build(),
-                FinanceTarget.builder()
-                    .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
-                    .setAmount(Money.of(50, CurrencyCode.USD.name()))
-                    .build()
-            ),
-            Arrays.asList(
-                FinancePlanEntry.builder()
-                    .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
-                    .setTotal(Money.of(35, CurrencyCode.USD.name()))
-                    .build(),
-                FinancePlanEntry.builder()
-                    .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
-                    .setTotal(Money.of(35, CurrencyCode.USD.name()))
-                    .build()
-            )
-        },
-    });
+    return Arrays.asList(
+        twoTargetsWithTheSameEndDateAndEnoughMoney(),
+        twoTargetsWithDifferentDateAndEnoughMoney()
+    );
+  }
+
+  private static Object[] twoTargetsWithDifferentDateAndEnoughMoney() {
+    FinanceTarget target1 = FinanceTarget.builder()
+        .setName("target 1")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(20, CurrencyCode.USD.name()))
+        .build();
+    FinanceTarget target2 = FinanceTarget.builder()
+        .setName("target 2")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.APRIL, 15).getTime())
+        .setAmount(Money.of(60, CurrencyCode.USD.name()))
+        .build();
+    return new Object[] {
+        "Two targets with different date and enough money",
+        Money.of(100, CurrencyCode.USD.name()),
+        Arrays.asList(target1, target2),
+        Arrays.asList(
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(20, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(20, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MARCH, 1).getTime())
+                .addDetailedMoney(target2, Money.of(20, CurrencyCode.USD.name()))
+                .setTotal(Money.of(20, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.APRIL, 1).getTime())
+                .addDetailedMoney(target2, Money.of(20, CurrencyCode.USD.name()))
+                .setTotal(Money.of(20, CurrencyCode.USD.name()))
+                .build()
+        )
+    };
+  }
+
+  private static Object[] twoTargetsWithTheSameEndDateAndEnoughMoney() {
+    FinanceTarget target1 = FinanceTarget.builder()
+        .setName("target 1")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(20, CurrencyCode.USD.name()))
+        .build();
+    FinanceTarget target2 = FinanceTarget.builder()
+        .setName("target 2")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(50, CurrencyCode.USD.name()))
+        .build();
+    return new Object[] {
+        "Two targets with the same date and enough money",
+        Money.of(100, CurrencyCode.USD.name()),
+        Arrays.asList(target1, target2),
+        Arrays.asList(
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
+                .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
+                .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .build()
+        )
+    };
+  }
+
+  /**
+   * Set up test cases.
+   */
+  @Before
+  public void setUp() throws Exception {
+    Assume.assumeNotNull(targets, availableMoney, expectedResult);
+    Assume.assumeFalse(targets.isEmpty());
+    Assume.assumeFalse(expectedResult.isEmpty());
+
+    results = SaverCalculator
+        .calculate(availableMoney, targets, currentDate);
+    Assume.assumeNotNull(results);
+    actual = results.stream()
+        .sorted(Comparator.comparing(FinancePlanEntry::getDate))
+        .collect(Collectors.toList());
+    expected = expectedResult.stream()
+        .sorted(Comparator.comparing(FinancePlanEntry::getDate))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Tear down test cases.
+   */
+  @After
+  public void tearDown() throws Exception {
+    results = null;
+    actual = null;
+    expected = null;
+    targets.forEach(target -> target.setSavedAmount(null));
   }
 
   @Test
-  public void calculate() {
-    List<FinancePlanEntry> results = SaverCalculator
-        .calculate(availableMoney, targets, currentDate);
-
-    Assert.assertNotNull("Result must not be null", results);
-
-    List<FinancePlanEntry> actual = results.stream()
-        .sorted(Comparator.comparing(FinancePlanEntry::getDate))
-        .collect(Collectors.toList());
-
-    List<FinancePlanEntry> expected = expectedResult.stream()
-        .sorted(Comparator.comparing(FinancePlanEntry::getDate))
-        .collect(Collectors.toList());
-
+  public void checkPlanSize() {
     Assert.assertEquals("Wrong size", expected.size(), actual.size());
+  }
 
+  @Test
+  public void checkDateForDoSaving() {
     for (int i = 0; i < actual.size(); i++) {
-      FinancePlanEntry expectedEntry = expected.get(i);
-      FinancePlanEntry actualEntry = actual.get(i);
-
       Assert.assertEquals("Wrong date",
-          expectedEntry.getDate(), actualEntry.getDate());
+          expected.get(i).getDate(),
+          actual.get(i).getDate());
+    }
+  }
+
+  @Test
+  public void checkTotalAmountForToSave() {
+    for (int i = 0; i < actual.size(); i++) {
       Assert.assertEquals("Wrong amount of total",
-          expectedEntry.getTotal(), actualEntry.getTotal());
+          expected.get(i).getTotal(),
+          actual.get(i).getTotal()
+      );
+    }
+  }
+
+  @Test
+  public void containsDetailedPlan() {
+    for (int i = 0; i < actual.size(); i++) {
+      Assume.assumeNotNull(expected.get(i).getDetailedMoney());
+      Assert.assertNotNull("Entry does not contain detailed plan",
+          actual.get(i).getDetailedMoney());
+    }
+  }
+
+  @Test
+  public void checkDetailedPlanSize() {
+    FinancePlanEntry expectedEntry;
+    FinancePlanEntry actualEntry;
+    for (int i = 0; i < actual.size(); i++) {
+      expectedEntry = expected.get(i);
+      actualEntry = actual.get(i);
+
+      Assume.assumeNotNull(expectedEntry.getDetailedMoney(), actualEntry.getDetailedMoney());
+
+      Assert.assertEquals("Wrong detailed plan size",
+          expectedEntry.getDetailedMoney().size(), actualEntry.getDetailedMoney().size());
+    }
+  }
+
+  @Test
+  public void checkThatDetailedPlanIncludesTarget() {
+    FinancePlanEntry expectedEntry;
+    FinancePlanEntry actualEntry;
+    for (int i = 0; i < actual.size(); i++) {
+      expectedEntry = expected.get(i);
+      actualEntry = actual.get(i);
+
+      Assume.assumeNotNull(expectedEntry.getDetailedMoney(), actualEntry.getDetailedMoney());
+
+      for (FinanceTarget target : expectedEntry.getDetailedMoney().keySet()) {
+        Assert.assertTrue("Detailed plan does not contain target",
+            actualEntry.getDetailedMoney().containsKey(target));
+      }
+    }
+  }
+
+  @Test
+  public void checkAmountsForEachTargets() {
+    FinancePlanEntry expectedEntry;
+    FinancePlanEntry actualEntry;
+    for (int i = 0; i < actual.size(); i++) {
+      expectedEntry = expected.get(i);
+      actualEntry = actual.get(i);
+
+      Assume.assumeNotNull(expectedEntry.getDetailedMoney(), actualEntry.getDetailedMoney());
+
+      for (FinanceTarget target : expectedEntry.getDetailedMoney().keySet()) {
+        Assert.assertEquals(
+            "Incorrect money amount for target: " + target.getName() + " on month " + i,
+            expectedEntry.getDetailedMoney().get(target),
+            actualEntry.getDetailedMoney().get(target)
+        );
+      }
     }
   }
 
