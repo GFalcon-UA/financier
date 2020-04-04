@@ -64,16 +64,16 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.12</version>
+        <version>4.13</version>
         <scope>test</scope>
       </dependency>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>5.6.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+      <!--      <dependency>-->
+      <!--        <groupId>org.junit</groupId>-->
+      <!--        <artifactId>junit-bom</artifactId>-->
+      <!--        <version>5.6.1</version>-->
+      <!--        <type>pom</type>-->
+      <!--        <scope>import</scope>-->
+      <!--      </dependency>-->
 
       <dependency>
         <groupId>org.mockito</groupId>
@@ -262,24 +262,11 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>junit</groupId>-->
-    <!--      <artifactId>junit</artifactId>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <!--      <version>${junit.jupiter.version}</version>-->
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-runner</artifactId>
-      <!--      <version>${junit.platform.version}</version>-->
-      <scope>test</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
