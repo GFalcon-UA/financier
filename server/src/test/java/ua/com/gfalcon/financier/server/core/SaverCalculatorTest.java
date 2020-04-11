@@ -41,7 +41,8 @@ import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
 @RunWith(Parameterized.class)
 public class SaverCalculatorTest {
 
-  private static Date currentDate = new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime();
+  private static final Date currentDate =
+      new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime();
   @Parameter(value = 0)
   public String description;
   @Parameter(value = 1)
@@ -63,8 +64,43 @@ public class SaverCalculatorTest {
   public static Iterable<Object[]> data() {
     return Arrays.asList(
         twoTargetsWithTheSameEndDateAndEnoughMoney(),
-        twoTargetsWithDifferentDateAndEnoughMoney()
+        twoTargetsWithDifferentDateAndEnoughMoney(),
+        twoTargetsWithDifferentDateAndLotOfMoney(),
+        twoTargetsWithDifferentDateAndNotEnoughMoney(),
+        fullCase()
     );
+  }
+
+  private static Object[] twoTargetsWithTheSameEndDateAndEnoughMoney() {
+    FinanceTarget target1 = FinanceTarget.builder()
+        .setName("target 1")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(20, CurrencyCode.USD.name()))
+        .build();
+    FinanceTarget target2 = FinanceTarget.builder()
+        .setName("target 2")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(50, CurrencyCode.USD.name()))
+        .build();
+    return new Object[] {
+        "Two targets with the same date and enough money",
+        Money.of(100, CurrencyCode.USD.name()),
+        Arrays.asList(target1, target2),
+        Arrays.asList(
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
+                .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
+                .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .build()
+        )
+    };
   }
 
   private static Object[] twoTargetsWithDifferentDateAndEnoughMoney() {
@@ -109,7 +145,7 @@ public class SaverCalculatorTest {
     };
   }
 
-  private static Object[] twoTargetsWithTheSameEndDateAndEnoughMoney() {
+  private static Object[] twoTargetsWithDifferentDateAndLotOfMoney() {
     FinanceTarget target1 = FinanceTarget.builder()
         .setName("target 1")
         .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
@@ -117,25 +153,158 @@ public class SaverCalculatorTest {
         .build();
     FinanceTarget target2 = FinanceTarget.builder()
         .setName("target 2")
-        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
-        .setAmount(Money.of(50, CurrencyCode.USD.name()))
+        .setUntilDate(new GregorianCalendar(2020, Calendar.APRIL, 15).getTime())
+        .setAmount(Money.of(40, CurrencyCode.USD.name()))
         .build();
     return new Object[] {
-        "Two targets with the same date and enough money",
-        Money.of(100, CurrencyCode.USD.name()),
+        "Two targets with different date and a lot of money",
+        Money.of(15, CurrencyCode.USD.name()),
         Arrays.asList(target1, target2),
         Arrays.asList(
             FinancePlanEntry.builder()
                 .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
                 .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
-                .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
-                .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(5, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
                 .build(),
             FinancePlanEntry.builder()
                 .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
                 .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
-                .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
-                .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(5, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MARCH, 1).getTime())
+                .addDetailedMoney(target2, Money.of(15, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.APRIL, 1).getTime())
+                .addDetailedMoney(target2, Money.of(15, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build()
+        )
+    };
+  }
+
+  private static Object[] twoTargetsWithDifferentDateAndNotEnoughMoney() {
+    FinanceTarget target1 = FinanceTarget.builder()
+        .setName("target 1")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(20, CurrencyCode.USD.name()))
+        .build();
+    FinanceTarget target2 = FinanceTarget.builder()
+        .setName("target 2")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.APRIL, 15).getTime())
+        .setAmount(Money.of(60, CurrencyCode.USD.name()))
+        .setDelayable(true)
+        .build();
+    return new Object[] {
+        "Two targets with different date and not enough money",
+        Money.of(15, CurrencyCode.USD.name()),
+        Arrays.asList(target1, target2),
+        Arrays.asList(
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(5, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(5, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MARCH, 1).getTime())
+                .addDetailedMoney(target2, Money.of(15, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.APRIL, 1).getTime())
+                .addDetailedMoney(target2, Money.of(15, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MAY, 1).getTime())
+                .addDetailedMoney(target2, Money.of(15, CurrencyCode.USD.name()))
+                .setTotal(Money.of(15, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JUNE, 1).getTime())
+                .addDetailedMoney(target2, Money.of(5, CurrencyCode.USD.name()))
+                .setTotal(Money.of(5, CurrencyCode.USD.name()))
+                .build()
+        )
+    };
+  }
+
+  private static Object[] fullCase() {
+    FinanceTarget target1 = FinanceTarget.builder()
+        .setName("target 1")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(40, CurrencyCode.USD.name()))
+        .build();
+    FinanceTarget target2 = FinanceTarget.builder()
+        .setName("target 2")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.MARCH, 15).getTime())
+        .setAmount(Money.of(10, CurrencyCode.USD.name()))
+        .build();
+    FinanceTarget target3 = FinanceTarget.builder()
+        .setName("target 3")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.MAY, 15).getTime())
+        .setAmount(Money.of(105, CurrencyCode.USD.name()))
+        .setDelayable(true)
+        .build();
+    FinanceTarget target4 = FinanceTarget.builder()
+        .setName("target 4")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.MAY, 15).getTime())
+        .setAmount(Money.of(50, CurrencyCode.USD.name()))
+        .setRegular(true)
+        .build();
+    return new Object[] {
+        "hard case",
+        Money.of(40, CurrencyCode.USD.name()),
+        Arrays.asList(target1, target2),
+        Arrays.asList(
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(20, CurrencyCode.USD.name()))
+                .addDetailedMoney(target3, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target4, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(40, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(20, CurrencyCode.USD.name()))
+                .addDetailedMoney(target3, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target4, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(40, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MARCH, 1).getTime())
+                .addDetailedMoney(target2, Money.of(10, CurrencyCode.USD.name()))
+                .addDetailedMoney(target3, Money.of(20, CurrencyCode.USD.name()))
+                .addDetailedMoney(target4, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(40, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.APRIL, 1).getTime())
+                .addDetailedMoney(target3, Money.of(30, CurrencyCode.USD.name()))
+                .addDetailedMoney(target4, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(40, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MAY, 1).getTime())
+                .addDetailedMoney(target3, Money.of(30, CurrencyCode.USD.name()))
+                .addDetailedMoney(target4, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(40, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JUNE, 1).getTime())
+                .addDetailedMoney(target3, Money.of(5, CurrencyCode.USD.name()))
+                .setTotal(Money.of(5, CurrencyCode.USD.name()))
                 .build()
         )
     };
