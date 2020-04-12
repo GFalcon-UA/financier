@@ -24,9 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import javax.money.CurrencyUnit;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,15 +96,12 @@ public class SaverCalculator {
 
   private List<FinancePlanEntry> calc() {
     List<FinancePlanEntry> plan = new ArrayList<>();
-    Map<FinanceTarget, Money> alreadySaved = new HashMap<>();
 
     List<FinanceTarget> sortedTargetList = targets.stream()
         .sorted(Comparator
             .comparing(FinanceTarget::getUntilDate)
             .thenComparing(FinanceTarget::getAmount))
         .collect(Collectors.toList());
-
-    sortedTargetList.forEach(target -> alreadySaved.put(target, target.getSavedAmount()));
 
     List<FinanceTarget> regularTargets = sortedTargetList.parallelStream()
         .filter(FinanceTarget::isRegular)
@@ -159,25 +154,58 @@ public class SaverCalculator {
         .filter(t -> !t.isDelayable() && !t.isRegular())
         .collect(Collectors.toList());
 
+    LocalDate maxLocalDate = targetList.stream()
+        .map(FinanceTarget::getUntilDate)
+        .reduce((date, date2) -> date.isBefore(date2) ? date2 : date)
+        .orElse(currentDate);
+
+    Date maxDate = DateUtils.convertToDate(maxLocalDate);
+
+    while (!plan.isEmpty() && plan.get(plan.size() - 1).getDate().before(maxDate)) {
+      Date lastDate = plan.get(plan.size() - 1).getDate();
+      LocalDate localDate = DateUtils.convertToLocalDate(lastDate).plusMonths(1);
+      plan.add(new FinancePlanEntry(DateUtils.convertToDate(localDate),
+          Money.of(0, availableMoney.getCurrency())));
+    }
+
     for (FinanceTarget target : targetList) {
       int months = Period.between(currentDate, target.getUntilDate()).getMonths() + 1;
-      for (int i = 0; i < months; i++) {
-        forSave = (target.getAmount().subtract(target.getSavedAmount())).divide(months);
-        LocalDate date = currentDate.plusMonths(i);
-        if (plan.isEmpty() || plan.size() <= i) {
-          Map<FinanceTarget, Money> byTargets = new HashMap<>();
-          byTargets.put(target, forSave);
-          FinancePlanEntry entry = new FinancePlanEntry(DateUtils.convertToDate(date), byTargets);
+
+      // расчитываем количество, которые можем дополнить
+      Money freeDeep = Money.of(0, availableMoney.getCurrency());
+      int fromMonth = 0; // месяц с которого наинаем откладывать
+      for (int i = months - 1; i >= 0; i--) {
+        if (plan.size() > i) {
+          Money alreadyUsed = plan.get(i).getTotal();
+          freeDeep = freeDeep.add(maxLevel.subtract(alreadyUsed));
+        } else {
+          freeDeep = freeDeep.add(maxLevel);
+        }
+        if (target.getAmount().isLessThanOrEqualTo(freeDeep)) {
+          fromMonth = i;
+          break;
+        }
+      }
+
+      Money alreadyUsed = Money.of(0, target.getAmount().getCurrency());
+      for (int i = fromMonth; i < plan.size(); i++) {
+        if (i <= months) {
+          FinancePlanEntry entry = plan.get(i);
+          alreadyUsed = alreadyUsed.add(entry.getTotal());
+        }
+      }
+      Money forSaveLimit = (alreadyUsed.add(target.getAmount())).divide(months - fromMonth);
+
+      for (int i = fromMonth; i < months; i++) {
+        if (i + 1 > plan.size()) {
+          Date date = DateUtils.convertToDate(currentDate.plusMonths(i));
+          FinancePlanEntry entry = new FinancePlanEntry(date, forSaveLimit);
+          entry.addDetailedMoney(target, forSaveLimit);
           plan.add(entry);
         } else {
           FinancePlanEntry entry = plan.get(i);
-          Money alreadySavedInPlan = plan.stream()
-              .map(planEntry -> planEntry.getSavedAmountByTarget(target))
-              .reduce(Money::add)
-              .orElse(Money.of(0, target.getAmount().getCurrency()));
-          forSave = (target.getAmount().subtract(target.getSavedAmount().add(alreadySavedInPlan)))
-              .divide(months - i);
-          entry.addDetailedMoney(target, forSave);
+          Money save = forSaveLimit.subtract(entry.getTotal());
+          entry.addDetailedMoney(target, save);
         }
       }
     }
@@ -192,159 +220,4 @@ public class SaverCalculator {
 
     return plan;
   }
-
-  private List<FinancePlanEntry> calculate() {
-    List<FinanceTarget> targetList = targets.stream()
-        .sorted(Comparator.comparing(FinanceTarget::getUntilDate))
-        .collect(Collectors.toList());
-    CurrencyUnit currency = availableMoney.getCurrency();
-    int months = getMonths(targetList);
-
-    Money optimalSaveBalance = getAmountPerPeriod(targetList, months, currency);
-
-    if (optimalSaveBalance.isGreaterThan(availableMoney)) {
-      List<FinanceTarget> delayableTargets = targetList.stream()
-          .filter(FinanceTarget::isDelayable)
-          .sorted(Comparator.comparing(FinanceTarget::getUntilDateAsDate)
-              .thenComparing(FinanceTarget::getAmount))
-          .collect(Collectors.toList());
-
-      if (delayableTargets.isEmpty()) {
-        // todo not enough money
-        return null;
-      } else {
-        // move delayable targets
-        optimalSaveBalance = availableMoney;
-        List<FinanceTarget> fixedTarget = targetList.stream()
-            .filter(t -> !t.isDelayable())
-            .collect(Collectors.toList());
-
-        Money fixedTargetsAmount = targetList.stream()
-            .map(FinanceTarget::getAmount)
-            .reduce(Money::add)
-            .orElse(Money.of(0, currency));
-
-        int monthsFixed = getMonths(fixedTarget);
-        Money optimalSaveBalanceFixed = getAmountPerPeriod(fixedTarget, monthsFixed, currency);
-        if (optimalSaveBalanceFixed.isGreaterThan(availableMoney)) {
-          // todo not enough money
-          return null;
-        }
-
-        List<FinancePlanEntry> plan = getFinancePlanEntries(fixedTarget, optimalSaveBalanceFixed);
-        for (FinanceTarget target : delayableTargets) {
-          List<FinancePlanEntry> list = plan.stream().filter(new Predicate<FinancePlanEntry>() {
-            @Override
-            public boolean test(FinancePlanEntry entry) {
-              return entry.getLocalDate().isBefore(target.getUntilDate());
-            }
-          }).collect(Collectors.toList());
-
-          for (FinancePlanEntry entry : list) {
-            Money freeMoney = availableMoney.subtract(entry.getTotal());
-            Money forSave = null;
-            if (target.getAmount().isLessThanOrEqualTo(freeMoney)) {
-              forSave = target.getAmount();
-            } else {
-              forSave = freeMoney;
-            }
-            target.setSavedAmount(target.getSavedAmount().add(forSave));
-            Map<FinanceTarget, Money> detailedMoney = entry.getDetailedMoney();
-            detailedMoney.put(target, forSave);
-          }
-          if (target.getAmount().isGreaterThan(target.getSavedAmount())) {
-            int i = Period.between(currentDate, target.getUntilDate()).getMonths() - list.size();
-            Money diff = (target.getAmount().subtract(target.getSavedAmount())).divide(i);
-            Money forSave;
-            for (int j = list.size(); j < plan.size(); j++) {
-              FinancePlanEntry entry = plan.get(j);
-              if (diff.isGreaterThan(availableMoney.subtract(entry.getTotal()))) {
-                forSave = availableMoney.subtract(entry.getTotal());
-              } else {
-                forSave = diff;
-              }
-              target.setSavedAmount(forSave);
-              Map<FinanceTarget, Money> detailedMoney = entry.getDetailedMoney();
-              detailedMoney.put(target, forSave);
-            }
-            while (target.getSavedAmount().isLessThan(target.getAmount())) {
-              Money subtract = target.getAmount().subtract(target.getSavedAmount());
-              if (diff.isGreaterThan(subtract) && subtract.isLessThanOrEqualTo(availableMoney)) {
-                forSave = subtract;
-              } else if (diff.isGreaterThan(availableMoney)) {
-                forSave = availableMoney;
-              } else {
-                forSave = diff;
-              }
-              LocalDate date = plan.get(plan.size() - 1).getLocalDate();
-              target.setSavedAmount(target.getSavedAmount().add(forSave));
-              FinancePlanEntry entry = FinancePlanEntry.builder()
-                  .setDate(date.plusMonths(1L))
-                  .addDetailedMoney(target, forSave)
-                  .build();
-              plan.add(entry);
-            }
-          }
-        }
-        return plan;
-      }
-    } else {
-      // enough money
-      return getFinancePlanEntries(targetList, optimalSaveBalance);
-    }
-  }
-
-  private List<FinancePlanEntry> getFinancePlanEntries(List<FinanceTarget> targetList, Money optimalSaveBalance) {
-    int months = getMonths(targetList);
-    CurrencyUnit currency = optimalSaveBalance.getCurrency();
-    List<FinancePlanEntry> plan = new ArrayList<>();
-    for (int month = 0; month <= months; month++) {
-      Money spend = Money.of(0, currency);
-      FinancePlanEntry.FinancePlanEntryBuilder builder = FinancePlanEntry.builder()
-          .setDate(currentDate.plusMonths(month));
-
-      for (FinanceTarget target : targetList) {
-        Money need = target.getAmountIn(currency);
-        Money diffSaved = need.subtract(target.getSavedAmount());
-        int periods = Period.between(currentDate, target.getUntilDate()).getMonths() - month;
-        if (periods < 0) {
-          continue;
-        }
-        Money forSave = diffSaved.divide(periods + 1);
-        if (optimalSaveBalance.isLessThan(spend.add(forSave))) {
-          forSave = optimalSaveBalance.subtract(spend);
-        } else if (availableMoney.isLessThan(spend.add(forSave))) {
-          forSave = availableMoney.subtract(spend);
-        }
-        if (forSave.isNegative()) {
-          forSave = Money.of(0, currency);
-        }
-        target.setSavedAmount(forSave.add(target.getSavedAmount()));
-        builder.addDetailedMoney(target, forSave);
-        spend = spend.add(forSave);
-      }
-
-      FinancePlanEntry planEntry = builder.build();
-      plan.add(planEntry);
-    }
-    return plan;
-  }
-
-  private Money getAmountPerPeriod(List<FinanceTarget> targetList, int months, CurrencyUnit currency) {
-    return targetList.stream()
-        .map(FinanceTarget::getAmount)
-        .reduce(Money::add)
-        .orElse(Money.of(0, currency))
-        .divide(months + 1);
-  }
-
-  private int getMonths(List<FinanceTarget> targetList) {
-    LocalDate maxDate = targetList.get(targetList.size() - 1).getUntilDate();
-
-    return Period.between(
-        currentDate,
-        maxDate
-    ).getMonths();
-  }
-
 }
