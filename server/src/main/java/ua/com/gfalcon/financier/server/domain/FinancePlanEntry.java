@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.javamoney.moneta.Money;
 import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
 import ua.com.gfalcon.financier.server.util.Builder;
@@ -72,6 +71,10 @@ public class FinancePlanEntry {
     return date;
   }
 
+  public LocalDate getLocalDate() {
+    return DateUtils.convertToLocalDate(date);
+  }
+
   public void setDate(Date date) {
     this.date = date;
   }
@@ -87,8 +90,39 @@ public class FinancePlanEntry {
    */
   public void setDetailedMoney(Map<FinanceTarget, Money> detailedMoney) {
     this.detailedMoney = detailedMoney;
-    Optional<Money> amount = detailedMoney.values().stream().reduce(Money::add);
-    setTotal(amount.orElse(Money.of(0, CurrencyCode.USD.name())));
+//    Optional<Money> amount = detailedMoney.values().stream().reduce(Money::add);
+//    setTotal(amount.orElse(Money.of(0, CurrencyCode.USD.name())));
+  }
+
+  /**
+   * Add entry to detail by target.
+   *
+   * @param target  finance target.
+   * @param forSave amount for save.
+   */
+  public void addDetailedMoney(FinanceTarget target, Money forSave) {
+    if (this.detailedMoney == null) {
+      this.detailedMoney = new HashMap<>();
+    }
+    if (this.detailedMoney.containsKey(target)) {
+      this.detailedMoney.replace(target, forSave);
+    } else {
+      this.detailedMoney.put(target, forSave);
+    }
+//    setTotal(getTotal().add(forSave));
+  }
+
+  /**
+   * Get saved amount by finance target in this entry.
+   *
+   * @param target finance target.
+   * @return money amount.
+   */
+  public Money getSavedAmountByTarget(FinanceTarget target) {
+    if (detailedMoney == null || detailedMoney.isEmpty() || !detailedMoney.containsKey(target)) {
+      return Money.of(0, target.getAmount().getCurrency());
+    }
+    return detailedMoney.get(target);
   }
 
   /**

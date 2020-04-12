@@ -67,7 +67,8 @@ public class SaverCalculatorTest {
         twoTargetsWithDifferentDateAndEnoughMoney(),
         twoTargetsWithDifferentDateAndLotOfMoney(),
         twoTargetsWithDifferentDateAndNotEnoughMoney(),
-        fullCase()
+        fullCase(),
+        twoRegularTargets()
     );
   }
 
@@ -98,6 +99,45 @@ public class SaverCalculatorTest {
                 .addDetailedMoney(target1, Money.of(10, CurrencyCode.USD.name()))
                 .addDetailedMoney(target2, Money.of(25, CurrencyCode.USD.name()))
                 .setTotal(Money.of(35, CurrencyCode.USD.name()))
+                .build()
+        )
+    };
+  }
+
+  private static Object[] twoRegularTargets() {
+    FinanceTarget target1 = FinanceTarget.builder()
+        .setName("target 1")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 15).getTime())
+        .setAmount(Money.of(40, CurrencyCode.USD.name()))
+        .setRegular(true)
+        .build();
+    FinanceTarget target2 = FinanceTarget.builder()
+        .setName("target 2")
+        .setUntilDate(new GregorianCalendar(2020, Calendar.MARCH, 15).getTime())
+        .setAmount(Money.of(30, CurrencyCode.USD.name()))
+        .setRegular(true)
+        .build();
+    return new Object[] {
+        "Two regular targets with enough money",
+        Money.of(100, CurrencyCode.USD.name()),
+        Arrays.asList(target1, target2),
+        Arrays.asList(
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(20, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(30, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 1).getTime())
+                .addDetailedMoney(target1, Money.of(20, CurrencyCode.USD.name()))
+                .addDetailedMoney(target2, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(30, CurrencyCode.USD.name()))
+                .build(),
+            FinancePlanEntry.builder()
+                .setDate(new GregorianCalendar(2020, Calendar.MARCH, 1).getTime())
+                .addDetailedMoney(target2, Money.of(10, CurrencyCode.USD.name()))
+                .setTotal(Money.of(10, CurrencyCode.USD.name()))
                 .build()
         )
     };
@@ -358,7 +398,7 @@ public class SaverCalculatorTest {
   @Test
   public void checkTotalAmountForToSave() {
     for (int i = 0; i < actual.size(); i++) {
-      Assert.assertEquals("Wrong amount of total",
+      Assert.assertEquals("Wrong amount of total. Wrong item id " + i,
           expected.get(i).getTotal(),
           actual.get(i).getTotal()
       );

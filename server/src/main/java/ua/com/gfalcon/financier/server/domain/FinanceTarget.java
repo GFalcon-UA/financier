@@ -41,6 +41,8 @@ public class FinanceTarget {
   private LocalDate untilDate;
   private String name;
   private boolean regular;
+  private boolean delayable;
+  private LocalDate optimisticDate;
 
   @Transient
   private Money savedAmount;
@@ -97,6 +99,22 @@ public class FinanceTarget {
     this.regular = regular;
   }
 
+  public boolean isDelayable() {
+    return delayable;
+  }
+
+  public void setDelayable(boolean delayable) {
+    this.delayable = delayable;
+  }
+
+  public LocalDate getOptimisticDate() {
+    return optimisticDate;
+  }
+
+  public void setOptimisticDate(LocalDate optimisticDate) {
+    this.optimisticDate = optimisticDate;
+  }
+
   /**
    * Get amount of already saved money.
    *
@@ -151,6 +169,11 @@ public class FinanceTarget {
 
     public FinanceTargetBuilder setUntilDate(Date date) {
       FinanceTarget.this.setUntilDate(date);
+      return this;
+    }
+
+    public FinanceTargetBuilder setDelayable(boolean delayable) {
+      FinanceTarget.this.setDelayable(delayable);
       return this;
     }
 
