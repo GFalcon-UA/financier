@@ -26,6 +26,10 @@ import java.util.Objects;
  */
 public class StringUtils {
 
+  private StringUtils() {
+
+  }
+
   public static boolean isNotBlank(String str) {
     return !isNullOrEmpty(str);
   }

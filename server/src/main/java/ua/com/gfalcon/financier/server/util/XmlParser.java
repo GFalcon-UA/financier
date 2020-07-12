@@ -32,11 +32,9 @@ public abstract class XmlParser<T> {
 
   private final XMLStreamReader reader;
   private T context;
-  private StringBuilder stringBuilder;
 
   protected XmlParser(XMLStreamReader reader) {
     this.reader = reader;
-    this.stringBuilder = new StringBuilder();
   }
 
   protected XmlParser(InputStream inputStream) throws XMLStreamException {

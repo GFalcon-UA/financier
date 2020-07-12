@@ -97,6 +97,7 @@ public class HibernateXmlConfigLoader extends XmlParser<HibernateConfiguration> 
     private String value;
 
     public Property() {
+      // nothing
     }
 
     public String getKey() {

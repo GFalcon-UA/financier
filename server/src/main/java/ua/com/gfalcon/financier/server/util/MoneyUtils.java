@@ -31,6 +31,10 @@ import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
  */
 public class MoneyUtils {
 
+  private MoneyUtils() {
+
+  }
+
   /**
    * Convert money amount to another currency.
    *

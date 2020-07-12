@@ -29,4 +29,7 @@ public class CurrencyProvider {
 
   public static final String DEFAULT = new JDKCurrencyProvider().getProviderName();
 
+  private CurrencyProvider() {
+  }
+
 }

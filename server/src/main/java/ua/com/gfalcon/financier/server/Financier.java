@@ -36,11 +36,6 @@ public class Financier {
 
     configure.getProperties();
 
-//
-//
-//    ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-//
-//    System.out.println(context.getBeanDefinitionNames().length);
 
   }
 

@@ -29,6 +29,10 @@ import java.util.Date;
  */
 public class DateUtils {
 
+  private DateUtils() {
+
+  }
+
   /**
    * Convert {@link Date} to {@link LocalDate}.
    *

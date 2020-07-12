@@ -90,8 +90,6 @@ public class FinancePlanEntry {
    */
   public void setDetailedMoney(Map<FinanceTarget, Money> detailedMoney) {
     this.detailedMoney = detailedMoney;
-//    Optional<Money> amount = detailedMoney.values().stream().reduce(Money::add);
-//    setTotal(amount.orElse(Money.of(0, CurrencyCode.USD.name())));
   }
 
   /**
@@ -109,7 +107,6 @@ public class FinancePlanEntry {
     } else {
       this.detailedMoney.put(target, forSave);
     }
-//    setTotal(getTotal().add(forSave));
   }
 
   /**

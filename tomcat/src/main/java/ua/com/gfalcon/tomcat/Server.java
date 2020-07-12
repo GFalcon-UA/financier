@@ -23,12 +23,16 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
 public class Server {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
   public void start() throws LifecycleException {
     String webappDirLocation = "src/main/webapp/";
@@ -43,8 +47,10 @@ public class Server {
 
     tomcat.setPort(Integer.parseInt(webPort));
 
-    StandardContext ctx = (StandardContext) tomcat.addWebapp("/", new File(webappDirLocation).getAbsolutePath());
-    System.out.println("configuring app with basedir: " + new File("./" + webappDirLocation).getAbsolutePath());
+    StandardContext ctx = (StandardContext) tomcat.addWebapp("/",
+        new File(webappDirLocation).getAbsolutePath());
+    LOGGER.info("configuring app with basedir: {}",
+        new File("./" + webappDirLocation).getAbsolutePath());
 
     // Declare an alternative location for your "WEB-INF/classes" dir
     // Servlet 3.0 annotation will work
