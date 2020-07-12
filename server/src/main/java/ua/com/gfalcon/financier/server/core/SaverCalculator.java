@@ -107,7 +107,7 @@ public class SaverCalculator {
         .filter(FinanceTarget::isRegular)
         .collect(Collectors.toList());
 
-    Money forSave;
+    Money forSave = Money.of(0, availableMoney.getCurrency());
     for (FinanceTarget target : regularTargets) {
       LOG.debug("Start plan Target {}", target.getName());
 
@@ -121,7 +121,7 @@ public class SaverCalculator {
         if (plan.isEmpty() || plan.size() <= i) {
           LOG.debug(" i = {}; The condition for create new entry is {}", i, "TRUE");
           LocalDate date = currentDate.plusMonths(i);
-          LOG.debug("{} plan date = {}", target.getName(), date.toString());
+          LOG.debug("{} plan date = {}", target.getName(), date);
           Map<FinanceTarget, Money> byTargets = new HashMap<>();
           byTargets.put(target, forSave);
           FinancePlanEntry entry = new FinancePlanEntry(DateUtils.convertToDate(date), byTargets);
@@ -138,35 +138,11 @@ public class SaverCalculator {
       }
     }
 
-    List<Money> savedPlan = plan.stream()
-        .map(FinancePlanEntry::getTotal)
-        .collect(Collectors.toList());
-
-    Money maxLevel = savedPlan.stream().reduce((money, money2) -> {
-      if (money.isGreaterThanOrEqualTo(money2)) {
-        return Money.of(money.getNumberStripped(), money.getCurrency());
-      } else {
-        return Money.of(money2.getNumberStripped(), money2.getCurrency());
-      }
-    }).orElse(Money.of(0, availableMoney.getCurrency()));
+    Money maxLevel = getMaxLevel(plan);
 
     List<FinanceTarget> targetList = sortedTargetList.parallelStream()
         .filter(t -> !t.isDelayable() && !t.isRegular())
         .collect(Collectors.toList());
-
-    LocalDate maxLocalDate = targetList.stream()
-        .map(FinanceTarget::getUntilDate)
-        .reduce((date, date2) -> date.isBefore(date2) ? date2 : date)
-        .orElse(currentDate);
-
-    Date maxDate = DateUtils.convertToDate(maxLocalDate);
-
-    while (!plan.isEmpty() && plan.get(plan.size() - 1).getDate().before(maxDate)) {
-      Date lastDate = plan.get(plan.size() - 1).getDate();
-      LocalDate localDate = DateUtils.convertToLocalDate(lastDate).plusMonths(1);
-      plan.add(new FinancePlanEntry(DateUtils.convertToDate(localDate),
-          Money.of(0, availableMoney.getCurrency())));
-    }
 
     for (FinanceTarget target : targetList) {
       int months = Period.between(currentDate, target.getUntilDate()).getMonths() + 1;
@@ -194,7 +170,7 @@ public class SaverCalculator {
           alreadyUsed = alreadyUsed.add(entry.getTotal());
         }
       }
-      Money forSaveLimit = (alreadyUsed.add(target.getAmount())).divide(months - fromMonth);
+      Money forSaveLimit = (alreadyUsed.add(target.getAmount())).divide(months - (long) fromMonth);
 
       for (int i = fromMonth; i < months; i++) {
         if (i + 1 > plan.size()) {
@@ -214,10 +190,79 @@ public class SaverCalculator {
         .filter(FinanceTarget::isDelayable)
         .collect(Collectors.toList());
 
-    for (FinanceTarget target : delayedTargets) {
+    maxLevel = getMaxLevel(plan);
 
+    for (FinanceTarget target : delayedTargets) {
+      int months = Period.between(currentDate, target.getUntilDate()).getMonths() + 1;
+
+      // расчитываем количество, которые можем дополнить
+      Money freeDeep = Money.of(0, availableMoney.getCurrency());
+      int fromMonth = 0; // месяц с которого наинаем откладывать
+      for (int i = months - 1; i >= 0; i--) {
+        if (plan.size() > i) {
+          Money alreadyUsed = plan.get(i).getTotal();
+          freeDeep = freeDeep.add(maxLevel.subtract(alreadyUsed));
+        } else {
+          freeDeep = freeDeep.add(maxLevel);
+        }
+        if (target.getAmount().isLessThanOrEqualTo(freeDeep)) {
+          fromMonth = i;
+          break;
+        }
+      }
+
+      Money alreadyUsed = Money.of(0, target.getAmount().getCurrency());
+      for (int i = fromMonth; i < plan.size(); i++) {
+        if (i <= months) {
+          FinancePlanEntry entry = plan.get(i);
+          alreadyUsed = alreadyUsed.add(entry.getTotal());
+        }
+      }
+      Money forSaveLimit = (alreadyUsed.add(target.getAmount())).divide(months - (long) fromMonth);
+      Money saved = Money.of(0, target.getAmount().getCurrency());
+      if (forSaveLimit.isGreaterThan(availableMoney)) {
+        forSave = availableMoney;
+      }
+
+      int iteration = fromMonth;
+      while (saved.isLessThan(target.getAmount())) {
+        if (iteration + 1 > plan.size()) {
+          Date date = DateUtils.convertToDate(currentDate.plusMonths(iteration));
+          FinancePlanEntry entry = new FinancePlanEntry(date, forSave);
+          if (forSave.isGreaterThan(target.getAmount().subtract(saved))) {
+            forSave = target.getAmount().subtract(saved);
+          }
+          saved = saved.add(forSave);
+          entry.addDetailedMoney(target, forSave);
+          plan.add(entry);
+        } else {
+          FinancePlanEntry entry = plan.get(iteration);
+          Money save = forSave.subtract(entry.getTotal());
+          if (save.isGreaterThan(target.getAmount().subtract(saved))) {
+            save = target.getAmount().subtract(saved);
+          }
+          saved = saved.add(save);
+          entry.addDetailedMoney(target, save);
+        }
+        iteration++;
+      }
     }
 
     return plan;
   }
+
+  private Money getMaxLevel(List<FinancePlanEntry> plan) {
+    List<Money> savedPlan = plan.stream()
+        .map(FinancePlanEntry::getTotal)
+        .collect(Collectors.toList());
+
+    return savedPlan.stream().reduce((money, money2) -> {
+      if (money.isGreaterThanOrEqualTo(money2)) {
+        return Money.of(money.getNumberStripped(), money.getCurrency());
+      } else {
+        return Money.of(money2.getNumberStripped(), money2.getCurrency());
+      }
+    }).orElse(Money.of(0, availableMoney.getCurrency()));
+  }
+
 }

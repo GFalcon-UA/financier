@@ -66,9 +66,9 @@ public class SaverCalculatorTest {
         twoTargetsWithTheSameEndDateAndEnoughMoney(),
         twoTargetsWithDifferentDateAndEnoughMoney(),
         twoTargetsWithDifferentDateAndLotOfMoney(),
-//        twoTargetsWithDifferentDateAndNotEnoughMoney(),
-//        fullCase(),
-        twoRegularTargets()
+        twoTargetsWithDifferentDateAndNotEnoughMoney(),
+        twoRegularTargets()/*,
+        fullCase()*/
     );
   }
 
@@ -306,7 +306,7 @@ public class SaverCalculatorTest {
     return new Object[] {
         "hard case",
         Money.of(40, CurrencyCode.USD.name()),
-        Arrays.asList(target1, target2),
+        Arrays.asList(target1, target2, target3, target4),
         Arrays.asList(
             FinancePlanEntry.builder()
                 .setDate(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
