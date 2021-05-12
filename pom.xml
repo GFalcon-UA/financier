@@ -44,7 +44,7 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.login>19c1645d2d77aeeac75af727ff0387de874e7b96</sonar.login>
 
-    <spring.version>5.2.1.RELEASE</spring.version>
+    <spring.version>5.2.10.RELEASE</spring.version>
     <tomcat.version>9.0.31</tomcat.version>
   </properties>
 
