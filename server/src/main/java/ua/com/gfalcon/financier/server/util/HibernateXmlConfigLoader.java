@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package ua.com.gfalcon.financier.server.util;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Objects;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
@@ -30,92 +31,92 @@ import javax.xml.stream.XMLStreamReader;
  */
 public class HibernateXmlConfigLoader extends XmlParser<HibernateConfiguration> {
 
-  public static final String PROPERTY = "property";
-  public static final String NAME = "name";
-  public static final String VALUE = "value";
-  public static final String MAPPING = "mapping";
-  public static final String PACKAGE = "package";
-  private Property entry;
+    public static final String   PROPERTY = "property";
+    public static final String   NAME     = "name";
+    public static final String   VALUE    = "value";
+    public static final String   MAPPING  = "mapping";
+    public static final String   PACKAGE  = "package";
+    private             Property entry;
 
-  protected HibernateXmlConfigLoader(XMLStreamReader reader) {
-    super(reader);
-    setContext();
-  }
+    protected HibernateXmlConfigLoader(XMLStreamReader reader) {
+        super(reader);
+        setContext();
+    }
 
-  public HibernateXmlConfigLoader(InputStream inputStream) throws XMLStreamException {
-    super(inputStream);
-    setContext();
-  }
+    public HibernateXmlConfigLoader(InputStream inputStream) throws XMLStreamException {
+        super(inputStream);
+        setContext();
+    }
 
-  protected HibernateXmlConfigLoader(Reader streamReader) throws XMLStreamException {
-    super(streamReader);
-    setContext();
-  }
+    protected HibernateXmlConfigLoader(Reader streamReader) throws XMLStreamException {
+        super(streamReader);
+        setContext();
+    }
 
-  private void setContext() {
-    setContext(new HibernateConfiguration());
-  }
-
-  @Override
-  protected void parseStartElement(String nodeName) {
-    if (PROPERTY.equals(nodeName)) {
-      entry = new Property();
-      for (int i = 0; i < getReader().getAttributeCount(); i++) {
-        if (NAME.equals(getReader().getAttributeLocalName(i))) {
-          entry.setKey(getReader().getAttributeValue(i));
-        } else if (VALUE.equals(getReader().getAttributeLocalName(i))) {
-          entry.setValue(getReader().getAttributeValue(i));
+    @Override
+    protected void parseEndElement(String nodeName) {
+        if (PROPERTY.equals(nodeName)) {
+            getContext().addProperty(entry.getKey(), entry.getValue());
+            entry = null;
         }
-      }
-    } else if (MAPPING.equals(nodeName)) {
-      for (int i = 0; i < getReader().getAttributeCount(); i++) {
-        if (PACKAGE.equals(getReader().getAttributeLocalName(i))) {
-          getContext().addPackage(getReader().getAttributeValue(i));
+    }
+
+    @Override
+    protected void parseStartElement(String nodeName) {
+        if (PROPERTY.equals(nodeName)) {
+            entry = new Property();
+            for (int i = 0; i < getReader().getAttributeCount(); i++) {
+                if (NAME.equals(getReader().getAttributeLocalName(i))) {
+                    entry.setKey(getReader().getAttributeValue(i));
+                } else if (VALUE.equals(getReader().getAttributeLocalName(i))) {
+                    entry.setValue(getReader().getAttributeValue(i));
+                }
+            }
+        } else if (MAPPING.equals(nodeName)) {
+            for (int i = 0; i < getReader().getAttributeCount(); i++) {
+                if (PACKAGE.equals(getReader().getAttributeLocalName(i))) {
+                    getContext().addPackage(getReader().getAttributeValue(i));
+                }
+            }
         }
-      }
-    }
-  }
-
-  @Override
-  protected void parseEndElement(String nodeName) {
-    if (PROPERTY.equals(nodeName)) {
-      getContext().addProperty(entry.getKey(), entry.getValue());
-      entry = null;
-    }
-  }
-
-  @Override
-  protected void parseText(String text) {
-    if (Objects.nonNull(entry)) {
-      entry.setValue(text);
-    }
-  }
-
-  private class Property {
-
-    private String key;
-    private String value;
-
-    public Property() {
-      // nothing
     }
 
-    public String getKey() {
-      return key;
+    @Override
+    protected void parseText(String text) {
+        if (Objects.nonNull(entry)) {
+            entry.setValue(text);
+        }
     }
 
-    public void setKey(String key) {
-      this.key = key;
+    private void setContext() {
+        setContext(new HibernateConfiguration());
     }
 
-    public String getValue() {
-      return value;
-    }
+    private class Property {
 
-    public void setValue(String value) {
-      this.value = value;
-    }
+        private String key;
+        private String value;
 
-  }
+        public Property() {
+            // nothing
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+    }
 
 }

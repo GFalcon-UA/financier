@@ -14,28 +14,18 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.server.util;
-
-import java.util.Objects;
+package ua.com.gfalcon.financier.server.domain.account;
 
 /**
- * Utility class for working with {@link String}.
+ * Bank entity.
  *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
-public class StringUtils {
+public class Bank {
 
-    private StringUtils() {
-
-    }
-
-    public static boolean isNotBlank(String str) {
-        return !isNullOrEmpty(str);
-    }
-
-    public static boolean isNullOrEmpty(String str) {
-        return Objects.isNull(str) || str.isEmpty();
-    }
+    private String name;
+    private String code;
+    private String address;
 
 }

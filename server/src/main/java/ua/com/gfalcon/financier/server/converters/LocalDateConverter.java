@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package ua.com.gfalcon.financier.server.converters;
 
 import java.sql.Date;
 import java.time.LocalDate;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
@@ -30,14 +31,14 @@ import javax.persistence.Converter;
 @Converter(autoApply = true)
 public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
-  @Override
-  public Date convertToDatabaseColumn(LocalDate attribute) {
-    return attribute == null ? null : Date.valueOf(attribute);
-  }
+    @Override
+    public Date convertToDatabaseColumn(LocalDate attribute) {
+        return attribute == null ? null : Date.valueOf(attribute);
+    }
 
-  @Override
-  public LocalDate convertToEntityAttribute(Date sqlDate) {
-    return sqlDate == null ? null : sqlDate.toLocalDate();
-  }
+    @Override
+    public LocalDate convertToEntityAttribute(Date sqlDate) {
+        return sqlDate == null ? null : sqlDate.toLocalDate();
+    }
 
 }

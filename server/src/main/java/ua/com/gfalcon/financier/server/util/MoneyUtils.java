@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,10 +17,13 @@
 package ua.com.gfalcon.financier.server.util;
 
 import java.util.Objects;
+
 import javax.money.CurrencyUnit;
 import javax.money.convert.CurrencyConversion;
 import javax.money.convert.MonetaryConversions;
+
 import org.javamoney.moneta.Money;
+
 import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
 
 /**
@@ -31,40 +34,40 @@ import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
  */
 public class MoneyUtils {
 
-  private MoneyUtils() {
+    private MoneyUtils() {
 
-  }
-
-  /**
-   * Convert money amount to another currency.
-   *
-   * @param input        input amount
-   * @param currencyCode target currency
-   * @return output amount
-   */
-  public static Money convertMoneyToCurrency(Money input, CurrencyCode currencyCode) {
-    if (Objects.isNull(input)) {
-      return Money.of(0, currencyCode.name());
     }
 
-    CurrencyConversion conversion = MonetaryConversions.getConversion(currencyCode.name());
-    return input.with(conversion);
-  }
+    /**
+     * Convert money amount to another currency.
+     *
+     * @param input        input amount
+     * @param currencyCode target currency
+     * @return output amount
+     */
+    public static Money convertMoneyToCurrency(Money input, CurrencyCode currencyCode) {
+        if (Objects.isNull(input)) {
+            return Money.of(0, currencyCode.name());
+        }
 
-  /**
-   * Convert money amount to another currency.
-   *
-   * @param input    input amount
-   * @param currency target currency
-   * @return output amount
-   */
-  public static Money convertMoneyToCurrency(Money input, CurrencyUnit currency) {
-    if (Objects.isNull(input)) {
-      return Money.of(0, currency);
+        CurrencyConversion conversion = MonetaryConversions.getConversion(currencyCode.name());
+        return input.with(conversion);
     }
 
-    CurrencyConversion conversion = MonetaryConversions.getConversion(currency.getCurrencyCode());
-    return input.with(conversion);
-  }
+    /**
+     * Convert money amount to another currency.
+     *
+     * @param input    input amount
+     * @param currency target currency
+     * @return output amount
+     */
+    public static Money convertMoneyToCurrency(Money input, CurrencyUnit currency) {
+        if (Objects.isNull(input)) {
+            return Money.of(0, currency);
+        }
+
+        CurrencyConversion conversion = MonetaryConversions.getConversion(currency.getCurrencyCode());
+        return input.with(conversion);
+    }
 
 }

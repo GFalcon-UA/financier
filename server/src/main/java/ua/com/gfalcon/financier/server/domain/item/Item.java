@@ -14,28 +14,20 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.server.util;
+package ua.com.gfalcon.financier.server.domain.item;
 
-import java.util.Objects;
+import org.javamoney.moneta.Money;
 
 /**
- * Utility class for working with {@link String}.
+ * Money item.
  *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
-public class StringUtils {
+public interface Item {
 
-    private StringUtils() {
+    Money getAmount();
 
-    }
-
-    public static boolean isNotBlank(String str) {
-        return !isNullOrEmpty(str);
-    }
-
-    public static boolean isNullOrEmpty(String str) {
-        return Objects.isNull(str) || str.isEmpty();
-    }
+    String getName();
 
 }

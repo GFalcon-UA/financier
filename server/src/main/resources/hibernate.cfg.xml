@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  ~   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+  ~   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -16,19 +16,21 @@
   -->
 
 <!DOCTYPE hibernate-configuration PUBLIC
-    "-//Hibernate/Hibernate Configuration DTD//EN"
-    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-    <property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
-    <property name="hibernate.default_batch_fetch_size">8</property>
-    <property name="hibernate.jdbc.batch_size">20</property>
-    <property name="hibernate.show_sql">false</property>
-    <property name="hibernate.format_sql">true</property>
-    <property name="hibernate.use_sql_comments">true</property>
-    <property name="hibernate.hbm2ddl.auto">validate</property>
+    <session-factory>
+        <property name="hibernate.connection.provider_class">
+            com.zaxxer.hikari.hibernate.HikariConnectionProvider
+        </property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+        <property name="hibernate.default_batch_fetch_size">8</property>
+        <property name="hibernate.jdbc.batch_size">20</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.use_sql_comments">true</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
 
-    <mapping package="ua.com.gfalcon.financier.server.domain"/>
-  </session-factory>
+        <mapping package="ua.com.gfalcon.financier.server.domain"/>
+    </session-factory>
 </hibernate-configuration>

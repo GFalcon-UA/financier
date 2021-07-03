@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,25 +17,32 @@
 package ua.com.gfalcon.financier.server.domain;
 
 import javax.money.Monetary;
+
 import org.javamoney.moneta.Money;
 import org.junit.Assert;
 import org.junit.Test;
 
+import ua.com.gfalcon.financier.server.domain.plan.FinanceTarget;
+
+/**
+ * Test {@link FinanceTarget}.
+ */
 public class FinanceTargetTest {
 
 
-  @Test
-  public void getAmountInTest() {
-    FinanceTarget target = new FinanceTarget();
-    int usdAmount = (int) (Math.random() * 1000);
-    target.setAmount(Money.of(usdAmount, "USD"));
+    @Test
+    public void getAmountInTest() {
+        FinanceTarget target = new FinanceTarget();
+        int usdAmount = (int) (Math.random() * 1000);
+        target.setAmount(Money.of(usdAmount, "USD"));
 
-    Money eur = target.getAmountIn(Monetary.getCurrency("EUR"));
+        Money eur = target.getAmountIn(Monetary.getCurrency("EUR"));
 
-    Assert.assertEquals("Wrong first amount set",
-        usdAmount, target.getAmount().getNumberStripped().intValue());
+        Assert.assertEquals("Wrong first amount set", usdAmount, target.getAmount()
+                .getNumberStripped()
+                .intValue());
 
-    Assert.assertNotNull(eur);
-  }
+        Assert.assertNotNull(eur);
+    }
 
 }

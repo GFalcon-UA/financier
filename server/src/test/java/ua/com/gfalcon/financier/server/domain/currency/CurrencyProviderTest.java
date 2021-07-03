@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,15 +17,19 @@
 package ua.com.gfalcon.financier.server.domain.currency;
 
 import javax.money.Monetary;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test of CurrencyProvider.
+ */
 public class CurrencyProviderTest {
 
-  @Test
-  public void defaultCurrencyProviderTest() {
-    Assert.assertTrue("Wrong default currency provider name",
-        Monetary.getCurrencyProviderNames().contains(CurrencyProvider.DEFAULT));
-  }
+    @Test
+    public void defaultCurrencyProviderTest() {
+        Assert.assertTrue("Wrong default currency provider name", Monetary.getCurrencyProviderNames()
+                .contains(CurrencyProvider.DEFAULT));
+    }
 
 }

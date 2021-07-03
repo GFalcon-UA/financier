@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,37 +21,39 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * Configuration of Hibernate.
+ *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
 public class HibernateConfiguration {
 
-  private Properties properties;
-  private List<String> packagesToScan;
+    private final Properties   properties;
+    private final List<String> packagesToScan;
 
-  public HibernateConfiguration() {
-    this.properties = new Properties();
-    this.packagesToScan = new LinkedList<>();
-  }
+    public HibernateConfiguration() {
+        this.properties = new Properties();
+        this.packagesToScan = new LinkedList<>();
+    }
 
-  public List<String> getPackagesToScan() {
-    return packagesToScan;
-  }
+    public List<String> getPackagesToScan() {
+        return packagesToScan;
+    }
 
-  public Properties getProperties() {
-    return properties;
-  }
+    public Properties getProperties() {
+        return properties;
+    }
 
-  public void addProperty(String key, Object value) {
-    properties.put(key, value);
-  }
+    public void addPackage(String packageToScane) {
+        packagesToScan.add(packageToScane);
+    }
 
-  public void addPackage(String packageToScane) {
-    packagesToScan.add(packageToScane);
-  }
+    public void addProperty(String key, Object value) {
+        properties.put(key, value);
+    }
 
-  public String getProperty(String key) {
-    return properties.getProperty(key);
-  }
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
 
 }

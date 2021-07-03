@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Main configuration.
+ *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
 @Configuration
-@ComponentScan(basePackages = {
-    "ua.com.gfalcon.financier.server.config"
-})
+@ComponentScan(basePackages = {"ua.com.gfalcon.financier.server.config"})
 public class AppConfig {
 
 }

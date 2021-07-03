@@ -14,28 +14,15 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.server.util;
-
-import java.util.Objects;
+package ua.com.gfalcon.financier.server.domain.item;
 
 /**
- * Utility class for working with {@link String}.
+ * Type of finance entry direction.
  *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
-public class StringUtils {
-
-    private StringUtils() {
-
-    }
-
-    public static boolean isNotBlank(String str) {
-        return !isNullOrEmpty(str);
-    }
-
-    public static boolean isNullOrEmpty(String str) {
-        return Objects.isNull(str) || str.isEmpty();
-    }
-
+public enum EntryType {
+    EXPENSE,
+    INCOME
 }

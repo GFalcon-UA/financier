@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,49 +29,49 @@ import java.util.Date;
  */
 public class DateUtils {
 
-  private DateUtils() {
+    private DateUtils() {
 
-  }
+    }
 
-  /**
-   * Convert {@link Date} to {@link LocalDate}.
-   *
-   * @param dateToConvert {@link Date} for converting
-   * @return {@link LocalDate} instance
-   */
-  public static LocalDate convertToLocalDate(Date dateToConvert) {
-    return dateToConvert.toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate();
-  }
+    /**
+     * Convert {@link LocalDate} to {@link Date}.
+     *
+     * @param dateToConvert {@link LocalDate} for converting
+     * @return {@link Date} instance
+     */
+    public static Date convertToDate(LocalDate dateToConvert) {
+        return Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
 
-  /**
-   * Convert {@link Date} to {@link LocalDateTime}.
-   *
-   * @param dateToConvert {@link Date} for converting
-   * @return {@link LocalDateTime} instance
-   */
-  public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
-    return dateToConvert.toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDateTime();
-  }
+    public static Date convertToDate(LocalDateTime dateToConvert) {
+        return Date.from(dateToConvert.atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
 
-  /**
-   * Convert {@link LocalDate} to {@link Date}.
-   *
-   * @param dateToConvert {@link LocalDate} for converting
-   * @return {@link Date} instance
-   */
-  public static Date convertToDate(LocalDate dateToConvert) {
-    return Date.from(dateToConvert.atStartOfDay()
-        .atZone(ZoneId.systemDefault())
-        .toInstant());
-  }
+    /**
+     * Convert {@link Date} to {@link LocalDate}.
+     *
+     * @param dateToConvert {@link Date} for converting
+     * @return {@link LocalDate} instance
+     */
+    public static LocalDate convertToLocalDate(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
 
-  public static Date convertToDate(LocalDateTime dateToConvert) {
-    return Date.from(dateToConvert.atZone(ZoneId.systemDefault())
-        .toInstant());
-  }
+    /**
+     * Convert {@link Date} to {@link LocalDateTime}.
+     *
+     * @param dateToConvert {@link Date} for converting
+     * @return {@link LocalDateTime} instance
+     */
+    public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
 
 }

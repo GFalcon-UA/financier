@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,47 +17,52 @@
 package ua.com.gfalcon.financier.server.domain.currency;
 
 import java.util.Currency;
+
 import javax.money.Monetary;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+
+/**
+ * Tests of correct using of CurrencyCode.
+ */
 @RunWith(JUnitParamsRunner.class)
 public class CurrencyCodeTest {
 
-  @Test
-  @Parameters(method = "getEnumValues")
-  public void correctCurrencyEnumTest(CurrencyCode currencyCode) {
-    Assert.assertNotNull(String.format("Currency code %s is invalid", currencyCode.name()),
-        Currency.getInstance(currencyCode.name()));
-  }
+    @SuppressWarnings("unused")
+    private Object[] getCurrencyCodes() {
+        return Currency.getAvailableCurrencies()
+                .parallelStream()
+                .map(Currency::getCurrencyCode)
+                .toArray();
+    }
 
-  @SuppressWarnings("unused")
-  private Object[] getEnumValues() {
-    return CurrencyCode.values();
-  }
+    @SuppressWarnings("unused")
+    private Object[] getEnumValues() {
+        return CurrencyCode.values();
+    }
 
-  @Test
-  @Parameters(method = "getCurrencyCodes")
-  public void fillingCurrencyEnumTest(String code) {
-    Assert.assertNotNull(String.format("Currency code %s is not present", code),
-        CurrencyCode.valueOf(code));
-  }
+    @Test
+    @Parameters(method = "getEnumValues")
+    public void correctCurrencyEnumTest(CurrencyCode currencyCode) {
+        Assert.assertNotNull(String.format("Currency code %s is invalid", currencyCode.name()),
+                Currency.getInstance(currencyCode.name()));
+    }
 
-  @Test
-  @Parameters(method = "getCurrencyCodes")
-  public void currencyProviderTest(String code) {
-    Assert.assertTrue(Monetary.isCurrencyAvailable(code, CurrencyProvider.DEFAULT));
-  }
+    @Test
+    @Parameters(method = "getCurrencyCodes")
+    public void currencyProviderTest(String code) {
+        Assert.assertTrue(Monetary.isCurrencyAvailable(code, CurrencyProvider.DEFAULT));
+    }
 
-  @SuppressWarnings("unused")
-  private Object[] getCurrencyCodes() {
-    return Currency.getAvailableCurrencies()
-        .parallelStream()
-        .map(Currency::getCurrencyCode)
-        .toArray();
-  }
+    @Test
+    @Parameters(method = "getCurrencyCodes")
+    public void fillingCurrencyEnumTest(String code) {
+        Assert.assertNotNull(String.format("Currency code %s is not present", code), CurrencyCode.valueOf(code));
+    }
 
 }

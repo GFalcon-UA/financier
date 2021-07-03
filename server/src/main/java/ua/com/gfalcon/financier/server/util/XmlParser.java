@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,75 +19,83 @@ package ua.com.gfalcon.financier.server.util;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Objects;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 /**
+ * Parser of XML files.
+ *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
 public abstract class XmlParser<T> {
 
-  private final XMLStreamReader reader;
-  private T context;
+    private final XMLStreamReader reader;
+    private       T               context;
 
-  protected XmlParser(XMLStreamReader reader) {
-    this.reader = reader;
-  }
-
-  protected XmlParser(InputStream inputStream) throws XMLStreamException {
-    this(getReader(inputStream));
-  }
-
-  protected XmlParser(Reader streamReader) throws XMLStreamException {
-    this(getReader(streamReader));
-  }
-
-  private static XMLStreamReader getReader(InputStream inputStream) throws XMLStreamException {
-    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-    return inputFactory.createXMLStreamReader(inputStream);
-  }
-
-  private static XMLStreamReader getReader(Reader streamReader) throws XMLStreamException {
-    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-    return inputFactory.createXMLStreamReader(streamReader);
-  }
-
-  public T parse() throws XMLStreamException {
-    if (Objects.isNull(this.context)) {
-      throw new IllegalStateException("Context is not initialized");
+    protected XmlParser(InputStream inputStream) throws XMLStreamException {
+        this(createReader(inputStream));
     }
-    while (reader.hasNext()) {
-      int event = reader.next();
-      if (event == XMLStreamConstants.START_ELEMENT) {
-        parseStartElement(reader.getLocalName());
-      } else if (event == XMLStreamConstants.CHARACTERS) {
-        parseText(reader.getText());
-      } else if (event == XMLStreamConstants.END_ELEMENT) {
-        parseEndElement(reader.getLocalName());
-      }
+
+    protected XmlParser(XMLStreamReader reader) {
+        this.reader = reader;
     }
-    return getContext();
-  }
 
-  protected abstract void parseStartElement(String nodeName);
+    protected XmlParser(Reader streamReader) throws XMLStreamException {
+        this(createReader(streamReader));
+    }
 
-  protected abstract void parseEndElement(String nodeName);
+    protected T getContext() {
+        return this.context;
+    }
 
-  protected abstract void parseText(String text);
+    public XMLStreamReader getReader() {
+        return this.reader;
+    }
 
-  protected T getContext() {
-    return this.context;
-  }
+    protected void setContext(T context) {
+        this.context = context;
+    }
 
-  protected void setContext(T context) {
-    this.context = context;
-  }
+    protected static XMLStreamReader createReader(InputStream inputStream) throws XMLStreamException {
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        return inputFactory.createXMLStreamReader(inputStream);
+    }
 
-  public XMLStreamReader getReader() {
-    return this.reader;
-  }
+    protected static XMLStreamReader createReader(Reader streamReader) throws XMLStreamException {
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        return inputFactory.createXMLStreamReader(streamReader);
+    }
+
+    /**
+     * Execute parsing.
+     *
+     * @return parsed context
+     */
+    public T parse() throws XMLStreamException {
+        if (Objects.isNull(this.context)) {
+            throw new IllegalStateException("Context is not initialized");
+        }
+        while (reader.hasNext()) {
+            int event = reader.next();
+            if (event == XMLStreamConstants.START_ELEMENT) {
+                parseStartElement(reader.getLocalName());
+            } else if (event == XMLStreamConstants.CHARACTERS) {
+                parseText(reader.getText());
+            } else if (event == XMLStreamConstants.END_ELEMENT) {
+                parseEndElement(reader.getLocalName());
+            }
+        }
+        return getContext();
+    }
+
+    protected abstract void parseEndElement(String nodeName);
+
+    protected abstract void parseStartElement(String nodeName);
+
+    protected abstract void parseText(String text);
 
 }

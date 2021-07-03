@@ -14,31 +14,34 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.server.converters;
+package ua.com.gfalcon.financier.server.domain.item;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import org.javamoney.moneta.Money;
 
 /**
- * 'https://thoughts-on-java.org/persist-localdate-localdatetime-jpa/'
+ * Entry of finance plan.
  *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
-@Converter(autoApply = true)
-public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
+public class Entry implements Item {
+
+    private String    name;
+    private Money     amount;
+    private EntryType type;
 
     @Override
-    public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {
-        return attribute == null ? null : Timestamp.valueOf(attribute);
+    public Money getAmount() {
+        if (EntryType.INCOME.equals(type)) {
+            return amount;
+        } else {
+            return amount.multiply(-1);
+        }
     }
 
     @Override
-    public LocalDateTime convertToEntityAttribute(Timestamp dbData) {
-        return dbData == null ? null : dbData.toLocalDateTime();
+    public String getName() {
+        return this.name;
     }
 
 }

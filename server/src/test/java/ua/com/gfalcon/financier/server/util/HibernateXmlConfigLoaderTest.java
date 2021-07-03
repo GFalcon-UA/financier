@@ -1,5 +1,5 @@
 /*
- *   Copyright 2016-2020 Oleksii V. KHALIKOV, PE
+ *   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,49 +18,54 @@ package ua.com.gfalcon.financier.server.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.xml.stream.XMLStreamException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Tests of {@link HibernateXmlConfigLoader}.
+ */
 public class HibernateXmlConfigLoaderTest {
 
-  @Test
-  public void parseTest() {
-    ClassLoader classLoader = getClass().getClassLoader();
-    HibernateConfiguration configuration = null;
+    @Test
+    public void parseTest() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        HibernateConfiguration configuration = null;
 
-    try (InputStream inputStream = classLoader.getResourceAsStream("hibernate.cfg.xml")) {
-      HibernateXmlConfigLoader loader = new HibernateXmlConfigLoader(inputStream);
-      configuration = loader.parse();
-    } catch (XMLStreamException | IOException e) {
-      e.printStackTrace();
+        try (InputStream inputStream = classLoader.getResourceAsStream("hibernate.cfg.xml")) {
+            HibernateXmlConfigLoader loader = new HibernateXmlConfigLoader(inputStream);
+            configuration = loader.parse();
+        } catch (XMLStreamException | IOException e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertNotNull(configuration);
+        Assert.assertEquals(1, configuration.getPackagesToScan()
+                .size());
+        Assert.assertEquals(8, configuration.getProperties()
+                .size());
+        Assert.assertEquals("ua.com.gfalcon.financier.server.domain", configuration.getPackagesToScan()
+                .get(0));
+        Assert.assertEquals("20", configuration.getProperty("hibernate.jdbc.batch_size"));
+
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.connection.provider_class"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.dialect"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.default_batch_fetch_size"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.jdbc.batch_size"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.show_sql"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.format_sql"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.use_sql_comments"));
+        Assert.assertTrue(configuration.getProperties()
+                .containsKey("hibernate.hbm2ddl.auto"));
     }
-
-    Assert.assertNotNull(configuration);
-    Assert.assertEquals(1, configuration.getPackagesToScan().size());
-    Assert.assertEquals(8, configuration.getProperties().size());
-    Assert.assertEquals(
-        "ua.com.gfalcon.financier.server.domain",
-        configuration.getPackagesToScan().get(0)
-    );
-    Assert.assertEquals("20", configuration.getProperty("hibernate.jdbc.batch_size"));
-
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.connection.provider_class"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.dialect"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.default_batch_fetch_size"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.jdbc.batch_size"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.show_sql"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.format_sql"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.use_sql_comments"));
-    Assert.assertTrue(configuration.getProperties()
-        .containsKey("hibernate.hbm2ddl.auto"));
-  }
 
 }
