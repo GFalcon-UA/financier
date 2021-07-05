@@ -46,7 +46,7 @@
 
         <spring.version>5.2.4.RELEASE</spring.version>
         <spring-security.version>5.3.0.RELEASE</spring-security.version>
-        <tomcat.version>9.0.31</tomcat.version>
+        <tomcat.version>9.0.43</tomcat.version>
     </properties>
 
     <dependencyManagement>
