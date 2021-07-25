@@ -27,6 +27,7 @@ import org.hibernate.cfg.Configuration;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+
 public class Financier {
 
     /**

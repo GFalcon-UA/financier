@@ -28,9 +28,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
-import ua.com.gfalcon.financier.server.domain.plan.FinancePlanEntry;
-import ua.com.gfalcon.financier.server.domain.plan.FinanceTarget;
+import ua.com.gfalcon.financier.model.currency.CurrencyCode;
+import ua.com.gfalcon.financier.model.plan.FinancePlanEntry;
+import ua.com.gfalcon.financier.model.plan.FinanceTarget;
+
 
 /**
  * Tests of {@link SaverCalculator}.

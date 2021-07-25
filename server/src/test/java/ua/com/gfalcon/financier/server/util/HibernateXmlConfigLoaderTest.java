@@ -24,6 +24,9 @@ import javax.xml.stream.XMLStreamException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import ua.com.gfalcon.financier.data.util.HibernateConfiguration;
+import ua.com.gfalcon.financier.data.util.HibernateXmlConfigLoader;
+
 /**
  * Tests of {@link HibernateXmlConfigLoader}.
  */
@@ -46,7 +49,7 @@ public class HibernateXmlConfigLoaderTest {
                 .size());
         Assert.assertEquals(8, configuration.getProperties()
                 .size());
-        Assert.assertEquals("ua.com.gfalcon.financier.server.domain", configuration.getPackagesToScan()
+        Assert.assertEquals("ua.com.gfalcon.financier.data.domain", configuration.getPackagesToScan()
                 .get(0));
         Assert.assertEquals("20", configuration.getProperty("hibernate.jdbc.batch_size"));
 

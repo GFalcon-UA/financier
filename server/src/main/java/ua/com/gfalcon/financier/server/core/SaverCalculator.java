@@ -31,9 +31,9 @@ import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.com.gfalcon.financier.server.domain.plan.FinancePlanEntry;
-import ua.com.gfalcon.financier.server.domain.plan.FinanceTarget;
-import ua.com.gfalcon.financier.server.util.DateUtils;
+import ua.com.gfalcon.financier.model.plan.FinancePlanEntry;
+import ua.com.gfalcon.financier.model.plan.FinanceTarget;
+import ua.com.gfalcon.financier.util.DateUtils;
 
 /**
  * Saver calculator.

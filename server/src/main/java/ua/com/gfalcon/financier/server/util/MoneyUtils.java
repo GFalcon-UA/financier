@@ -24,7 +24,8 @@ import javax.money.convert.MonetaryConversions;
 
 import org.javamoney.moneta.Money;
 
-import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
+import ua.com.gfalcon.financier.model.currency.CurrencyCode;
+
 
 /**
  * Util class for working with {@link Money}.

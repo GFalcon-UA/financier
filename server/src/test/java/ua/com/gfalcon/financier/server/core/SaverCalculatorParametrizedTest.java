@@ -36,9 +36,10 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import ua.com.gfalcon.financier.server.domain.currency.CurrencyCode;
-import ua.com.gfalcon.financier.server.domain.plan.FinancePlanEntry;
-import ua.com.gfalcon.financier.server.domain.plan.FinanceTarget;
+import ua.com.gfalcon.financier.model.currency.CurrencyCode;
+import ua.com.gfalcon.financier.model.plan.FinancePlanEntry;
+import ua.com.gfalcon.financier.model.plan.FinanceTarget;
+
 
 /**
  * Tests of {@link SaverCalculator}.
@@ -47,7 +48,7 @@ import ua.com.gfalcon.financier.server.domain.plan.FinanceTarget;
 @RunWith(Parameterized.class)
 public class SaverCalculatorParametrizedTest {
 
-    private static final Date                   currentDate = new GregorianCalendar(2020, Calendar.JANUARY,
+    private static final Date currentDate = new GregorianCalendar(2020, Calendar.JANUARY,
             1).getTime();
     @Parameter(value = 0)
     public               String                 description;
