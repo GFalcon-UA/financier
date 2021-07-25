@@ -40,6 +40,18 @@
 
     <name>Financier</name>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+        </profile>
+    </profiles>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -408,6 +420,34 @@
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>front/dist</directory>
+                                <includes>
+                                    <include>**/*</include>
+                                    <include>**</include>
+                                </includes>
+                                <followSymlinks>false</followSymlinks>
+                            </fileset>
+                            <!--                            <fileset>-->
+                            <!--                                <directory>front/node</directory>-->
+                            <!--                                <includes>-->
+                            <!--                                    <include>**/*</include>-->
+                            <!--                                    <include>**</include>-->
+                            <!--                                </includes>-->
+                            <!--                                <followSymlinks>false</followSymlinks>-->
+                            <!--                            </fileset>-->
+                            <!--                            <fileset>-->
+                            <!--                                <directory>front/node_modules</directory>-->
+                            <!--                                <includes>-->
+                            <!--                                    <include>**/*</include>-->
+                            <!--                                    <include>**</include>-->
+                            <!--                                </includes>-->
+                            <!--                                <followSymlinks>false</followSymlinks>-->
+                            <!--                            </fileset>-->
+                        </filesets>
+                    </configuration>
                 </plugin>
                 <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
                 <plugin>
