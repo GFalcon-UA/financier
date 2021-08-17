@@ -77,6 +77,7 @@ jobs:
         uses: checkmarx/kics-action@v1.2
         with:
           path: 'backend,data,front,model,server,util'
+          exclude_paths: 'backend/target,data/target,front/dist,front/node,front/node_modules,front/target,model/target,server/target,util/target'
           fail_on: high,medium,low
           output_path: 'results-dir'
           output_formats: 'json,sarif'
