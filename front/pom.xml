@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>financier-front</artifactId>
-  <name>financier-front</name>
+  <name>front</name>
 
   <profiles>
     <profile>

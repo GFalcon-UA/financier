@@ -46,9 +46,15 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <spring.profile>dev</spring.profile>
+            </properties>
         </profile>
         <profile>
             <id>prod</id>
+            <properties>
+                <spring.profile>prod</spring.profile>
+            </properties>
         </profile>
     </profiles>
 
