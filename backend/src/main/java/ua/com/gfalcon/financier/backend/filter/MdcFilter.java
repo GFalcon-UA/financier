@@ -40,11 +40,13 @@ import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class MdcFilter extends MDCInsertingServletFilter {
 
+    public static final String REQUEST_REQUEST_ID = "req.id";
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         try {
-            MDC.put("requestId", createRequestId());
+            MDC.put(REQUEST_REQUEST_ID, createRequestId());
             super.doFilter(request, response, chain);
         } finally {
             MDC.clear();
