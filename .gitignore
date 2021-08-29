@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+logs/
 
 # BlueJ files
 *.ctxt
@@ -29,7 +30,7 @@ hs_err_pid*
 target/*
 */target/*
 
-server/.resourceCache
+*/.resourceCache
 
 # compiled output
 /dist/

@@ -40,6 +40,19 @@
 
     <name>Financier</name>
 
+    <organization>
+        <name>Khalikov, PE</name>
+        <url>gfalcon.com.ua</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>gfalcon-ua</id>
+            <name>Oleksii V. Khalikov</name>
+            <email>oleksii.khalikov@gmail.com</email>
+        </developer>
+    </developers>
+
     <profiles>
         <profile>
             <id>dev</id>
@@ -279,6 +292,12 @@
             <!--                <version>${tomcat.version}</version>-->
             <!--            </dependency>-->
 
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -415,6 +434,25 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>3.0.27</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/openapi.json</inputSpec>
+                            <language>typescript-angular</language>
+                            <!--                            <configOptions>-->
+                            <!--                                <sourceFolder>src/gen/java/main</sourceFolder>-->
+                            <!--                            </configOptions>-->
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -20,9 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Simple rest controller.
@@ -30,11 +37,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Oleksii Khalikov
  */
 @RestController
+@Tag(name = "ping", description = "Ping API")
+@RequestMapping(path = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PingController {
 
     /**
      * Check method.
      */
+    @Operation(summary = "Check method",
+            tags = {"ping"},
+            responses = {@ApiResponse(responseCode = "200",
+                    description = "ping",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))})
     @GetMapping(path = "/ping")
     public ResponseEntity<Map<String, String>> ping() {
         Map<String, String> map = new HashMap<>();
