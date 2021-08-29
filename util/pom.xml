@@ -27,6 +27,7 @@
 
     <artifactId>util</artifactId>
     <version>${project.parent.version}</version>
+    <description>The module contains useful util classes</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

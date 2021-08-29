@@ -25,7 +25,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>financier-data</artifactId>
+    <artifactId>financier-protocol</artifactId>
+    <version>${project.parent.version}</version>
+    <description>Collection of DTO for REST api</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -41,21 +43,9 @@
             <groupId>ua.com.gfalcon</groupId>
             <artifactId>financier-model</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-agroal</artifactId>
-            <type>pom</type>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
     </dependencies>
 

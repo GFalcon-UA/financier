@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.server.util;
+package ua.com.gfalcon.core.util;
 
 import java.util.Objects;
 

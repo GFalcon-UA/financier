@@ -26,6 +26,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>financier-backend</artifactId>
+    <version>${project.parent.version}</version>
+    <description>REST endpoints</description>
 
     <profiles>
         <profile>
@@ -114,6 +116,19 @@
             <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>ua.com.gfalcon</groupId>
+            <artifactId>financier-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ua.com.gfalcon</groupId>
+            <artifactId>financier-protocol</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -151,7 +166,7 @@
                 <configuration>
                     <apiDocsUrl>http://localhost:8080/api-docs</apiDocsUrl>
                     <outputFileName>openapi.json</outputFileName>
-                    <outputDir>${project.parent.basedir}/swagger</outputDir>
+                    <outputDir>${project.parent.basedir}/docs/swagger</outputDir>
                 </configuration>
             </plugin>
         </plugins>

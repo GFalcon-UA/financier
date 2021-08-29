@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.server.core;
+package ua.com.gfalcon.core;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -26,12 +26,13 @@
         <maven>3.6.1</maven>
     </prerequisites>
     <modules>
-        <module>server</module>
         <module>data</module>
         <module>util</module>
         <module>model</module>
         <module>front</module>
         <module>backend</module>
+        <module>core</module>
+        <module>protocol</module>
     </modules>
 
     <groupId>ua.com.gfalcon</groupId>
@@ -117,43 +118,16 @@
                 <artifactId>financier-data</artifactId>
                 <version>1.0.0</version>
             </dependency>
-
             <dependency>
                 <groupId>ua.com.gfalcon</groupId>
-                <artifactId>financier-server</artifactId>
+                <artifactId>financier-core</artifactId>
                 <version>1.0.0</version>
             </dependency>
-
-            <!--            <dependency>-->
-            <!--                <groupId>ch.qos.logback</groupId>-->
-            <!--                <artifactId>logback-classic</artifactId>-->
-            <!--                <version>1.2.3</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>javax</groupId>-->
-            <!--                <artifactId>javaee-api</artifactId>-->
-            <!--                <version>8.0.1</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>junit</groupId>-->
-            <!--                <artifactId>junit</artifactId>-->
-            <!--                <version>4.13.1</version>-->
-            <!--                <scope>test</scope>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.mockito</groupId>-->
-            <!--                <artifactId>mockito-core</artifactId>-->
-            <!--                <version>3.2.0</version>-->
-            <!--                <scope>test</scope>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework</groupId>-->
-            <!--                <artifactId>spring-framework-bom</artifactId>-->
-            <!--                <version>5.2.9.RELEASE</version>-->
-            <!--                <type>pom</type>-->
-            <!--                <scope>import</scope>-->
-            <!--            </dependency>-->
+            <dependency>
+                <groupId>ua.com.gfalcon</groupId>
+                <artifactId>financier-protocol</artifactId>
+                <version>1.0.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -167,22 +141,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--            <dependency>-->
-            <!--                <groupId>net.bytebuddy</groupId>-->
-            <!--                <artifactId>byte-buddy</artifactId>-->
-            <!--                <version>1.10.6</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.flywaydb</groupId>-->
-            <!--                <artifactId>flyway-core</artifactId>-->
-            <!--                <version>6.1.0</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.dbunit</groupId>-->
-            <!--                <artifactId>dbunit</artifactId>-->
-            <!--                <version>2.6.0</version>-->
-            <!--                <scope>test</scope>-->
-            <!--            </dependency>-->
             <dependency>
                 <!--        https://github.com/Pragmatists/JUnitParams-->
                 <groupId>pl.pragmatists</groupId>
@@ -190,114 +148,17 @@
                 <version>1.1.1</version>
                 <scope>test</scope>
             </dependency>
-
-            <!--            <dependency>-->
-            <!--                <groupId>org.postgresql</groupId>-->
-            <!--                <artifactId>postgresql</artifactId>-->
-            <!--                <version>42.2.9</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>com.h2database</groupId>-->
-            <!--                <artifactId>h2</artifactId>-->
-            <!--                <version>1.4.199</version>-->
-            <!--                <scope>test</scope>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>com.zaxxer</groupId>-->
-            <!--                <artifactId>HikariCP</artifactId>-->
-            <!--                <version>3.4.0</version>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>com.fasterxml.jackson.datatype</groupId>-->
-            <!--                <artifactId>jackson-datatype-jsr310</artifactId>-->
-            <!--                <version>2.9.9</version>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.security</groupId>-->
-            <!--                <artifactId>spring-security-web</artifactId>-->
-            <!--                <version>${spring-security.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.security</groupId>-->
-            <!--                <artifactId>spring-security-config</artifactId>-->
-            <!--                <version>${spring-security.version}</version>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.security</groupId>-->
-            <!--                <artifactId>spring-security-crypto</artifactId>-->
-            <!--                <version>${spring-security.version}</version>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.security</groupId>-->
-            <!--                <artifactId>spring-security-jwt</artifactId>-->
-            <!--                <version>1.1.0.RELEASE</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.security</groupId>-->
-            <!--                <artifactId>spring-security-test</artifactId>-->
-            <!--                <version>${spring-security.version}</version>-->
-            <!--                <scope>test</scope>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>javax.money</groupId>-->
-            <!--                <artifactId>money-api</artifactId>-->
-            <!--&lt;!&ndash;                <version>1.0.3</version>&ndash;&gt;-->
-            <!--            </dependency>-->
             <dependency>
                 <groupId>org.javamoney</groupId>
                 <artifactId>moneta</artifactId>
                 <version>1.3</version>
                 <type>pom</type>
             </dependency>
-
-
-            <!--            <dependency>-->
-            <!--                <groupId>javax.servlet</groupId>-->
-            <!--                <artifactId>javax.servlet-api</artifactId>-->
-            <!--                <version>4.0.1</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.tomcat.embed</groupId>-->
-            <!--                <artifactId>tomcat-embed-core</artifactId>-->
-            <!--                <version>${tomcat.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.tomcat.embed</groupId>-->
-            <!--                <artifactId>tomcat-embed-jasper</artifactId>-->
-            <!--                <version>${tomcat.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.tomcat</groupId>-->
-            <!--                <artifactId>tomcat-catalina</artifactId>-->
-            <!--                <version>${tomcat.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.tomcat</groupId>-->
-            <!--                <artifactId>tomcat-jasper</artifactId>-->
-            <!--                <version>${tomcat.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.tomcat</groupId>-->
-            <!--                <artifactId>tomcat-jasper-el</artifactId>-->
-            <!--                <version>${tomcat.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.tomcat</groupId>-->
-            <!--                <artifactId>tomcat-jsp-api</artifactId>-->
-            <!--                <version>${tomcat.version}</version>-->
-            <!--            </dependency>-->
-
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>1.5.10</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -306,15 +167,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework</groupId>-->
-        <!--            <artifactId>spring-context-support</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework</groupId>-->
-        <!--            <artifactId>spring-test</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -350,29 +202,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--            <plugin>-->
-            <!--                &lt;!&ndash;        https://devcenter.heroku.com/articles/create-a-java-web-application-using-embedded-tomcat&ndash;&gt;-->
-            <!--                <groupId>org.codehaus.mojo</groupId>-->
-            <!--                <artifactId>appassembler-maven-plugin</artifactId>-->
-            <!--                <version>2.1.0</version>-->
-            <!--                <configuration>-->
-            <!--                    <assembleDirectory>target</assembleDirectory>-->
-            <!--                    <programs>-->
-            <!--                        <program>-->
-            <!--                            <mainClass>ua.com.gfalcon.tomcat.launch.Main</mainClass>-->
-            <!--                            <name>webapp</name>-->
-            <!--                        </program>-->
-            <!--                    </programs>-->
-            <!--                </configuration>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <phase>package</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>assemble</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -437,25 +266,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>io.swagger.codegen.v3</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>3.0.27</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/swagger/openapi.json</inputSpec>
-                            <language>typescript-angular</language>
-                            <!--                            <configOptions>-->
-                            <!--                                <sourceFolder>src/gen/java/main</sourceFolder>-->
-                            <!--                            </configOptions>-->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
 
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -474,22 +284,6 @@
                                 </includes>
                                 <followSymlinks>false</followSymlinks>
                             </fileset>
-                            <!--                            <fileset>-->
-                            <!--                                <directory>front/node</directory>-->
-                            <!--                                <includes>-->
-                            <!--                                    <include>**/*</include>-->
-                            <!--                                    <include>**</include>-->
-                            <!--                                </includes>-->
-                            <!--                                <followSymlinks>false</followSymlinks>-->
-                            <!--                            </fileset>-->
-                            <!--                            <fileset>-->
-                            <!--                                <directory>front/node_modules</directory>-->
-                            <!--                                <includes>-->
-                            <!--                                    <include>**/*</include>-->
-                            <!--                                    <include>**</include>-->
-                            <!--                                </includes>-->
-                            <!--                                <followSymlinks>false</followSymlinks>-->
-                            <!--                            </fileset>-->
                         </filesets>
                     </configuration>
                 </plugin>

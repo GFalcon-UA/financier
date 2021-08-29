@@ -26,7 +26,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>financier-front</artifactId>
-  <name>front</name>
+  <version>${project.parent.version}</version>
+  <description>WEB front-end</description>
 
   <profiles>
     <profile>
