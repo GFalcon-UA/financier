@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
+import lombok.extern.slf4j.Slf4j;
 import ua.com.gfalcon.financier.data.util.HibernateConfiguration;
 import ua.com.gfalcon.financier.data.util.HibernateXmlConfigLoader;
 
@@ -38,6 +39,7 @@ import ua.com.gfalcon.financier.data.util.HibernateXmlConfigLoader;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@Slf4j
 @Configuration
 public class PersistenceConfig {
 
@@ -60,7 +62,7 @@ public class PersistenceConfig {
             loader = new HibernateXmlConfigLoader(stream);
             return loader.parse();
         } catch (XMLStreamException | IOException e) {
-            e.printStackTrace();
+            log.error("Can not read hibernate config", e);
             return new HibernateConfiguration();
         }
     }
