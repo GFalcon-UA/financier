@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Objects;
 
+import javax.xml.XMLConstants;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -61,13 +62,22 @@ public abstract class XmlParser<T> {
     }
 
     protected static XMLStreamReader createReader(InputStream inputStream) throws XMLStreamException {
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = createXmlInputFactory();
         return inputFactory.createXMLStreamReader(inputStream);
     }
 
     protected static XMLStreamReader createReader(Reader streamReader) throws XMLStreamException {
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = createXmlInputFactory();
         return inputFactory.createXMLStreamReader(streamReader);
+    }
+
+    private static XMLInputFactory createXmlInputFactory() {
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE);
+        factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+        return factory;
     }
 
     /**

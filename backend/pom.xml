@@ -36,11 +36,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
-                <!--                <dependency>-->
-                <!--                    <groupId>ua.com.gfalcon</groupId>-->
-                <!--                    <artifactId>financier-front</artifactId>-->
-                <!--                    <scope>provided</scope>-->
-                <!--                </dependency>-->
+
             </dependencies>
             <build>
                 <plugins>
