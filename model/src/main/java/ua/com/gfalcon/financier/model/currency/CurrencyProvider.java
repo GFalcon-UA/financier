@@ -16,7 +16,7 @@
 
 package ua.com.gfalcon.financier.model.currency;
 
-import org.javamoney.moneta.internal.JDKCurrencyProvider;
+import org.javamoney.moneta.spi.JDKCurrencyProvider;
 
 /**
  * Currency provider.

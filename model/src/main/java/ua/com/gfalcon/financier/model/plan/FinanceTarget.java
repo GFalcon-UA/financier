@@ -28,6 +28,10 @@ import javax.money.convert.MonetaryConversions;
 
 import org.javamoney.moneta.Money;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import ua.com.gfalcon.financier.util.Builder;
 import ua.com.gfalcon.financier.util.DateUtils;
 
@@ -37,6 +41,10 @@ import ua.com.gfalcon.financier.util.DateUtils;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@Data
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
 public class FinanceTarget {
 
     private Money     amount;
@@ -48,17 +56,6 @@ public class FinanceTarget {
 
     private Money savedAmount; // FIXME: 25.07.21 transient
 
-    public Money getAmount() {
-        return amount;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getOptimisticDate() {
-        return optimisticDate;
-    }
 
     /**
      * Get amount of already saved money.
@@ -72,93 +69,12 @@ public class FinanceTarget {
         return savedAmount;
     }
 
-    public LocalDate getUntilDate() {
-        return untilDate;
-    }
-
     public Date getUntilDateAsDate() {
         return DateUtils.convertToDate(untilDate);
     }
 
-    public boolean isDelayable() {
-        return delayable;
-    }
-
-    public boolean isRegular() {
-        return regular;
-    }
-
-    public void setAmount(Money amount) {
-        this.amount = amount;
-    }
-
-    public void setDelayable(boolean delayable) {
-        this.delayable = delayable;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setOptimisticDate(LocalDate optimisticDate) {
-        this.optimisticDate = optimisticDate;
-    }
-
-    public void setRegular(boolean regular) {
-        this.regular = regular;
-    }
-
-    public void setSavedAmount(Money savedAmount) {
-        this.savedAmount = savedAmount;
-    }
-
-    public void setUntilDate(LocalDate untilDate) {
-        this.untilDate = untilDate;
-    }
-
     public void setUntilDate(Date untilDate) {
         this.untilDate = DateUtils.convertToLocalDate(untilDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAmount(), getUntilDate(), getName(), isRegular(), isDelayable(), getOptimisticDate());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof FinanceTarget)) {
-            return false;
-        }
-        FinanceTarget that = (FinanceTarget) o;
-        return isRegular() == that.isRegular() && isDelayable() == that.isDelayable() && getAmount().equals(
-                that.getAmount()) && getUntilDate().equals(that.getUntilDate()) && getName().equals(that.getName())
-                && Objects.equals(getOptimisticDate(), that.getOptimisticDate());
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("FinanceTarget{");
-        sb.append("amount=")
-                .append(amount);
-        sb.append(", untilDate=")
-                .append(untilDate);
-        sb.append(", name='")
-                .append(name)
-                .append('\'');
-        sb.append(", regular=")
-                .append(regular);
-        sb.append(", delayable=")
-                .append(delayable);
-        sb.append(", optimisticDate=")
-                .append(optimisticDate);
-        sb.append(", savedAmount=")
-                .append(savedAmount);
-        sb.append('}');
-        return sb.toString();
     }
 
     public static FinanceTargetBuilder builder() {

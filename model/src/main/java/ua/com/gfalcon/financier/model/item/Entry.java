@@ -18,21 +18,31 @@ package ua.com.gfalcon.financier.model.item;
 
 import org.javamoney.moneta.Money;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * Entry of finance plan.
  *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@ToString
+@EqualsAndHashCode
 public class Entry implements Item {
 
+    @Setter
     private String    name;
+    @Setter
     private Money     amount;
+    @Getter
     private EntryType type;
 
     @Override
     public Money getAmount() {
-        if (EntryType.INCOME.equals(type)) {
+        if (EntryType.INCOME.equals(getType())) {
             return amount;
         } else {
             return amount.multiply(-1);

@@ -64,7 +64,6 @@
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.9.1</version>
         <configuration>
           <nodeVersion>v12.16.2</nodeVersion>
         </configuration>

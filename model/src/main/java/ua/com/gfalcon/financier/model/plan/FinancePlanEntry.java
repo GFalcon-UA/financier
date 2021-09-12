@@ -24,6 +24,8 @@ import java.util.Objects;
 
 import org.javamoney.moneta.Money;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import ua.com.gfalcon.financier.model.currency.CurrencyCode;
 import ua.com.gfalcon.financier.util.Builder;
 import ua.com.gfalcon.financier.util.DateUtils;
@@ -34,6 +36,8 @@ import ua.com.gfalcon.financier.util.DateUtils;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@ToString
+@EqualsAndHashCode
 public class FinancePlanEntry {
 
     private Date                      date;
@@ -114,37 +118,6 @@ public class FinancePlanEntry {
 
     public void setTotal(Money total) {
         this.total = total;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDate(), getDetailedMoney(), getTotal());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof FinancePlanEntry)) {
-            return false;
-        }
-        FinancePlanEntry that = (FinancePlanEntry) o;
-        return getDate().equals(that.getDate()) && getDetailedMoney().equals(that.getDetailedMoney()) && Objects.equals(
-                getTotal(), that.getTotal());
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("FinancePlanEntry{");
-        sb.append("date=")
-                .append(date);
-        sb.append(", detailedMoney=")
-                .append(detailedMoney);
-        sb.append(", total=")
-                .append(total);
-        sb.append('}');
-        return sb.toString();
     }
 
     public static FinancePlanEntryBuilder builder() {

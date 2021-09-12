@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 
 import org.javamoney.moneta.Money;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import ua.com.gfalcon.financier.model.currency.CurrencyCode;
 
 
@@ -29,6 +32,9 @@ import ua.com.gfalcon.financier.model.currency.CurrencyCode;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@Data
+@ToString
+@EqualsAndHashCode
 public class Account {
     private String name;
     private String number;

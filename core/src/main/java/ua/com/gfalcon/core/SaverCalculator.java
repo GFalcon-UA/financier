@@ -28,9 +28,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.javamoney.moneta.Money;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
 import ua.com.gfalcon.financier.model.plan.FinancePlanEntry;
 import ua.com.gfalcon.financier.model.plan.FinanceTarget;
 import ua.com.gfalcon.financier.util.DateUtils;
@@ -41,9 +40,8 @@ import ua.com.gfalcon.financier.util.DateUtils;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@Slf4j
 public class SaverCalculator {
-
-    private static final Logger LOG = LoggerFactory.getLogger(SaverCalculator.class);
 
     private final List<FinanceTarget> targets;
     private final Money               availableMoney;
@@ -247,33 +245,33 @@ public class SaverCalculator {
 
         Money forSave;
         for (FinanceTarget target : regularTargets) {
-            LOG.debug("Start plan Target {}", target.getName());
+            log.debug("Start plan Target {}", target.getName());
 
             int months = Period.between(currentDate, target.getUntilDate())
                     .getMonths() + 1;
-            LOG.debug("{} month = {}", target.getName(), months);
+            log.debug("{} month = {}", target.getName(), months);
             forSave = (target.getAmount()
                     .subtract(target.getSavedAmount())).divide(months);
-            LOG.debug("{} forSave = {}", target.getName(), forSave);
-            LOG.debug("Start cycle per month for {}", target.getName());
+            log.debug("{} forSave = {}", target.getName(), forSave);
+            log.debug("Start cycle per month for {}", target.getName());
             for (int i = 0; i < months; i++) {
-                LOG.debug("  i = {}", i);
+                log.debug("  i = {}", i);
                 if (plan.isEmpty() || plan.size() <= i) {
-                    LOG.debug(" i = {}; The condition for create new entry is {}", i, "TRUE");
+                    log.debug(" i = {}; The condition for create new entry is {}", i, "TRUE");
                     LocalDate date = currentDate.plusMonths(i);
-                    LOG.debug("{} plan date = {}", target.getName(), date);
+                    log.debug("{} plan date = {}", target.getName(), date);
                     Map<FinanceTarget, Money> byTargets = new HashMap<>();
                     byTargets.put(target, forSave);
                     FinancePlanEntry entry = new FinancePlanEntry(DateUtils.convertToDate(date), byTargets);
-                    LOG.debug("Created entry {}", entry);
+                    log.debug("Created entry {}", entry);
                     plan.add(entry);
                 } else {
-                    LOG.debug(" i = {}; The condition for create new entry is {}", i, "FALSE");
-                    LOG.debug("Try to get item {} from plan with size {}", i, plan.size());
+                    log.debug(" i = {}; The condition for create new entry is {}", i, "FALSE");
+                    log.debug("Try to get item {} from plan with size {}", i, plan.size());
                     FinancePlanEntry entry = plan.get(i);
-                    LOG.debug("Existing entry is got");
+                    log.debug("Existing entry is got");
                     entry.addDetailedMoney(target, forSave);
-                    LOG.debug("Target {} was added in existing entry", target.getName());
+                    log.debug("Target {} was added in existing entry", target.getName());
                 }
             }
         }

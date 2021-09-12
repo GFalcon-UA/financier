@@ -24,6 +24,10 @@ import javax.money.Monetary;
 
 import org.javamoney.moneta.Money;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import ua.com.gfalcon.financier.model.currency.CurrencyProvider;
 
 /**
@@ -32,9 +36,13 @@ import ua.com.gfalcon.financier.model.currency.CurrencyProvider;
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@ToString
+@EqualsAndHashCode
 public class Group implements Item {
 
+    @Getter
     private List<Item> items;
+    @Setter
     private String     name;
 
     @Override

@@ -16,12 +16,19 @@
 
 package ua.com.gfalcon.financier.model.account;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * Bank entity.
  *
  * @author Oleksii Khalikov
  * @since 1.0.0
  */
+@Data
+@ToString
+@EqualsAndHashCode
 public class Bank {
 
     private String name;
