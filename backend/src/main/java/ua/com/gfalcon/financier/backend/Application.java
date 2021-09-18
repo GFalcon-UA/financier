@@ -19,6 +19,8 @@ package ua.com.gfalcon.financier.backend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import lombok.Generated;
+
 /**
  * Main class for running back-end side application.
  *
@@ -27,6 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
 
+    @Generated
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

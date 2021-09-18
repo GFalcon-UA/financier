@@ -275,6 +275,10 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
                     <append>true</append>
+                    <excludes>
+                        <exclude>ua/com/gfalcon/**/config/*</exclude>
+                        <exclude>ua/com/gfalcon/**/*DTO.*</exclude>
+                    </excludes>
                 </configuration>
                 <executions>
                     <execution>
