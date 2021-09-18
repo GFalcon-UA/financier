@@ -278,7 +278,7 @@
                     <excludes>
                         <exclude>**/config/*</exclude>
                         <exclude>**/*DTO.*</exclude>
-                        <exclude>ua.com.gfalcon.financier.model.*</exclude>
+                        <exclude>**/ua/com/gfalcon/financier/model/**/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
