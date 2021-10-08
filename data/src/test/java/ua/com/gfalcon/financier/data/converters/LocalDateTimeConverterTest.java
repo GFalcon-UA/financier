@@ -45,7 +45,7 @@ public class LocalDateTimeConverterTest {
 
     @Test
     public void convertToEntityAttribute() {
-        assertNull(self.convertToEntityAttribute(new Timestamp(LocalDateTime.now()
+        assertNotNull(self.convertToEntityAttribute(new Timestamp(LocalDateTime.now()
                 .toEpochSecond(ZoneOffset.UTC))));
     }
 

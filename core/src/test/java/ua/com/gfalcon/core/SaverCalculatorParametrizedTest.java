@@ -29,7 +29,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -44,7 +43,6 @@ import ua.com.gfalcon.financier.model.plan.FinanceTarget;
 /**
  * Tests of {@link SaverCalculator}.
  */
-@Ignore
 @RunWith(Parameterized.class)
 public class SaverCalculatorParametrizedTest {
 
@@ -71,7 +69,7 @@ public class SaverCalculatorParametrizedTest {
     public static Iterable<Object[]> data() {
         return Arrays.asList(twoTargetsWithTheSameEndDateAndEnoughMoney(), twoTargetsWithDifferentDateAndEnoughMoney(),
                 twoTargetsWithDifferentDateAndLotOfMoney(), twoTargetsWithDifferentDateAndNotEnoughMoney(),
-                twoRegularTargets(), fullCase());
+                twoRegularTargets());
     }
 
     @Test

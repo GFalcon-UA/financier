@@ -67,16 +67,8 @@ public class SaverCalculator {
         initNewPlan();
     }
 
-    public SaverCalculator(Money availableMoney, List<FinanceTarget> targets, Date currentDate) {
-        this(availableMoney, targets, DateUtils.convertToLocalDate(currentDate));
-    }
-
     public List<FinancePlanEntry> getPlan() {
         return this.plan;
-    }
-
-    public static List<FinancePlanEntry> calculate(Money availableMoney, List<FinanceTarget> targets) {
-        return calculate(availableMoney, targets, LocalDate.now());
     }
 
     /**
