@@ -20,9 +20,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.javamoney.moneta.Money;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ua.com.gfalcon.financier.model.currency.CurrencyCode;
 import ua.com.gfalcon.financier.model.plan.FinancePlanEntry;
@@ -32,10 +35,10 @@ import ua.com.gfalcon.financier.model.plan.FinanceTarget;
 /**
  * Test of FinancePlanEntry.
  */
-public class FinancePlanEntryTest {
+class FinancePlanEntryTest {
 
     @Test
-    public void createWithTargetListTest() {
+    void createWithTargetListTest() {
         int amount1 = (int) (Math.random() * 10000);
         int amount2 = (int) (Math.random() * 10000);
         Map<FinanceTarget, Money> details = new HashMap<>();
@@ -48,24 +51,24 @@ public class FinancePlanEntryTest {
         FinancePlanEntry entry = new FinancePlanEntry(new Date(), details);
 
         checkNotNull(entry);
-        Assert.assertTrue(entry.isDetailed());
-        Assert.assertEquals(Money.of(amount1 + amount2, CurrencyCode.USD.name()), entry.getTotal());
+        assertTrue(entry.isDetailed());
+        assertEquals(Money.of(amount1 + amount2, CurrencyCode.USD.name()), entry.getTotal());
     }
 
     @Test
-    public void createWithoutTargetListTest() {
+    void createWithoutTargetListTest() {
         int amount = (int) (Math.random() * 10000);
         FinancePlanEntry entry = new FinancePlanEntry(new Date(), Money.of(amount, CurrencyCode.USD.name()));
 
         checkNotNull(entry);
-        Assert.assertFalse(entry.isDetailed());
-        Assert.assertEquals(Money.of(amount, CurrencyCode.USD.name()), entry.getTotal());
+        assertFalse(entry.isDetailed());
+        assertEquals(Money.of(amount, CurrencyCode.USD.name()), entry.getTotal());
     }
 
     private void checkNotNull(FinancePlanEntry entry) {
-        Assert.assertNotNull(entry.getDate());
-        Assert.assertNotNull(entry.getDetailedMoney());
-        Assert.assertNotNull(entry.getTotal());
+        assertNotNull(entry.getDate());
+        assertNotNull(entry.getDetailedMoney());
+        assertNotNull(entry.getTotal());
     }
 
 }

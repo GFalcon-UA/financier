@@ -16,18 +16,18 @@
 
 package ua.com.gfalcon.financier.backend.config;
 
-import static org.junit.Assert.assertNotNull;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests of {@link OpenApiConfig}.
  *
  * @author Oleksii Khalikov
  */
-public class OpenApiConfigTest {
+class OpenApiConfigTest {
 
     @Test
-    public void createOpenApiBean() {
+    void createOpenApiBean() {
         assertNotNull((new OpenApiConfig()).openApi());
     }
 

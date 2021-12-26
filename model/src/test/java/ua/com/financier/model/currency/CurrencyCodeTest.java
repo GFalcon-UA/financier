@@ -17,54 +17,49 @@
 package ua.com.financier.model.currency;
 
 import java.util.Currency;
+import java.util.stream.Stream;
 
 import javax.money.Monetary;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import ua.com.gfalcon.financier.model.currency.CurrencyCode;
 import ua.com.gfalcon.financier.model.currency.CurrencyProvider;
 
 /**
  * Tests of correct using of CurrencyCode.
  */
-@RunWith(JUnitParamsRunner.class)
-public class CurrencyCodeTest {
+class CurrencyCodeTest {
 
-    @SuppressWarnings("unused")
-    private Object[] getCurrencyCodes() {
+    private static Stream<Arguments> getCurrencyCodes() {
         return Currency.getAvailableCurrencies()
                 .parallelStream()
                 .map(Currency::getCurrencyCode)
-                .toArray();
+                .map(Arguments::of);
+    }
+    
+    @ParameterizedTest
+    @EnumSource(CurrencyCode.class)
+    void correctCurrencyEnumTest(CurrencyCode currencyCode) {
+        assertNotNull(Currency.getInstance(currencyCode.name()),
+                String.format("Currency code %s is invalid", currencyCode.name()));
     }
 
-    @SuppressWarnings("unused")
-    private Object[] getEnumValues() {
-        return CurrencyCode.values();
+    @ParameterizedTest
+    @MethodSource("getCurrencyCodes")
+    void currencyProviderTest(String code) {
+        assertTrue(Monetary.isCurrencyAvailable(code, CurrencyProvider.DEFAULT));
     }
 
-    @Test
-    @Parameters(method = "getEnumValues")
-    public void correctCurrencyEnumTest(CurrencyCode currencyCode) {
-        Assert.assertNotNull(String.format("Currency code %s is invalid", currencyCode.name()),
-                Currency.getInstance(currencyCode.name()));
-    }
-
-    @Test
-    @Parameters(method = "getCurrencyCodes")
-    public void currencyProviderTest(String code) {
-        Assert.assertTrue(Monetary.isCurrencyAvailable(code, CurrencyProvider.DEFAULT));
-    }
-
-    @Test
-    @Parameters(method = "getCurrencyCodes")
-    public void fillingCurrencyEnumTest(String code) {
-        Assert.assertNotNull(String.format("Currency code %s is not present", code), CurrencyCode.valueOf(code));
+    @ParameterizedTest
+    @MethodSource("getCurrencyCodes")
+    void fillingCurrencyEnumTest(String code) {
+        assertNotNull(CurrencyCode.valueOf(code), String.format("Currency code %s is not present", code));
     }
 
 }

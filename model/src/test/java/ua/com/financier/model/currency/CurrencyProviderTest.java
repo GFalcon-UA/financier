@@ -18,8 +18,8 @@ package ua.com.financier.model.currency;
 
 import javax.money.Monetary;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import ua.com.gfalcon.financier.model.currency.CurrencyProvider;
 
@@ -30,8 +30,8 @@ public class CurrencyProviderTest {
 
     @Test
     public void defaultCurrencyProviderTest() {
-        Assert.assertTrue("Wrong default currency provider name", Monetary.getCurrencyProviderNames()
-                .contains(CurrencyProvider.DEFAULT));
+        Assertions.assertTrue(Monetary.getCurrencyProviderNames()
+                .contains(CurrencyProvider.DEFAULT), "Wrong default currency provider name");
     }
 
 }

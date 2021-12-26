@@ -41,14 +41,6 @@
         </dependency>
         <dependency>
             <groupId>ua.com.gfalcon</groupId>
-            <artifactId>financier-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ua.com.gfalcon</groupId>
-            <artifactId>financier-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ua.com.gfalcon</groupId>
             <artifactId>util</artifactId>
         </dependency>
     </dependencies>

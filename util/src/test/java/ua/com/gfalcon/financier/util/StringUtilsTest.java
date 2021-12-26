@@ -16,28 +16,29 @@
 
 package ua.com.gfalcon.financier.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 /**
  * String utils test cases.
  *
  * @author Oleksii Khalikov
  */
-public class StringUtilsTest {
+class StringUtilsTest {
 
     @Test
-    public void isNotBlankWhenEmptyString() {
-        Assert.assertFalse(StringUtils.isNotBlank(""));
+    void isNotBlankWhenEmptyString() {
+        assertFalse(StringUtils.isNotBlank(""));
     }
 
     @Test
-    public void isNotBlankWhenNull() {
-        Assert.assertFalse(StringUtils.isNotBlank(null));
+    void isNotBlankWhenNull() {
+        assertFalse(StringUtils.isNotBlank(null));
     }
 
     @Test
-    public void isNotBlankWithAnyString() {
-        Assert.assertTrue(StringUtils.isNotBlank("test"));
+    void isNotBlankWithAnyString() {
+        assertTrue(StringUtils.isNotBlank("test"));
     }
 }

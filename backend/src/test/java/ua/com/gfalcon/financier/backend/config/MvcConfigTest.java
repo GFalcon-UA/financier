@@ -16,8 +16,8 @@
 
 package ua.com.gfalcon.financier.backend.config;
 
-import static org.junit.Assert.assertNotNull;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -25,10 +25,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author Oleksii Khalikov
  */
-public class MvcConfigTest {
+class MvcConfigTest {
 
     @Test
-    public void corsConfigurer() {
+    void corsConfigurer() {
         WebMvcConfigurer configurer = (new MvcConfig()).corsConfigurer();
         assertNotNull(configurer);
     }

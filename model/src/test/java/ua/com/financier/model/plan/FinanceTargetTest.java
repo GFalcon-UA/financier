@@ -18,9 +18,10 @@ package ua.com.financier.model.plan;
 
 import javax.money.Monetary;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 import org.javamoney.moneta.Money;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ua.com.gfalcon.financier.model.plan.FinanceTarget;
 
@@ -28,22 +29,22 @@ import ua.com.gfalcon.financier.model.plan.FinanceTarget;
 /**
  * Test {@link FinanceTarget}.
  */
-public class FinanceTargetTest {
+class FinanceTargetTest {
 
 
     @Test
-    public void getAmountInTest() {
+    void getAmountInTest() {
         FinanceTarget target = new FinanceTarget();
         int usdAmount = (int) (Math.random() * 1000);
         target.setAmount(Money.of(usdAmount, "USD"));
 
         Money eur = target.getAmountIn(Monetary.getCurrency("EUR"));
 
-        Assert.assertEquals("Wrong first amount set", usdAmount, target.getAmount()
+        assertEquals("Wrong first amount set", usdAmount, target.getAmount()
                 .getNumberStripped()
                 .intValue());
 
-        Assert.assertNotNull(eur);
+        assertNotNull(eur);
     }
 
 }
