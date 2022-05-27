@@ -38,6 +38,7 @@
         <module>eureka</module>
         <module>admin</module>
 <!--        <module>zool</module>-->
+        <module>authorization</module>
     </modules>
 
     <groupId>ua.com.gfalcon</groupId>
@@ -93,7 +94,7 @@
             ${project.build.directory}/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
 
-        <spring-boot.version>2.6.6</spring-boot.version> <!-- org.springframework.boot : spring-boot-starter-parent -->
+        <spring-boot.version>2.6.8</spring-boot.version> <!-- org.springframework.boot : spring-boot-starter-parent -->
 
         <hibernate.version>5.6.3.Final</hibernate.version> <!-- org.hibernate : hibernate-agroal -->
         <moneta.version>1.4.2</moneta.version> <!-- org.javamoney : moneta -->
@@ -445,6 +446,10 @@
                     <skipDockerBuild>true</skipDockerBuild>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -462,6 +467,13 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <configuration>
                         <excludes>
                             <exclude>
