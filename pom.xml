@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
+  ~   Copyright 2016-2022 Oleksii V. KHALIKOV
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -39,6 +39,8 @@
         <module>admin</module>
 <!--        <module>zool</module>-->
         <module>authorization</module>
+        <module>ibkr-web-api</module>
+<!--        <module>ibkr-rest-model</module>-->
     </modules>
 
     <groupId>ua.com.gfalcon</groupId>
