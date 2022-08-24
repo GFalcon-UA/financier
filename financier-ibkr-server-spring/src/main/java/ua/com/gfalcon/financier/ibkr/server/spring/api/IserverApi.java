@@ -39,10 +39,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import ua.com.gfalcon.financier.ibkr.model.AccountPnL;
 import ua.com.gfalcon.financier.ibkr.model.AlertRequest;
 import ua.com.gfalcon.financier.ibkr.model.AlertResponse;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
@@ -52,6 +54,7 @@ import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
 import ua.com.gfalcon.financier.ibkr.model.SecdefInfo;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
+import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
 import ua.com.gfalcon.financier.ibkr.model.Symbol;
 import ua.com.gfalcon.financier.ibkr.model.SystemError;
 import ua.com.gfalcon.financier.ibkr.model.Trade;
@@ -301,19 +304,19 @@ public interface IserverApi {
     @RequestMapping(value = "/iserver/account/pnl/partitioned",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Object> iserverAccountPnlPartitionedGet();
+    ResponseEntity<AccountPnL> iserverAccountPnlPartitionedGet();
 
 
     @ApiOperation(value = "Switch Account",
             nickname = "iserverAccountPost",
             notes = "If an user has multiple accounts, and user wants to get orders, trades, etc. of an account other than currently selected account, then user can update the currently selected account using this API and then can fetch required information for the newly updated account.",
-            response = Object.class,
+            response = SwitchAccount.class,
             tags = {"Account",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "an object containing updated account ID",
-            response = Object.class)})
+            response = SwitchAccount.class)})
     @RequestMapping(value = "/iserver/account", produces = {"application/json"}, method = RequestMethod.POST)
-    ResponseEntity<Object> iserverAccountPost(
+    ResponseEntity<SwitchAccount> iserverAccountPost(
             @ApiParam(value = "account id", required = true) @Valid @RequestBody SetAccount body);
 
 
@@ -334,11 +337,11 @@ public interface IserverApi {
     @ApiOperation(value = "Brokerage Accounts",
             nickname = "iserverAccountsGet",
             notes = "Returns a list of accounts the user has trading access to, their respective aliases and the currently selected account. Note this endpoint must be called before modifying an order or querying open orders.",
-            response = Object.class,
+            response = BrokerageAccount.class,
             tags = {"Account",})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "An array of accounts", response = Object.class)})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "An array of accounts", response = BrokerageAccount.class)})
     @RequestMapping(value = "/iserver/accounts", produces = {"application/json"}, method = RequestMethod.GET)
-    ResponseEntity<Object> iserverAccountsGet();
+    ResponseEntity<BrokerageAccount> iserverAccountsGet();
 
 
     @ApiOperation(value = "Authentication Status",

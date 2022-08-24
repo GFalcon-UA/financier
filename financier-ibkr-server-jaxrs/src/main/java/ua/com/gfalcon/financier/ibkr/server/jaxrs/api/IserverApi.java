@@ -29,10 +29,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import io.swagger.annotations.ApiParam;
+import ua.com.gfalcon.financier.ibkr.model.AccountPnL;
 import ua.com.gfalcon.financier.ibkr.model.AlertRequest;
 import ua.com.gfalcon.financier.ibkr.model.AlertResponse;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
@@ -42,6 +44,7 @@ import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
 import ua.com.gfalcon.financier.ibkr.model.SecdefInfo;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
+import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
 import ua.com.gfalcon.financier.ibkr.model.Symbol;
 import ua.com.gfalcon.financier.ibkr.model.SystemError;
 import ua.com.gfalcon.financier.ibkr.model.Trade;
@@ -360,11 +363,11 @@ public class IserverApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "PnL for the selected account",
             notes = "Returns an object containing PnL for the selected account and its models (if any). To receive streaming PnL the endpoint /ws can be used. Refer to [Streaming WebSocket Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html) for details. ",
-            response = Object.class,
+            response = AccountPnL.class,
             tags = {"PnL", "Account",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "An object containing account and model(s) pnl",
-            response = Object.class)})
+            response = AccountPnL.class)})
     public Response iserverAccountPnlPartitionedGet(@Context SecurityContext securityContext) throws NotFoundException {
         return delegate.iserverAccountPnlPartitionedGet(securityContext);
     }
@@ -375,11 +378,11 @@ public class IserverApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Switch Account",
             notes = "If an user has multiple accounts, and user wants to get orders, trades, etc. of an account other than currently selected account, then user can update the currently selected account using this API and then can fetch required information for the newly updated account.",
-            response = Object.class,
+            response = SwitchAccount.class,
             tags = {"Account",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "an object containing updated account ID",
-            response = Object.class)})
+            response = SwitchAccount.class)})
     public Response iserverAccountPost(@ApiParam(value = "account id", required = true) SetAccount body,
             @Context SecurityContext securityContext) throws NotFoundException {
         return delegate.iserverAccountPost(body, securityContext);
@@ -408,11 +411,11 @@ public class IserverApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Brokerage Accounts",
             notes = "Returns a list of accounts the user has trading access to, their respective aliases and the currently selected account. Note this endpoint must be called before modifying an order or querying open orders.",
-            response = Object.class,
+            response = BrokerageAccount.class,
             tags = {"Account",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "An array of accounts",
-            response = Object.class)})
+            response = BrokerageAccount.class)})
     public Response iserverAccountsGet(@Context SecurityContext securityContext) throws NotFoundException {
         return delegate.iserverAccountsGet(securityContext);
     }

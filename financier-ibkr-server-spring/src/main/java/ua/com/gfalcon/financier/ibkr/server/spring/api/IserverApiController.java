@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.rowset.BaseRowSet;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -35,10 +36,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
+import ua.com.gfalcon.financier.ibkr.model.AccountPnL;
 import ua.com.gfalcon.financier.ibkr.model.AlertRequest;
 import ua.com.gfalcon.financier.ibkr.model.AlertResponse;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
@@ -48,6 +51,7 @@ import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
 import ua.com.gfalcon.financier.ibkr.model.SecdefInfo;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
+import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
 import ua.com.gfalcon.financier.ibkr.model.Symbol;
 import ua.com.gfalcon.financier.ibkr.model.Trade;
 
@@ -329,37 +333,37 @@ public class IserverApiController implements IserverApi {
         return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> iserverAccountPnlPartitionedGet() {
+    public ResponseEntity<AccountPnL> iserverAccountPnlPartitionedGet() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<AccountPnL>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", AccountPnL.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<AccountPnL>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<AccountPnL>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> iserverAccountPost(
+    public ResponseEntity<SwitchAccount> iserverAccountPost(
             @ApiParam(value = "account id", required = true) @Valid @RequestBody SetAccount body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<SwitchAccount>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", SwitchAccount.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<SwitchAccount>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<SwitchAccount>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<List<Trade>> iserverAccountTradesGet() {
@@ -377,20 +381,20 @@ public class IserverApiController implements IserverApi {
         return new ResponseEntity<List<Trade>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> iserverAccountsGet() {
+    public ResponseEntity<BrokerageAccount> iserverAccountsGet() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<BrokerageAccount>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", BrokerageAccount.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<BrokerageAccount>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<BrokerageAccount>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<AuthStatus> iserverAuthStatusPost() {

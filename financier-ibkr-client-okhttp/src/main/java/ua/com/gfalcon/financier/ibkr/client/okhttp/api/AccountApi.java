@@ -47,8 +47,13 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.Pair;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
 import ua.com.gfalcon.financier.ibkr.model.Account;
+import ua.com.gfalcon.financier.ibkr.model.AccountLedger;
+import ua.com.gfalcon.financier.ibkr.model.AccountPnL;
+import ua.com.gfalcon.financier.ibkr.model.AccountSummary;
 import ua.com.gfalcon.financier.ibkr.model.Accounts;
+import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
+import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
 
 public class AccountApi {
     private ApiClient apiClient;
@@ -78,8 +83,8 @@ public class AccountApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object iserverAccountPnlPartitionedGet() throws ApiException {
-        ApiResponse<Object> resp = iserverAccountPnlPartitionedGetWithHttpInfo();
+    public AccountPnL iserverAccountPnlPartitionedGet() throws ApiException {
+        ApiResponse<AccountPnL> resp = iserverAccountPnlPartitionedGetWithHttpInfo();
         return resp.getData();
     }
 
@@ -94,7 +99,7 @@ public class AccountApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call iserverAccountPnlPartitionedGetAsync(
-            final ApiCallback<Object> callback) throws ApiException {
+            final ApiCallback<AccountPnL> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -117,7 +122,7 @@ public class AccountApi {
 
         com.squareup.okhttp.Call call = iserverAccountPnlPartitionedGetValidateBeforeCall(progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<AccountPnL>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -196,9 +201,9 @@ public class AccountApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> iserverAccountPnlPartitionedGetWithHttpInfo() throws ApiException {
+    public ApiResponse<AccountPnL> iserverAccountPnlPartitionedGetWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = iserverAccountPnlPartitionedGetValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<AccountPnL>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -213,8 +218,8 @@ public class AccountApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object iserverAccountPost(SetAccount body) throws ApiException {
-        ApiResponse<Object> resp = iserverAccountPostWithHttpInfo(body);
+    public SwitchAccount iserverAccountPost(SetAccount body) throws ApiException {
+        ApiResponse<SwitchAccount> resp = iserverAccountPostWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -230,7 +235,7 @@ public class AccountApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call iserverAccountPostAsync(SetAccount body,
-            final ApiCallback<Object> callback) throws ApiException {
+            final ApiCallback<SwitchAccount> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -253,7 +258,7 @@ public class AccountApi {
 
         com.squareup.okhttp.Call call = iserverAccountPostValidateBeforeCall(body, progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<SwitchAccount>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -339,9 +344,9 @@ public class AccountApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> iserverAccountPostWithHttpInfo(SetAccount body) throws ApiException {
+    public ApiResponse<SwitchAccount> iserverAccountPostWithHttpInfo(SetAccount body) throws ApiException {
         com.squareup.okhttp.Call call = iserverAccountPostValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<SwitchAccount>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -354,8 +359,8 @@ public class AccountApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object iserverAccountsGet() throws ApiException {
-        ApiResponse<Object> resp = iserverAccountsGetWithHttpInfo();
+    public BrokerageAccount iserverAccountsGet() throws ApiException {
+        ApiResponse<BrokerageAccount> resp = iserverAccountsGetWithHttpInfo();
         return resp.getData();
     }
 
@@ -368,7 +373,7 @@ public class AccountApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call iserverAccountsGetAsync(final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call iserverAccountsGetAsync(final ApiCallback<BrokerageAccount> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -390,7 +395,7 @@ public class AccountApi {
         }
 
         com.squareup.okhttp.Call call = iserverAccountsGetValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<BrokerageAccount>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -467,9 +472,9 @@ public class AccountApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> iserverAccountsGetWithHttpInfo() throws ApiException {
+    public ApiResponse<BrokerageAccount> iserverAccountsGetWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = iserverAccountsGetValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<BrokerageAccount>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -485,8 +490,8 @@ public class AccountApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object portfolioAccountIdLedgerGet(String accountId) throws ApiException {
-        ApiResponse<Object> resp = portfolioAccountIdLedgerGetWithHttpInfo(accountId);
+    public AccountLedger portfolioAccountIdLedgerGet(String accountId) throws ApiException {
+        ApiResponse<AccountLedger> resp = portfolioAccountIdLedgerGetWithHttpInfo(accountId);
         return resp.getData();
     }
 
@@ -503,7 +508,7 @@ public class AccountApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call portfolioAccountIdLedgerGetAsync(String accountId,
-            final ApiCallback<Object> callback) throws ApiException {
+            final ApiCallback<AccountLedger> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -526,7 +531,7 @@ public class AccountApi {
 
         com.squareup.okhttp.Call call = portfolioAccountIdLedgerGetValidateBeforeCall(accountId, progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<AccountLedger>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -616,9 +621,9 @@ public class AccountApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> portfolioAccountIdLedgerGetWithHttpInfo(String accountId) throws ApiException {
+    public ApiResponse<AccountLedger> portfolioAccountIdLedgerGetWithHttpInfo(String accountId) throws ApiException {
         com.squareup.okhttp.Call call = portfolioAccountIdLedgerGetValidateBeforeCall(accountId, null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<AccountLedger>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -776,8 +781,8 @@ public class AccountApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object portfolioAccountIdSummaryGet(String accountId) throws ApiException {
-        ApiResponse<Object> resp = portfolioAccountIdSummaryGetWithHttpInfo(accountId);
+    public AccountSummary portfolioAccountIdSummaryGet(String accountId) throws ApiException {
+        ApiResponse<AccountSummary> resp = portfolioAccountIdSummaryGetWithHttpInfo(accountId);
         return resp.getData();
     }
 
@@ -793,7 +798,7 @@ public class AccountApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call portfolioAccountIdSummaryGetAsync(String accountId,
-            final ApiCallback<Object> callback) throws ApiException {
+            final ApiCallback<AccountSummary> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -816,7 +821,7 @@ public class AccountApi {
 
         com.squareup.okhttp.Call call = portfolioAccountIdSummaryGetValidateBeforeCall(accountId, progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<AccountSummary>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -905,9 +910,9 @@ public class AccountApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> portfolioAccountIdSummaryGetWithHttpInfo(String accountId) throws ApiException {
+    public ApiResponse<AccountSummary> portfolioAccountIdSummaryGetWithHttpInfo(String accountId) throws ApiException {
         com.squareup.okhttp.Call call = portfolioAccountIdSummaryGetValidateBeforeCall(accountId, null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<AccountSummary>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }

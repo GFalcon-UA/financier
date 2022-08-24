@@ -34,11 +34,11 @@
     </properties>
     <dependencies>
 
-        <dependency>
-            <groupId>ua.com.gfalcon</groupId>
-            <artifactId>ibkr-rest-model</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ua.com.gfalcon</groupId>-->
+<!--            <artifactId>ibkr-rest-model</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

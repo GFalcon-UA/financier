@@ -142,10 +142,12 @@ public class Account {
     @JsonProperty("covestor")
     @SerializedName("covestor")
     private Boolean covestor = null;
+
     @ApiModelProperty(value = "")
     @JsonProperty("parent")
     @SerializedName("parent")
-    private Object parent = null;
+    private ParentAccount parent = null;
+
     /**
      * Formatted \"accountId - accountAlias\"
      */
@@ -334,11 +336,11 @@ public class Account {
      * @return parent
      */
     @JsonProperty("parent")
-    public Object getParent() {
+    public ParentAccount getParent() {
         return parent;
     }
 
-    public void setParent(Object parent) {
+    public void setParent(ParentAccount parent) {
         this.parent = parent;
     }
 
@@ -549,7 +551,7 @@ public class Account {
         return faclient;
     }
 
-    public Account parent(Object parent) {
+    public Account parent(ParentAccount parent) {
         this.parent = parent;
         return this;
     }

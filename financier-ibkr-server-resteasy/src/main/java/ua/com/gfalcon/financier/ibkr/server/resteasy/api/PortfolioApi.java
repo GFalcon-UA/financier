@@ -29,6 +29,8 @@ import javax.ws.rs.core.SecurityContext;
 
 import io.swagger.annotations.ApiParam;
 import ua.com.gfalcon.financier.ibkr.model.Account;
+import ua.com.gfalcon.financier.ibkr.model.AccountLedger;
+import ua.com.gfalcon.financier.ibkr.model.AccountSummary;
 import ua.com.gfalcon.financier.ibkr.model.Accounts;
 import ua.com.gfalcon.financier.ibkr.model.Allocation;
 import ua.com.gfalcon.financier.ibkr.model.Body;
@@ -65,11 +67,11 @@ public class PortfolioApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Account Ledger",
             notes = "Information regarding settled cash, cash balances, etc. in the account's base currency and any other cash balances hold in other currencies.  /portfolio/accounts or /portfolio/subaccounts must be called prior to this endpoint. The list of supported currencies is available at https://www.interactivebrokers.com/en/index.php?f=3185.",
-            response = Object.class,
+            response = AccountLedger.class,
             tags = {"Account", "Portfolio",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "200 means successful",
-            response = Object.class)})
+            response = AccountLedger.class)})
     public Response portfolioAccountIdLedgerGet(@PathParam("accountId") String accountId,
             @Context SecurityContext securityContext) throws NotFoundException {
         return service.portfolioAccountIdLedgerGet(accountId, securityContext);
@@ -148,11 +150,11 @@ public class PortfolioApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Account Summary",
             notes = "Returns information about margin, cash balances and other information related to specified account. See also /portfolio/{accountId}/ledger. /portfolio/accounts or /portfolio/subaccounts must be called prior to this endpoint.",
-            response = Object.class,
+            response = AccountSummary.class,
             tags = {"Account", "Portfolio",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "returns an object containing account summary. The object contains multiple properties. A property is sufficed with -c if its provides commodity value, -s if it provides security value and -c if its UKL segment value",
-            response = Object.class)})
+            response = AccountSummary.class)})
     public Response portfolioAccountIdSummaryGet(@PathParam("accountId") String accountId,
             @Context SecurityContext securityContext) throws NotFoundException {
         return service.portfolioAccountIdSummaryGet(accountId, securityContext);

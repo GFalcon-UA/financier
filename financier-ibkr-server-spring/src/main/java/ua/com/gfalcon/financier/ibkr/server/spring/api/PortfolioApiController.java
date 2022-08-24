@@ -34,6 +34,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
 import ua.com.gfalcon.financier.ibkr.model.Account;
+import ua.com.gfalcon.financier.ibkr.model.AccountLedger;
+import ua.com.gfalcon.financier.ibkr.model.AccountSummary;
 import ua.com.gfalcon.financier.ibkr.model.Accounts;
 import ua.com.gfalcon.financier.ibkr.model.Allocation;
 import ua.com.gfalcon.financier.ibkr.model.Body;
@@ -72,21 +74,21 @@ public class PortfolioApiController implements PortfolioApi {
         return new ResponseEntity<Allocation>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> portfolioAccountIdLedgerGet(
+    public ResponseEntity<AccountLedger> portfolioAccountIdLedgerGet(
             @ApiParam(value = "account id", required = true) @PathVariable("accountId") String accountId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<AccountLedger>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", AccountLedger.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<AccountLedger>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<AccountLedger>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Accounts> portfolioAccountIdMetaGet(
@@ -166,21 +168,21 @@ public class PortfolioApiController implements PortfolioApi {
         return new ResponseEntity<Position>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> portfolioAccountIdSummaryGet(
+    public ResponseEntity<AccountSummary> portfolioAccountIdSummaryGet(
             @ApiParam(value = "account id", required = true) @PathVariable("accountId") String accountId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<AccountSummary>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", AccountSummary.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<AccountSummary>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<AccountSummary>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Accounts> portfolioAccountsGet() {

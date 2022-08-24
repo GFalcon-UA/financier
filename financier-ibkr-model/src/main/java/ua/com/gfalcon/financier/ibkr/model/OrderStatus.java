@@ -38,8 +38,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * contains all the details of an order
- **/
+ * Contains all the details of an order.
+ */
 @Validated
 @ApiModel(description = "contains all the details of an order")
 public class OrderStatus {

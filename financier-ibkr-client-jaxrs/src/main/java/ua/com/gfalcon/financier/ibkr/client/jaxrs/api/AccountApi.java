@@ -27,8 +27,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ua.com.gfalcon.financier.ibkr.model.Account;
+import ua.com.gfalcon.financier.ibkr.model.AccountLedger;
+import ua.com.gfalcon.financier.ibkr.model.AccountPnL;
+import ua.com.gfalcon.financier.ibkr.model.AccountSummary;
 import ua.com.gfalcon.financier.ibkr.model.Accounts;
+import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
+import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
 
 /**
  * Client Portal Web API
@@ -41,7 +46,7 @@ public interface AccountApi {
 
     /**
      * PnL for the selected account
-     * <p>
+     * <p/>
      * Returns an object containing PnL for the selected account and its models (if any). To receive streaming PnL the
      * endpoint /ws can be used. Refer to [Streaming WebSocket
      * Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html) for details.
@@ -52,12 +57,12 @@ public interface AccountApi {
     @ApiOperation(value = "PnL for the selected account", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "An object containing account and model(s) pnl",
-            response = Object.class)})
-    public Object iserverAccountPnlPartitionedGet();
+            response = AccountPnL.class)})
+    public AccountPnL iserverAccountPnlPartitionedGet();
 
     /**
      * Switch Account
-     * <p>
+     * <p/>
      * If an user has multiple accounts, and user wants to get orders, trades, etc. of an account other than currently
      * selected account, then user can update the currently selected account using this API and then can fetch required
      * information for the newly updated account.
@@ -68,12 +73,12 @@ public interface AccountApi {
     @ApiOperation(value = "Switch Account", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "an object containing updated account ID",
-            response = Object.class)})
-    public Object iserverAccountPost(SetAccount body);
+            response = SwitchAccount.class)})
+    public SwitchAccount iserverAccountPost(SetAccount body);
 
     /**
      * Brokerage Accounts
-     * <p>
+     * <p/>
      * Returns a list of accounts the user has trading access to, their respective aliases and the currently selected
      * account. Note this endpoint must be called before modifying an order or querying open orders.
      */
@@ -81,12 +86,12 @@ public interface AccountApi {
     @Path("/iserver/accounts")
     @Produces({"application/json"})
     @ApiOperation(value = "Brokerage Accounts", tags = {})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "An array of accounts", response = Object.class)})
-    public Object iserverAccountsGet();
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "An array of accounts", response = BrokerageAccount.class)})
+    public BrokerageAccount iserverAccountsGet();
 
     /**
      * Account Ledger
-     * <p>
+     * <p/>
      * Information regarding settled cash, cash balances, etc. in the account&#39;s base currency and any other cash
      * balances hold in other currencies.  /portfolio/accounts or /portfolio/subaccounts must be called prior to this
      * endpoint. The list of supported currencies is available at
@@ -96,12 +101,12 @@ public interface AccountApi {
     @Path("/portfolio/{accountId}/ledger")
     @Produces({"application/json"})
     @ApiOperation(value = "Account Ledger", tags = {})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "200 means successful", response = Object.class)})
-    public Object portfolioAccountIdLedgerGet(@PathParam("accountId") String accountId);
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "200 means successful", response = AccountLedger.class)})
+    public AccountLedger portfolioAccountIdLedgerGet(@PathParam("accountId") String accountId);
 
     /**
      * Account Information
-     * <p>
+     * <p/>
      * Account information related to account Id /portfolio/accounts or /portfolio/subaccounts must be called prior to
      * this endpoint.
      */
@@ -114,7 +119,7 @@ public interface AccountApi {
 
     /**
      * Account Summary
-     * <p>
+     * <p/>
      * Returns information about margin, cash balances and other information related to specified account. See also
      * /portfolio/{accountId}/ledger. /portfolio/accounts or /portfolio/subaccounts must be called prior to this
      * endpoint.
@@ -125,12 +130,12 @@ public interface AccountApi {
     @ApiOperation(value = "Account Summary", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "returns an object containing account summary. The object contains multiple properties. A property is sufficed with -c if its provides commodity value, -s if it provides security value and -c if its UKL segment value",
-            response = Object.class)})
-    public Object portfolioAccountIdSummaryGet(@PathParam("accountId") String accountId);
+            response = AccountSummary.class)})
+    public AccountSummary portfolioAccountIdSummaryGet(@PathParam("accountId") String accountId);
 
     /**
      * Portfolio Accounts
-     * <p>
+     * <p/>
      * In non-tiered account structures, returns a list of accounts for which the user can view position and account
      * information. This endpoint must be called prior to calling other /portfolio endpoints for those accounts. For
      * querying a list of accounts which the user can trade, see /iserver/accounts. For a list of subaccounts in tiered
@@ -145,7 +150,7 @@ public interface AccountApi {
 
     /**
      * List of Sub-Accounts
-     * <p>
+     * <p/>
      * Used in tiered account structures (such as Financial Advisor and IBroker Accounts) to return a list of up to 100
      * sub-accounts for which the user can view position and account-related information. This endpoint must be called
      * prior to calling other /portfolio endpoints for those sub-accounts. If you have more than 100 sub-accounts use

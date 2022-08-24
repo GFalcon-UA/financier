@@ -37,6 +37,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ua.com.gfalcon.financier.ibkr.model.Account;
+import ua.com.gfalcon.financier.ibkr.model.AccountLedger;
+import ua.com.gfalcon.financier.ibkr.model.AccountSummary;
 import ua.com.gfalcon.financier.ibkr.model.Accounts;
 import ua.com.gfalcon.financier.ibkr.model.Allocation;
 import ua.com.gfalcon.financier.ibkr.model.Body;
@@ -66,13 +68,13 @@ public interface PortfolioApi {
     @ApiOperation(value = "Account Ledger",
             nickname = "portfolioAccountIdLedgerGet",
             notes = "Information regarding settled cash, cash balances, etc. in the account's base currency and any other cash balances hold in other currencies.  /portfolio/accounts or /portfolio/subaccounts must be called prior to this endpoint. The list of supported currencies is available at https://www.interactivebrokers.com/en/index.php?f=3185.",
-            response = Object.class,
+            response = AccountLedger.class,
             tags = {"Account", "Portfolio",})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "200 means successful", response = Object.class)})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "200 means successful", response = AccountLedger.class)})
     @RequestMapping(value = "/portfolio/{accountId}/ledger",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Object> portfolioAccountIdLedgerGet(
+    ResponseEntity<AccountLedger> portfolioAccountIdLedgerGet(
             @ApiParam(value = "account id", required = true) @PathVariable("accountId") String accountId);
 
 
@@ -142,15 +144,15 @@ public interface PortfolioApi {
     @ApiOperation(value = "Account Summary",
             nickname = "portfolioAccountIdSummaryGet",
             notes = "Returns information about margin, cash balances and other information related to specified account. See also /portfolio/{accountId}/ledger. /portfolio/accounts or /portfolio/subaccounts must be called prior to this endpoint.",
-            response = Object.class,
+            response = AccountSummary.class,
             tags = {"Account", "Portfolio",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "returns an object containing account summary. The object contains multiple properties. A property is sufficed with -c if its provides commodity value, -s if it provides security value and -c if its UKL segment value",
-            response = Object.class)})
+            response = AccountSummary.class)})
     @RequestMapping(value = "/portfolio/{accountId}/summary",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Object> portfolioAccountIdSummaryGet(
+    ResponseEntity<AccountSummary> portfolioAccountIdSummaryGet(
             @ApiParam(value = "account id", required = true) @PathVariable("accountId") String accountId);
 
 
