@@ -14,16 +14,29 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.ibkr.server.resteasy.api;
+package ua.com.gfalcon.financier.ibkr.model;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import java.math.BigDecimal;
 
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
-public interface HmdsApiService {
-    Response hmdsHistoryGet(Integer conid, String period, String bar, Boolean outsideRth,
-            SecurityContext securityContext) throws NotFoundException;
+public class NumberScannerFilter extends ScannerFilter {
+    @JsonProperty("value")
+    @SerializedName("value")
+    private BigDecimal value;
 
-    Response hmdsScannerPost(DirectScanner body, SecurityContext securityContext) throws NotFoundException;
+    public NumberScannerFilter(String code, BigDecimal value) {
+        super(code, value);
+    }
+
+    @Override
+    public void setValue(Object value) {
+        this.value = (BigDecimal) value;
+    }
+
+    @Override
+    public BigDecimal getValue() {
+        return this.value;
+    }
 }

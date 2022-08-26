@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import io.swagger.annotations.ApiParam;
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
@@ -74,7 +74,7 @@ public class HmdsApi {
             response = ScannerResult.class),
 
             @io.swagger.annotations.ApiResponse(code = 400, message = "Bad request", response = Void.class)})
-    public Response hmdsScannerPost(@ApiParam(value = "request body", required = true) Body body,
+    public Response hmdsScannerPost(@ApiParam(value = "request body", required = true) DirectScanner body,
             @Context SecurityContext securityContext) throws NotFoundException {
         return service.hmdsScannerPost(body, securityContext);
     }

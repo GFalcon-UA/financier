@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
@@ -81,7 +81,7 @@ public class HmdsApiController implements HmdsApi {
     }
 
     public ResponseEntity<ScannerResult> hmdsScannerPost(
-            @ApiParam(value = "request body", required = true) @Valid @RequestBody Body body) {
+            @ApiParam(value = "request body", required = true) @Valid @RequestBody DirectScanner body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

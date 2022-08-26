@@ -20,7 +20,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.server.resteasy.api.ApiResponseMessage;
 import ua.com.gfalcon.financier.ibkr.server.resteasy.api.HmdsApiService;
 import ua.com.gfalcon.financier.ibkr.server.resteasy.api.NotFoundException;
@@ -35,7 +35,7 @@ public class HmdsApiServiceImpl implements HmdsApiService {
                 .build();
     }
 
-    public Response hmdsScannerPost(Body body, SecurityContext securityContext) throws NotFoundException {
+    public Response hmdsScannerPost(DirectScanner body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok()
                 .entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!"))

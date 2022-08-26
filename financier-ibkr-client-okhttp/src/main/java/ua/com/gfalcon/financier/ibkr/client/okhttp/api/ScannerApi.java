@@ -46,7 +46,7 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.Configuration;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.Pair;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
@@ -77,7 +77,7 @@ public class ScannerApi {
      * @return ScannerResult
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ScannerResult hmdsScannerPost(Body body) throws ApiException {
+    public ScannerResult hmdsScannerPost(DirectScanner body) throws ApiException {
         ApiResponse<ScannerResult> resp = hmdsScannerPostWithHttpInfo(body);
         return resp.getData();
     }
@@ -91,7 +91,7 @@ public class ScannerApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call hmdsScannerPostAsync(Body body,
+    public com.squareup.okhttp.Call hmdsScannerPostAsync(DirectScanner body,
             final ApiCallback<ScannerResult> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
@@ -130,7 +130,7 @@ public class ScannerApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call hmdsScannerPostCall(Body body,
+    public com.squareup.okhttp.Call hmdsScannerPostCall(DirectScanner body,
             final ProgressResponseBody.ProgressListener progressListener,
             final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -176,7 +176,7 @@ public class ScannerApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call hmdsScannerPostValidateBeforeCall(Body body,
+    private com.squareup.okhttp.Call hmdsScannerPostValidateBeforeCall(DirectScanner body,
             final ProgressResponseBody.ProgressListener progressListener,
             final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
 
@@ -199,7 +199,7 @@ public class ScannerApi {
      * @return ApiResponse&lt;ScannerResult&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ScannerResult> hmdsScannerPostWithHttpInfo(Body body) throws ApiException {
+    public ApiResponse<ScannerResult> hmdsScannerPostWithHttpInfo(DirectScanner body) throws ApiException {
         com.squareup.okhttp.Call call = hmdsScannerPostValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<ScannerResult>() {
         }.getType();

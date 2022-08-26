@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
@@ -80,6 +80,6 @@ public interface HmdsApi {
             response = ScannerResult.class), @ApiResponse(code = 400, message = "Bad request")})
     @RequestMapping(value = "/hmds/scanner", produces = {"application/json"}, method = RequestMethod.POST)
     ResponseEntity<ScannerResult> hmdsScannerPost(
-            @ApiParam(value = "request body", required = true) @Valid @RequestBody Body body);
+            @ApiParam(value = "request body", required = true) @Valid @RequestBody DirectScanner body);
 
 }

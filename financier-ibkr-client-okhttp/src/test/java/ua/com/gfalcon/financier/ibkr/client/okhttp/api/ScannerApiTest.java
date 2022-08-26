@@ -34,7 +34,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
@@ -56,7 +56,7 @@ public class ScannerApiTest {
      */
     @Test
     public void hmdsScannerPostTest() throws Exception {
-        Body body = null;
+        DirectScanner body = null;
         ScannerResult response = api.hmdsScannerPost(body);
 
         // TODO: test validations

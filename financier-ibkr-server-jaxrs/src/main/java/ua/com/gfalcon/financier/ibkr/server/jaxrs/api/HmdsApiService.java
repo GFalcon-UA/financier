@@ -20,11 +20,12 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 
 public abstract class HmdsApiService {
     public abstract Response hmdsHistoryGet(@NotNull Integer conid, @NotNull String period, String bar,
             Boolean outsideRth, SecurityContext securityContext) throws NotFoundException;
 
-    public abstract Response hmdsScannerPost(Body body, SecurityContext securityContext) throws NotFoundException;
+    public abstract Response hmdsScannerPost(DirectScanner body,
+            SecurityContext securityContext) throws NotFoundException;
 }

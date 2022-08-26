@@ -27,7 +27,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
@@ -42,7 +42,7 @@ public interface ScannerApi {
 
     /**
      * Run Scanner (Beta)
-     * <p>
+     * <p/>
      * Using a direct connection to the market data farm, will provide results to the requested scanner.
      */
     @POST
@@ -52,7 +52,7 @@ public interface ScannerApi {
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "Valid result",
             response = ScannerResult.class), @ApiResponse(code = 400, message = "Bad request")})
-    public ScannerResult hmdsScannerPost(Body body);
+    public ScannerResult hmdsScannerPost(DirectScanner body);
 
     /**
      * Scanner Parameters

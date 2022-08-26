@@ -14,16 +14,27 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.ibkr.server.resteasy.api;
+package ua.com.gfalcon.financier.ibkr.model;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
+public class DoubleScannerFilter extends ScannerFilter {
+    @JsonProperty("value")
+    @SerializedName("value")
+    private Double value;
 
-public interface HmdsApiService {
-    Response hmdsHistoryGet(Integer conid, String period, String bar, Boolean outsideRth,
-            SecurityContext securityContext) throws NotFoundException;
+    public DoubleScannerFilter(String code, Double value) {
+        super(code, value);
+    }
 
-    Response hmdsScannerPost(DirectScanner body, SecurityContext securityContext) throws NotFoundException;
+    @Override
+    public void setValue(Object value) {
+        this.value = (Double) value;
+    }
+
+    @Override
+    public Double getValue() {
+        return this.value;
+    }
 }
