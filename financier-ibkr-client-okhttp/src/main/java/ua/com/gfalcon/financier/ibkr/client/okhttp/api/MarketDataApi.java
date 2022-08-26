@@ -48,6 +48,8 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
 import ua.com.gfalcon.financier.ibkr.model.MarketData;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 
 public class MarketDataApi {
     private ApiClient apiClient;
@@ -76,8 +78,8 @@ public class MarketDataApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object iserverMarketdataConidUnsubscribeGet(String conid) throws ApiException {
-        ApiResponse<Object> resp = iserverMarketdataConidUnsubscribeGetWithHttpInfo(conid);
+    public MarketDataCancelSingle iserverMarketdataConidUnsubscribeGet(String conid) throws ApiException {
+        ApiResponse<MarketDataCancelSingle> resp = iserverMarketdataConidUnsubscribeGetWithHttpInfo(conid);
         return resp.getData();
     }
 
@@ -91,7 +93,7 @@ public class MarketDataApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call iserverMarketdataConidUnsubscribeGetAsync(String conid,
-            final ApiCallback<Object> callback) throws ApiException {
+            final ApiCallback<MarketDataCancelSingle> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -114,7 +116,7 @@ public class MarketDataApi {
 
         com.squareup.okhttp.Call call = iserverMarketdataConidUnsubscribeGetValidateBeforeCall(conid, progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<MarketDataCancelSingle>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -201,9 +203,9 @@ public class MarketDataApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> iserverMarketdataConidUnsubscribeGetWithHttpInfo(String conid) throws ApiException {
+    public ApiResponse<MarketDataCancelSingle> iserverMarketdataConidUnsubscribeGetWithHttpInfo(String conid) throws ApiException {
         com.squareup.okhttp.Call call = iserverMarketdataConidUnsubscribeGetValidateBeforeCall(conid, null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<MarketDataCancelSingle>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -589,8 +591,8 @@ public class MarketDataApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object iserverMarketdataUnsubscribeallGet() throws ApiException {
-        ApiResponse<Object> resp = iserverMarketdataUnsubscribeallGetWithHttpInfo();
+    public MarketDataCancelAll iserverMarketdataUnsubscribeallGet() throws ApiException {
+        ApiResponse<MarketDataCancelAll> resp = iserverMarketdataUnsubscribeallGetWithHttpInfo();
         return resp.getData();
     }
 
@@ -627,7 +629,7 @@ public class MarketDataApi {
 
         com.squareup.okhttp.Call call = iserverMarketdataUnsubscribeallGetValidateBeforeCall(progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<MarketDataCancelAll>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -706,9 +708,9 @@ public class MarketDataApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> iserverMarketdataUnsubscribeallGetWithHttpInfo() throws ApiException {
+    public ApiResponse<MarketDataCancelAll> iserverMarketdataUnsubscribeallGetWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = iserverMarketdataUnsubscribeallGetValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<MarketDataCancelAll>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }

@@ -36,6 +36,8 @@ import org.junit.Test;
 
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
 import ua.com.gfalcon.financier.ibkr.model.MarketData;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 
 /**
  * API tests for MarketDataApi
@@ -47,8 +49,8 @@ public class MarketDataApiTest {
 
 
     /**
-     * Market Data Cancel (Single)
-     * <p>
+     * Market Data Cancel (Single).
+     * <p/>
      * Cancel market data for given conid. To cancel all market data request(s), see /iserver/marketdata/unsubscribeall.
      *
      * @throws Exception if the Api call fails
@@ -56,14 +58,14 @@ public class MarketDataApiTest {
     @Test
     public void iserverMarketdataConidUnsubscribeGetTest() throws Exception {
         String conid = null;
-        Object response = api.iserverMarketdataConidUnsubscribeGet(conid);
+        MarketDataCancelSingle response = api.iserverMarketdataConidUnsubscribeGet(conid);
 
         // TODO: test validations
     }
 
     /**
      * Market Data History
-     * <p>
+     * <p/>
      * Get historical market Data for given conid, length of data is controlled by &#39;period&#39; and &#39;bar&#39;.
      * Formatted as: min&#x3D;minute, h&#x3D;hour, d&#x3D;day, w&#x3D;week, m&#x3D;month, y&#x3D;year e.g. period
      * &#x3D;1y with bar &#x3D;1w returns 52 data points (Max of 1000 data points supported). **Note**: There&#39;s a
@@ -86,7 +88,7 @@ public class MarketDataApiTest {
 
     /**
      * Market Data
-     * <p>
+     * <p/>
      * Get Market Data for the given conid(s). The endpoint will return by default bid, ask, last, change, change pct,
      * close, listing exchange. See response fields for a list of available fields that can be request via fields
      * argument. The endpoint /iserver/accounts must be called prior to /iserver/marketdata/snapshot. For derivative
@@ -111,7 +113,7 @@ public class MarketDataApiTest {
 
     /**
      * Market Data Cancel (All)
-     * <p>
+     * <p/>
      * Cancel all market data request(s). To cancel market data for given conid, see
      * /iserver/marketdata/{conid}/unsubscribe.
      *
@@ -119,7 +121,7 @@ public class MarketDataApiTest {
      */
     @Test
     public void iserverMarketdataUnsubscribeallGetTest() throws Exception {
-        Object response = api.iserverMarketdataUnsubscribeallGet();
+        MarketDataCancelAll response = api.iserverMarketdataUnsubscribeallGet();
 
         // TODO: test validations
     }

@@ -30,6 +30,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
 import ua.com.gfalcon.financier.ibkr.model.MarketData;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.SystemError;
 
 /**
@@ -43,7 +45,7 @@ public interface MarketDataApi {
 
     /**
      * Market Data Cancel (Single)
-     * <p>
+     * <p/>
      * Cancel market data for given conid. To cancel all market data request(s), see /iserver/marketdata/unsubscribeall.
      */
     @GET
@@ -52,12 +54,12 @@ public interface MarketDataApi {
     @ApiOperation(value = "Market Data Cancel (Single)", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "confirms market data for conid is cancelled",
-            response = Object.class), @ApiResponse(code = 500, message = "cancel failed")})
-    public Object iserverMarketdataConidUnsubscribeGet(@PathParam("conid") String conid);
+            response = MarketDataCancelSingle.class), @ApiResponse(code = 500, message = "cancel failed")})
+    public MarketDataCancelSingle iserverMarketdataConidUnsubscribeGet(@PathParam("conid") String conid);
 
     /**
      * Market Data History
-     * <p>
+     * <p/>
      * Get historical market Data for given conid, length of data is controlled by &#39;period&#39; and &#39;bar&#39;.
      * Formatted as: min&#x3D;minute, h&#x3D;hour, d&#x3D;day, w&#x3D;week, m&#x3D;month, y&#x3D;year e.g. period
      * &#x3D;1y with bar &#x3D;1w returns 52 data points (Max of 1000 data points supported). **Note**: There&#39;s a
@@ -79,7 +81,7 @@ public interface MarketDataApi {
 
     /**
      * Market Data
-     * <p>
+     * <p/>
      * Get Market Data for the given conid(s). The endpoint will return by default bid, ask, last, change, change pct,
      * close, listing exchange. See response fields for a list of available fields that can be request via fields
      * argument. The endpoint /iserver/accounts must be called prior to /iserver/marketdata/snapshot. For derivative
@@ -115,8 +117,8 @@ public interface MarketDataApi {
     @ApiOperation(value = "Market Data Cancel (All)", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "confirms market data is cancelled",
-            response = Object.class)})
-    public Object iserverMarketdataUnsubscribeallGet();
+            response = MarketDataCancelAll.class)})
+    public MarketDataCancelAll iserverMarketdataUnsubscribeallGet();
 
     /**
      * Market Data Snapshot (Beta)

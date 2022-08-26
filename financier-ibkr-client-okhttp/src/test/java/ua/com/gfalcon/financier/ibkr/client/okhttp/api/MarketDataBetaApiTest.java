@@ -35,7 +35,7 @@ import org.junit.Test;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
 
 /**
- * API tests for MarketDataBetaApi
+ * API tests for MarketDataBetaApi.
  */
 @Ignore
 public class MarketDataBetaApiTest {
@@ -44,8 +44,8 @@ public class MarketDataBetaApiTest {
 
 
     /**
-     * Market Data History
-     * <p>
+     * Market Data History.
+     * <p/>
      * Using direct to market data farm connection, will provide a list of historical market data for a given conid
      *
      * @throws Exception if the Api call fails

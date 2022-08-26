@@ -38,6 +38,8 @@ import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
 import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
@@ -517,11 +519,11 @@ public class IserverApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Market Data Cancel (Single)",
             notes = "Cancel market data for given conid. To cancel all market data request(s), see /iserver/marketdata/unsubscribeall. ",
-            response = Object.class,
+            response = MarketDataCancelSingle.class,
             tags = {"Market Data",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "confirms market data for conid is cancelled",
-            response = Object.class),
+            response = MarketDataCancelSingle.class),
 
             @io.swagger.annotations.ApiResponse(code = 500, message = "cancel failed", response = Void.class)})
     public Response iserverMarketdataConidUnsubscribeGet(
@@ -591,11 +593,11 @@ public class IserverApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Market Data Cancel (All)",
             notes = "Cancel all market data request(s). To cancel market data for given conid, see /iserver/marketdata/{conid}/unsubscribe. ",
-            response = Object.class,
+            response = MarketDataCancelAll.class,
             tags = {"Market Data",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "confirms market data is cancelled",
-            response = Object.class)})
+            response = MarketDataCancelAll.class)})
     public Response iserverMarketdataUnsubscribeallGet(
             @Context SecurityContext securityContext) throws NotFoundException {
         return delegate.iserverMarketdataUnsubscribeallGet(securityContext);

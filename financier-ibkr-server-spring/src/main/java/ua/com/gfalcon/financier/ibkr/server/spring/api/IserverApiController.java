@@ -45,6 +45,8 @@ import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
 import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
@@ -489,21 +491,21 @@ public class IserverApiController implements IserverApi {
         return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> iserverMarketdataConidUnsubscribeGet(
+    public ResponseEntity<MarketDataCancelSingle> iserverMarketdataConidUnsubscribeGet(
             @ApiParam(value = "contract id", required = true) @PathVariable("conid") String conid) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<MarketDataCancelSingle>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", MarketDataCancelSingle.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<MarketDataCancelSingle>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<MarketDataCancelSingle>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<HistoryData> iserverMarketdataHistoryGet(
@@ -556,20 +558,20 @@ public class IserverApiController implements IserverApi {
         return new ResponseEntity<List<Object>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> iserverMarketdataUnsubscribeallGet() {
+    public ResponseEntity<MarketDataCancelAll> iserverMarketdataUnsubscribeallGet() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", MarketDataCancelAll.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<AuthStatus> iserverReauthenticatePost() {

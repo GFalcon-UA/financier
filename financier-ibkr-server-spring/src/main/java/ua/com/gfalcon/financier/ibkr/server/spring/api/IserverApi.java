@@ -48,6 +48,8 @@ import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
 import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
@@ -422,15 +424,15 @@ public interface IserverApi {
     @ApiOperation(value = "Market Data Cancel (Single)",
             nickname = "iserverMarketdataConidUnsubscribeGet",
             notes = "Cancel market data for given conid. To cancel all market data request(s), see /iserver/marketdata/unsubscribeall. ",
-            response = Object.class,
+            response = MarketDataCancelSingle.class,
             tags = {"Market Data",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "confirms market data for conid is cancelled",
-            response = Object.class), @ApiResponse(code = 500, message = "cancel failed")})
+            response = MarketDataCancelSingle.class), @ApiResponse(code = 500, message = "cancel failed")})
     @RequestMapping(value = "/iserver/marketdata/{conid}/unsubscribe",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Object> iserverMarketdataConidUnsubscribeGet(
+    ResponseEntity<MarketDataCancelSingle> iserverMarketdataConidUnsubscribeGet(
             @ApiParam(value = "contract id", required = true) @PathVariable("conid") String conid);
 
 
@@ -487,15 +489,15 @@ public interface IserverApi {
     @ApiOperation(value = "Market Data Cancel (All)",
             nickname = "iserverMarketdataUnsubscribeallGet",
             notes = "Cancel all market data request(s). To cancel market data for given conid, see /iserver/marketdata/{conid}/unsubscribe. ",
-            response = Object.class,
+            response = MarketDataCancelAll.class,
             tags = {"Market Data",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "confirms market data is cancelled",
-            response = Object.class)})
+            response = MarketDataCancelAll.class)})
     @RequestMapping(value = "/iserver/marketdata/unsubscribeall",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Object> iserverMarketdataUnsubscribeallGet();
+    ResponseEntity<MarketDataCancelAll> iserverMarketdataUnsubscribeallGet();
 
 
     @ApiOperation(value = "Tries to re-authenticate to Brokerage",
