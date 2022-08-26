@@ -30,6 +30,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import ua.com.gfalcon.financier.ibkr.model.ValidateSso;
 
 
 @Validated
@@ -40,13 +41,13 @@ public interface SsoApi {
     @ApiOperation(value = "Validate SSO",
             nickname = "ssoValidateGet",
             notes = "Validates the current session for the SSO user",
-            response = Object.class,
+            response = ValidateSso.class,
             tags = {"Session",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "An Object",
-            response = Object.class), @ApiResponse(code = 401,
+            response = ValidateSso.class), @ApiResponse(code = 401,
             message = "Authentication failed"), @ApiResponse(code = 500, message = "System failed")})
     @RequestMapping(value = "/sso/validate", produces = {"application/json"}, method = RequestMethod.GET)
-    ResponseEntity<Object> ssoValidateGet();
+    ResponseEntity<ValidateSso> ssoValidateGet();
 
 }

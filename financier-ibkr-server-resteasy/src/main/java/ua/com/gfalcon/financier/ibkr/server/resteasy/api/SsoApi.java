@@ -24,6 +24,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import ua.com.gfalcon.financier.ibkr.model.ValidateSso;
+
 @Path("/sso")
 
 @Produces({"application/json"})
@@ -39,11 +41,11 @@ public class SsoApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Validate SSO",
             notes = "Validates the current session for the SSO user",
-            response = Object.class,
+            response = ValidateSso.class,
             tags = {"Session",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "An Object",
-            response = Object.class),
+            response = ValidateSso.class),
 
             @io.swagger.annotations.ApiResponse(code = 401, message = "Authentication failed", response = Void.class),
 

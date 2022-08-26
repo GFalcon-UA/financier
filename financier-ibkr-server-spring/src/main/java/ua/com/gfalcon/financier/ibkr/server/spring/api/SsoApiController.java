@@ -28,6 +28,8 @@ import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ua.com.gfalcon.financier.ibkr.model.ValidateSso;
+
 
 @Controller
 public class SsoApiController implements SsoApi {
@@ -44,20 +46,20 @@ public class SsoApiController implements SsoApi {
         this.request = request;
     }
 
-    public ResponseEntity<Object> ssoValidateGet() {
+    public ResponseEntity<ValidateSso> ssoValidateGet() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<ValidateSso>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", ValidateSso.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<ValidateSso>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<ValidateSso>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

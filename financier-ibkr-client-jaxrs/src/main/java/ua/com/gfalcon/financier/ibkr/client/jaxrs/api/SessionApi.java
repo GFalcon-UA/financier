@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
+import ua.com.gfalcon.financier.ibkr.model.ValidateSso;
 
 /**
  * Client Portal Web API
@@ -79,7 +80,7 @@ public interface SessionApi {
 
     /**
      * Validate SSO
-     * <p>
+     * <p/>
      * Validates the current session for the SSO user
      */
     @GET
@@ -88,9 +89,9 @@ public interface SessionApi {
     @ApiOperation(value = "Validate SSO", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "An Object",
-            response = Object.class), @ApiResponse(code = 401,
+            response = ValidateSso.class), @ApiResponse(code = 401,
             message = "Authentication failed"), @ApiResponse(code = 500, message = "System failed")})
-    public Object ssoValidateGet();
+    public ValidateSso ssoValidateGet();
 
     /**
      * Ping the server to keep the session open

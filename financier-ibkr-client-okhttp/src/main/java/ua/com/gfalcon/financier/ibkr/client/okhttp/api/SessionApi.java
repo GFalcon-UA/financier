@@ -48,6 +48,7 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
+import ua.com.gfalcon.financier.ibkr.model.ValidateSso;
 
 public class SessionApi {
     private ApiClient apiClient;
@@ -462,8 +463,8 @@ public class SessionApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object ssoValidateGet() throws ApiException {
-        ApiResponse<Object> resp = ssoValidateGetWithHttpInfo();
+    public ValidateSso ssoValidateGet() throws ApiException {
+        ApiResponse<ValidateSso> resp = ssoValidateGetWithHttpInfo();
         return resp.getData();
     }
 
@@ -497,7 +498,7 @@ public class SessionApi {
         }
 
         com.squareup.okhttp.Call call = ssoValidateGetValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<ValidateSso>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -573,9 +574,9 @@ public class SessionApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> ssoValidateGetWithHttpInfo() throws ApiException {
+    public ApiResponse<ValidateSso> ssoValidateGetWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = ssoValidateGetValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<ValidateSso>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }

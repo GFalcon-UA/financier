@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
+import ua.com.gfalcon.financier.ibkr.model.ValidateSso;
 
 /**
  * API tests for SessionApi
@@ -90,14 +91,14 @@ public class SessionApiTest {
 
     /**
      * Validate SSO
-     * <p>
+     * <p/>
      * Validates the current session for the SSO user
      *
      * @throws Exception if the Api call fails
      */
     @Test
     public void ssoValidateGetTest() throws Exception {
-        Object response = api.ssoValidateGet();
+        ValidateSso response = api.ssoValidateGet();
 
         // TODO: test validations
     }
