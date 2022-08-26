@@ -26,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 
 /**
  * Client Portal Web API
@@ -51,7 +52,7 @@ public interface SessionApi {
 
     /**
      * Tries to re-authenticate to Brokerage
-     * <p>
+     * <p/>
      * When using the CP Gateway, this endpoint provides a way to reauthenticate to the Brokerage system as long as
      * there is a valid SSO session, see /sso/validate.
      */
@@ -64,7 +65,7 @@ public interface SessionApi {
 
     /**
      * Ends the current session
-     * <p>
+     * <p/>
      * Logs the user out of the gateway session. Any further activity requires re-authentication.
      */
     @POST
@@ -73,8 +74,8 @@ public interface SessionApi {
     @ApiOperation(value = "Ends the current session", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "returned status indicates if user is logged in",
-            response = Object.class)})
-    public Object logoutPost();
+            response = BooleanConfirmed.class)})
+    public BooleanConfirmed logoutPost();
 
     /**
      * Validate SSO

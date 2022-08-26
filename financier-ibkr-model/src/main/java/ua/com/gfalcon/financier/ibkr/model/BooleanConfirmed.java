@@ -26,12 +26,12 @@ import lombok.Data;
 
 @Data
 @Validated
-public class MarketDataCancelAll {
+public class BooleanConfirmed {
 
     /**
-     * true means market data is cancelled, false means it is not.
+     * true means success, false means it is not.
      */
-    @ApiModelProperty(value = "Success means market data was cancelled.")
+    @ApiModelProperty(value = "true means success, false means it is not.")
     @JsonProperty("confirmed")
     @SerializedName("confirmed")
     private Boolean confirmed;

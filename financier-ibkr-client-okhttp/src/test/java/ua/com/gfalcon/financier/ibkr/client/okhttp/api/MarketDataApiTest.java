@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
 import ua.com.gfalcon.financier.ibkr.model.MarketData;
-import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 
 /**
@@ -121,7 +121,7 @@ public class MarketDataApiTest {
      */
     @Test
     public void iserverMarketdataUnsubscribeallGetTest() throws Exception {
-        MarketDataCancelAll response = api.iserverMarketdataUnsubscribeallGet();
+        BooleanConfirmed response = api.iserverMarketdataUnsubscribeallGet();
 
         // TODO: test validations
     }

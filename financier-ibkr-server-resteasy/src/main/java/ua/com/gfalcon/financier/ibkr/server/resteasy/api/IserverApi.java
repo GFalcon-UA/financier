@@ -39,7 +39,7 @@ import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
-import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
@@ -534,11 +534,11 @@ public class IserverApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Market Data Cancel (All)",
             notes = "Cancel all market data request(s). To cancel market data for given conid, see /iserver/marketdata/{conid}/unsubscribe. ",
-            response = MarketDataCancelAll.class,
+            response = BooleanConfirmed.class,
             tags = {"Market Data",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "confirms market data is cancelled",
-            response = MarketDataCancelAll.class)})
+            response = BooleanConfirmed.class)})
     public Response iserverMarketdataUnsubscribeallGet(
             @Context SecurityContext securityContext) throws NotFoundException {
         return service.iserverMarketdataUnsubscribeallGet(securityContext);

@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.rowset.BaseRowSet;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -45,7 +44,7 @@ import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
-import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
@@ -558,12 +557,12 @@ public class IserverApiController implements IserverApi {
         return new ResponseEntity<List<Object>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<MarketDataCancelAll> iserverMarketdataUnsubscribeallGet() {
+    public ResponseEntity<BooleanConfirmed> iserverMarketdataUnsubscribeallGet() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 return new ResponseEntity<>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", MarketDataCancelAll.class),
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", BooleanConfirmed.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);

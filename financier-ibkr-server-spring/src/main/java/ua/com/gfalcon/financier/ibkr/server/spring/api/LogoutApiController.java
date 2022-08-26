@@ -28,6 +28,8 @@ import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
+
 
 @Controller
 public class LogoutApiController implements LogoutApi {
@@ -44,20 +46,20 @@ public class LogoutApiController implements LogoutApi {
         this.request = request;
     }
 
-    public ResponseEntity<Object> logoutPost() {
+    public ResponseEntity<BooleanConfirmed> logoutPost() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
+                return new ResponseEntity<>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", BooleanConfirmed.class),
                         HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

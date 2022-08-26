@@ -47,6 +47,7 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.Pair;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 
 public class SessionApi {
     private ApiClient apiClient;
@@ -336,8 +337,8 @@ public class SessionApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object logoutPost() throws ApiException {
-        ApiResponse<Object> resp = logoutPostWithHttpInfo();
+    public BooleanConfirmed logoutPost() throws ApiException {
+        ApiResponse<BooleanConfirmed> resp = logoutPostWithHttpInfo();
         return resp.getData();
     }
 
@@ -371,7 +372,7 @@ public class SessionApi {
         }
 
         com.squareup.okhttp.Call call = logoutPostValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<BooleanConfirmed>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -447,9 +448,9 @@ public class SessionApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> logoutPostWithHttpInfo() throws ApiException {
+    public ApiResponse<BooleanConfirmed> logoutPostWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = logoutPostValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<BooleanConfirmed>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }

@@ -33,6 +33,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 
 /**
  * API tests for SessionApi
@@ -45,7 +46,7 @@ public class SessionApiTest {
 
     /**
      * Authentication Status
-     * <p>
+     * <p/>
      * Current Authentication status to the Brokerage system. Market Data and Trading is not possible if not
      * authenticated, e.g. authenticated shows false
      *
@@ -60,7 +61,7 @@ public class SessionApiTest {
 
     /**
      * Tries to re-authenticate to Brokerage
-     * <p>
+     * <p/>
      * When using the CP Gateway, this endpoint provides a way to reauthenticate to the Brokerage system as long as
      * there is a valid SSO session, see /sso/validate.
      *
@@ -75,14 +76,14 @@ public class SessionApiTest {
 
     /**
      * Ends the current session
-     * <p>
+     * <p/>
      * Logs the user out of the gateway session. Any further activity requires re-authentication.
      *
      * @throws Exception if the Api call fails
      */
     @Test
     public void logoutPostTest() throws Exception {
-        Object response = api.logoutPost();
+        BooleanConfirmed response = api.logoutPost();
 
         // TODO: test validations
     }
@@ -103,7 +104,7 @@ public class SessionApiTest {
 
     /**
      * Ping the server to keep the session open
-     * <p>
+     * <p/>
      * If the gateway has not received any requests for several minutes an open session will automatically timeout. The
      * tickle endpoint pings the server to prevent the session from ending.
      *

@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
 import ua.com.gfalcon.financier.ibkr.model.MarketData;
-import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.SystemError;
 
@@ -117,8 +117,8 @@ public interface MarketDataApi {
     @ApiOperation(value = "Market Data Cancel (All)", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "confirms market data is cancelled",
-            response = MarketDataCancelAll.class)})
-    public MarketDataCancelAll iserverMarketdataUnsubscribeallGet();
+            response = BooleanConfirmed.class)})
+    public BooleanConfirmed iserverMarketdataUnsubscribeallGet();
 
     /**
      * Market Data Snapshot (Beta)

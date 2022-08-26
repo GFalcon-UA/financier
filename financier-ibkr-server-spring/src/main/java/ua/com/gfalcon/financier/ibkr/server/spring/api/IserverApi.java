@@ -48,7 +48,7 @@ import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
-import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
@@ -489,15 +489,15 @@ public interface IserverApi {
     @ApiOperation(value = "Market Data Cancel (All)",
             nickname = "iserverMarketdataUnsubscribeallGet",
             notes = "Cancel all market data request(s). To cancel market data for given conid, see /iserver/marketdata/{conid}/unsubscribe. ",
-            response = MarketDataCancelAll.class,
+            response = BooleanConfirmed.class,
             tags = {"Market Data",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "confirms market data is cancelled",
-            response = MarketDataCancelAll.class)})
+            response = BooleanConfirmed.class)})
     @RequestMapping(value = "/iserver/marketdata/unsubscribeall",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<MarketDataCancelAll> iserverMarketdataUnsubscribeallGet();
+    ResponseEntity<BooleanConfirmed> iserverMarketdataUnsubscribeallGet();
 
 
     @ApiOperation(value = "Tries to re-authenticate to Brokerage",

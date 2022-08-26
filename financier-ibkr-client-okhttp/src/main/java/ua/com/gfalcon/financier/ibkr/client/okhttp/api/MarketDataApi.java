@@ -48,7 +48,7 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
 import ua.com.gfalcon.financier.ibkr.model.MarketData;
-import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelAll;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 
 public class MarketDataApi {
@@ -591,8 +591,8 @@ public class MarketDataApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public MarketDataCancelAll iserverMarketdataUnsubscribeallGet() throws ApiException {
-        ApiResponse<MarketDataCancelAll> resp = iserverMarketdataUnsubscribeallGetWithHttpInfo();
+    public BooleanConfirmed iserverMarketdataUnsubscribeallGet() throws ApiException {
+        ApiResponse<BooleanConfirmed> resp = iserverMarketdataUnsubscribeallGetWithHttpInfo();
         return resp.getData();
     }
 
@@ -629,7 +629,7 @@ public class MarketDataApi {
 
         com.squareup.okhttp.Call call = iserverMarketdataUnsubscribeallGetValidateBeforeCall(progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<MarketDataCancelAll>() {
+        Type localVarReturnType = new TypeToken<BooleanConfirmed>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -708,9 +708,9 @@ public class MarketDataApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<MarketDataCancelAll> iserverMarketdataUnsubscribeallGetWithHttpInfo() throws ApiException {
+    public ApiResponse<BooleanConfirmed> iserverMarketdataUnsubscribeallGetWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = iserverMarketdataUnsubscribeallGetValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<MarketDataCancelAll>() {
+        Type localVarReturnType = new TypeToken<BooleanConfirmed>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }

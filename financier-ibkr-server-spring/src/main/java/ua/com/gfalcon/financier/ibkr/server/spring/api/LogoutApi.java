@@ -30,6 +30,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 
 
 @Validated
@@ -40,12 +41,12 @@ public interface LogoutApi {
     @ApiOperation(value = "Ends the current session",
             nickname = "logoutPost",
             notes = "Logs the user out of the gateway session. Any further activity requires re-authentication.",
-            response = Object.class,
+            response = BooleanConfirmed.class,
             tags = {"Session",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "returned status indicates if user is logged in",
-            response = Object.class)})
+            response = BooleanConfirmed.class)})
     @RequestMapping(value = "/logout", produces = {"application/json"}, method = RequestMethod.POST)
-    ResponseEntity<Object> logoutPost();
+    ResponseEntity<BooleanConfirmed> logoutPost();
 
 }

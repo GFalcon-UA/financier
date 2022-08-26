@@ -24,6 +24,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.server.jaxrs.api.factories.LogoutApiServiceFactory;
 
 @Path("/logout")
@@ -62,11 +63,11 @@ public class LogoutApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Ends the current session",
             notes = "Logs the user out of the gateway session. Any further activity requires re-authentication.",
-            response = Object.class,
+            response = BooleanConfirmed.class,
             tags = {"Session",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "returned status indicates if user is logged in",
-            response = Object.class)})
+            response = BooleanConfirmed.class)})
     public Response logoutPost(@Context SecurityContext securityContext) throws NotFoundException {
         return delegate.logoutPost(securityContext);
     }
