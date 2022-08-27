@@ -46,8 +46,10 @@ import ua.com.gfalcon.financier.ibkr.client.okhttp.Configuration;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.Pair;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressRequestBody;
 import ua.com.gfalcon.financier.ibkr.client.okhttp.ProgressResponseBody;
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirectResult;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
+import ua.com.gfalcon.financier.ibkr.model.ScannerParamsList;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
 public class ScannerApi {
@@ -77,8 +79,8 @@ public class ScannerApi {
      * @return ScannerResult
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ScannerResult hmdsScannerPost(DirectScanner body) throws ApiException {
-        ApiResponse<ScannerResult> resp = hmdsScannerPostWithHttpInfo(body);
+    public ScannerDirectResult hmdsScannerPost(ScannerDirect body) throws ApiException {
+        ApiResponse<ScannerDirectResult> resp = hmdsScannerPostWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -91,8 +93,8 @@ public class ScannerApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call hmdsScannerPostAsync(DirectScanner body,
-            final ApiCallback<ScannerResult> callback) throws ApiException {
+    public com.squareup.okhttp.Call hmdsScannerPostAsync(ScannerDirect body,
+            final ApiCallback<ScannerDirectResult> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -115,7 +117,7 @@ public class ScannerApi {
 
         com.squareup.okhttp.Call call = hmdsScannerPostValidateBeforeCall(body, progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<ScannerResult>() {
+        Type localVarReturnType = new TypeToken<ScannerDirectResult>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -130,7 +132,7 @@ public class ScannerApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call hmdsScannerPostCall(DirectScanner body,
+    public com.squareup.okhttp.Call hmdsScannerPostCall(ScannerDirect body,
             final ProgressResponseBody.ProgressListener progressListener,
             final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -176,7 +178,7 @@ public class ScannerApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call hmdsScannerPostValidateBeforeCall(DirectScanner body,
+    private com.squareup.okhttp.Call hmdsScannerPostValidateBeforeCall(ScannerDirect body,
             final ProgressResponseBody.ProgressListener progressListener,
             final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
 
@@ -199,9 +201,9 @@ public class ScannerApi {
      * @return ApiResponse&lt;ScannerResult&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ScannerResult> hmdsScannerPostWithHttpInfo(DirectScanner body) throws ApiException {
+    public ApiResponse<ScannerDirectResult> hmdsScannerPostWithHttpInfo(ScannerDirect body) throws ApiException {
         com.squareup.okhttp.Call call = hmdsScannerPostValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<ScannerResult>() {
+        Type localVarReturnType = new TypeToken<ScannerDirectResult>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -213,8 +215,8 @@ public class ScannerApi {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object iserverScannerParamsGet() throws ApiException {
-        ApiResponse<Object> resp = iserverScannerParamsGetWithHttpInfo();
+    public ScannerParamsList iserverScannerParamsGet() throws ApiException {
+        ApiResponse<ScannerParamsList> resp = iserverScannerParamsGetWithHttpInfo();
         return resp.getData();
     }
 
@@ -250,7 +252,7 @@ public class ScannerApi {
 
         com.squareup.okhttp.Call call = iserverScannerParamsGetValidateBeforeCall(progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<ScannerParamsList>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -327,9 +329,9 @@ public class ScannerApi {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> iserverScannerParamsGetWithHttpInfo() throws ApiException {
+    public ApiResponse<ScannerParamsList> iserverScannerParamsGetWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = iserverScannerParamsGetValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<Object>() {
+        Type localVarReturnType = new TypeToken<ScannerParamsList>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -341,8 +343,8 @@ public class ScannerApi {
      * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<Object> iserverScannerRunPost(ScannerParams body) throws ApiException {
-        ApiResponse<List<Object>> resp = iserverScannerRunPostWithHttpInfo(body);
+    public List<ScannerResult> iserverScannerRunPost(ScannerParams body) throws ApiException {
+        ApiResponse<List<ScannerResult>> resp = iserverScannerRunPostWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -355,7 +357,7 @@ public class ScannerApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call iserverScannerRunPostAsync(ScannerParams body,
-            final ApiCallback<List<Object>> callback) throws ApiException {
+            final ApiCallback<List<ScannerResult>> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -378,7 +380,7 @@ public class ScannerApi {
 
         com.squareup.okhttp.Call call = iserverScannerRunPostValidateBeforeCall(body, progressListener,
                 progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<Object>>() {
+        Type localVarReturnType = new TypeToken<List<ScannerResult>>() {
         }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -461,9 +463,9 @@ public class ScannerApi {
      * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<Object>> iserverScannerRunPostWithHttpInfo(ScannerParams body) throws ApiException {
+    public ApiResponse<List<ScannerResult>> iserverScannerRunPostWithHttpInfo(ScannerParams body) throws ApiException {
         com.squareup.okhttp.Call call = iserverScannerRunPostValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<List<Object>>() {
+        Type localVarReturnType = new TypeToken<List<ScannerResult>>() {
         }.getType();
         return apiClient.execute(call, localVarReturnType);
     }

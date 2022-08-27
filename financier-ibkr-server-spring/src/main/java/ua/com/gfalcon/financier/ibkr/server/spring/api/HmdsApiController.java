@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
-import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirectResult;
 
 
 @Controller
@@ -80,20 +80,21 @@ public class HmdsApiController implements HmdsApi {
         return new ResponseEntity<HistoryResult>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<ScannerResult> hmdsScannerPost(
-            @ApiParam(value = "request body", required = true) @Valid @RequestBody DirectScanner body) {
+    public ResponseEntity<ScannerDirectResult> hmdsScannerPost(
+            @ApiParam(value = "request body", required = true) @Valid @RequestBody ScannerDirect body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<ScannerResult>(
-                        objectMapper.readValue("{\"empty\": false}", ScannerResult.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<ScannerDirectResult>(
+                        objectMapper.readValue("{\"empty\": false}", ScannerDirectResult.class),
+                        HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<ScannerResult>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<ScannerDirectResult>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<ScannerResult>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<ScannerDirectResult>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

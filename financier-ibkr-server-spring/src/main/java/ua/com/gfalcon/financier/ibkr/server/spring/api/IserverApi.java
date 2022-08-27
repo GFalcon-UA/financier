@@ -44,16 +44,18 @@ import ua.com.gfalcon.financier.ibkr.model.AlertRequest;
 import ua.com.gfalcon.financier.ibkr.model.AlertResponse;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
-import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
 import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
+import ua.com.gfalcon.financier.ibkr.model.ScannerParamsList;
+import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 import ua.com.gfalcon.financier.ibkr.model.SecdefInfo;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
 import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
@@ -532,25 +534,27 @@ public interface IserverApi {
     @ApiOperation(value = "Scanner Parameters",
             nickname = "iserverScannerParamsGet",
             notes = "Returns an object contains four lists contain all parameters for scanners",
-            response = Object.class,
+            response = ScannerParamsList.class,
             tags = {"Scanner",})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "An object contains lists", response = Object.class)})
+    @ApiResponses(value = {@ApiResponse(code = 200,
+            message = "An object contains lists",
+            response = ScannerParamsList.class)})
     @RequestMapping(value = "/iserver/scanner/params", produces = {"application/json"}, method = RequestMethod.GET)
-    ResponseEntity<Object> iserverScannerParamsGet();
+    ResponseEntity<ScannerParamsList> iserverScannerParamsGet();
 
 
     @ApiOperation(value = "run scanner to get a list of contracts",
             nickname = "iserverScannerRunPost",
             notes = "",
-            response = Object.class,
+            response = ScannerResult.class,
             responseContainer = "List",
             tags = {"Scanner",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "returns an array",
-            response = Object.class,
+            response = ScannerResult.class,
             responseContainer = "List")})
     @RequestMapping(value = "/iserver/scanner/run", produces = {"application/json"}, method = RequestMethod.POST)
-    ResponseEntity<List<Object>> iserverScannerRunPost(
+    ResponseEntity<List<ScannerResult>> iserverScannerRunPost(
             @ApiParam(value = "scanner-params request", required = true) @Valid @RequestBody ScannerParams body);
 
 

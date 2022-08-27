@@ -16,40 +16,26 @@
 
 package ua.com.gfalcon.financier.ibkr.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;
 
-/**
- * Using a direct connection to the market data farm, will provide results to the requested scanner.
- */
 @Data
-public class DirectScanner {
+public class ScanFilter {
+    @JsonProperty("group")
+    @SerializedName("group")
+    private String group;
 
-    @JsonProperty("instrument")
-    @SerializedName("instrument")
-    private String instrument;
+    @JsonProperty("display_name")
+    @SerializedName("display_name")
+    private String displayName;
 
-    @JsonProperty("locations")
-    @SerializedName("locations")
-    private String locations;
+    @JsonProperty("code")
+    @SerializedName("code")
+    private String code;
 
-    @JsonProperty("scanCode")
-    @SerializedName("scanCode")
-    private String scanCode;
-
-    @JsonProperty("secType")
-    @SerializedName("secType")
-    private String secType;
-
-    /**
-     * Value can be either an integer, double, boolean or a string depending upon the type of filter specified in the
-     * code section.
-     */
-    @JsonProperty("filters")
-    @SerializedName("filters")
-    private List<ScannerFilter> filters;
+    @JsonProperty("type")
+    @SerializedName("type")
+    private String type;
 }

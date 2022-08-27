@@ -36,9 +36,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
-import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirectResult;
 
 
 @Validated
@@ -73,13 +73,13 @@ public interface HmdsApi {
     @ApiOperation(value = "Run Scanner (Beta)",
             nickname = "hmdsScannerPost",
             notes = "Using a direct connection to the market data farm, will provide results to the requested scanner.",
-            response = ScannerResult.class,
+            response = ScannerDirectResult.class,
             tags = {"Scanner",})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "Valid result",
-            response = ScannerResult.class), @ApiResponse(code = 400, message = "Bad request")})
+            response = ScannerDirectResult.class), @ApiResponse(code = 400, message = "Bad request")})
     @RequestMapping(value = "/hmds/scanner", produces = {"application/json"}, method = RequestMethod.POST)
-    ResponseEntity<ScannerResult> hmdsScannerPost(
-            @ApiParam(value = "request body", required = true) @Valid @RequestBody DirectScanner body);
+    ResponseEntity<ScannerDirectResult> hmdsScannerPost(
+            @ApiParam(value = "request body", required = true) @Valid @RequestBody ScannerDirect body);
 
 }

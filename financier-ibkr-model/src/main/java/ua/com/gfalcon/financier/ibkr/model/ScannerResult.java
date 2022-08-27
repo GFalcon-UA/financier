@@ -17,262 +17,67 @@
 package ua.com.gfalcon.financier.ibkr.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
-
-import javax.validation.Valid;
-
-import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-/**
- * ScannerResult
- */
-@Validated
+@Data
 public class ScannerResult {
 
-    @ApiModelProperty(value = "")
-    @JsonProperty("total")
-    @SerializedName("total")
-    private Integer total = null;
+    @JsonProperty("server_id")
+    @SerializedName("server_id")
+    private String serverId;
 
-    @ApiModelProperty(value = "")
-    @JsonProperty("size")
-    @SerializedName("size")
-    private Integer size = null;
-
-    @ApiModelProperty(value = "")
-    @JsonProperty("offset")
-    @SerializedName("offset")
-    private Integer offset = null;
-
-    @ApiModelProperty(value = "")
-    @JsonProperty("scanTime")
-    @SerializedName("scanTime")
-    private String scanTime = null;
-
-    @ApiModelProperty(value = "")
-    @JsonProperty("id")
-    @SerializedName("id")
-    private BigDecimal id = null;
-
-    @ApiModelProperty(value = "")
-    @JsonProperty("position")
-    @SerializedName("position")
-    private String position = null;
-
-    @ApiModelProperty(value = "Contains list of contracts matching the scanner query")
-    /**
-     * Contains list of contracts matching the scanner query
-     **/
-    @JsonProperty("Contracts")
-    @SerializedName("Contracts")
-    private Object contracts = null;
+    @JsonProperty("column_name")
+    @SerializedName("column_name")
+    private String columnName;
 
     /**
-     * Contains list of contracts matching the scanner query
-     *
-     * @return contracts
-     **/
-    @JsonProperty("Contracts")
-    @ApiModelProperty(value = "Contains list of contracts matching the scanner query")
-    public Object getContracts() {
-        return contracts;
-    }
-
-    public void setContracts(Object contracts) {
-        this.contracts = contracts;
-    }
-
-    /**
-     * Get id
-     *
-     * @return id
-     **/
-    @JsonProperty("id")
-    @ApiModelProperty(value = "")
-    @Valid
-    public BigDecimal getId() {
-        return id;
-    }
-
-    public void setId(BigDecimal id) {
-        this.id = id;
-    }
-
-    /**
-     * Get offset
-     *
-     * @return offset
-     **/
-    @JsonProperty("offset")
-    @ApiModelProperty(value = "")
-    public Integer getOffset() {
-        return offset;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    /**
-     * Get position
-     *
-     * @return position
-     **/
-    @JsonProperty("position")
-    @ApiModelProperty(value = "")
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    /**
-     * Get scanTime
-     *
-     * @return scanTime
-     **/
-    @JsonProperty("scanTime")
-    @ApiModelProperty(value = "")
-    public String getScanTime() {
-        return scanTime;
-    }
-
-    public void setScanTime(String scanTime) {
-        this.scanTime = scanTime;
-    }
-
-    /**
-     * Get size
-     *
-     * @return size
-     **/
-    @JsonProperty("size")
-    @ApiModelProperty(value = "")
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
-    /**
-     * Get total
-     *
-     * @return total
-     **/
-    @JsonProperty("total")
-    @ApiModelProperty(value = "")
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(total, size, offset, scanTime, id, position, contracts);
-    }
-
-    @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ScannerResult scannerResult = (ScannerResult) o;
-        return Objects.equals(this.total, scannerResult.total) && Objects.equals(this.size, scannerResult.size)
-                && Objects.equals(this.offset, scannerResult.offset) && Objects.equals(this.scanTime,
-                scannerResult.scanTime) && Objects.equals(this.id, scannerResult.id) && Objects.equals(this.position,
-                scannerResult.position) && Objects.equals(this.contracts, scannerResult.contracts);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class ScannerResult {\n");
-
-        sb.append("    total: ")
-                .append(toIndentedString(total))
-                .append("\n");
-        sb.append("    size: ")
-                .append(toIndentedString(size))
-                .append("\n");
-        sb.append("    offset: ")
-                .append(toIndentedString(offset))
-                .append("\n");
-        sb.append("    scanTime: ")
-                .append(toIndentedString(scanTime))
-                .append("\n");
-        sb.append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb.append("    position: ")
-                .append(toIndentedString(position))
-                .append("\n");
-        sb.append("    contracts: ")
-                .append(toIndentedString(contracts))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    public ScannerResult contracts(Object contracts) {
-        this.contracts = contracts;
-        return this;
-    }
-
-    public ScannerResult id(BigDecimal id) {
-        this.id = id;
-        return this;
-    }
-
-    public ScannerResult offset(Integer offset) {
-        this.offset = offset;
-        return this;
-    }
-
-    public ScannerResult position(String position) {
-        this.position = position;
-        return this;
-    }
-
-    public ScannerResult scanTime(String scanTime) {
-        this.scanTime = scanTime;
-        return this;
-    }
-
-    public ScannerResult size(Integer size) {
-        this.size = size;
-        return this;
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
+     * Underlying symbol.
      */
-    private String toIndentedString(java.lang.Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString()
-                .replace("\n", "\n    ");
-    }
+    @JsonProperty("symbol")
+    @SerializedName("symbol")
+    private String symbol;
 
-    public ScannerResult total(Integer total) {
-        this.total = total;
-        return this;
-    }
+    /**
+     * conid and exchange. Format supports conid or conid@exchange.
+     */
+    @JsonProperty("conidex")
+    @SerializedName("conidex")
+    private String conidex;
+
+    @JsonProperty("con_id")
+    @SerializedName("con_id")
+    private BigDecimal conId;
+
+    /**
+     * List of available chart periods.
+     */
+    @JsonProperty("available_chart_periods")
+    @SerializedName("available_chart_periods")
+    private String availableChartPeriods;
+
+    /**
+     * Contracts company name.
+     */
+    @JsonProperty("company_name")
+    @SerializedName("company_name")
+    private String companyName;
+
+    /**
+     * Format contract name.
+     */
+    @JsonProperty("contract_description_1")
+    @SerializedName("contract_description_1")
+    private String contractDescription;
+
+    @JsonProperty("listing_exchange")
+    @SerializedName("listing_exchange")
+    private String listingExchange;
+
+    @JsonProperty("sec_type")
+    @SerializedName("sec_type")
+    private String secType;
 }
-

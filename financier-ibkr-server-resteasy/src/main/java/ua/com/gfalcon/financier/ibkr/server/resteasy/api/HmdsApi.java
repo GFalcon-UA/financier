@@ -28,9 +28,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import io.swagger.annotations.ApiParam;
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
 import ua.com.gfalcon.financier.ibkr.model.HistoryResult;
-import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirectResult;
 
 @Path("/hmds")
 
@@ -67,14 +67,14 @@ public class HmdsApi {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Run Scanner (Beta)",
             notes = "Using a direct connection to the market data farm, will provide results to the requested scanner.",
-            response = ScannerResult.class,
+            response = ScannerDirectResult.class,
             tags = {"Scanner",})
     @io.swagger.annotations.ApiResponses(value = {@io.swagger.annotations.ApiResponse(code = 200,
             message = "Valid result",
-            response = ScannerResult.class),
+            response = ScannerDirectResult.class),
 
             @io.swagger.annotations.ApiResponse(code = 400, message = "Bad request", response = Void.class)})
-    public Response hmdsScannerPost(@ApiParam(value = "request body", required = true) DirectScanner body,
+    public Response hmdsScannerPost(@ApiParam(value = "request body", required = true) ScannerDirect body,
             @Context SecurityContext securityContext) throws NotFoundException {
         return service.hmdsScannerPost(body, securityContext);
     }

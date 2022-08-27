@@ -40,16 +40,18 @@ import ua.com.gfalcon.financier.ibkr.model.AlertRequest;
 import ua.com.gfalcon.financier.ibkr.model.AlertResponse;
 import ua.com.gfalcon.financier.ibkr.model.AuthStatus;
 import ua.com.gfalcon.financier.ibkr.model.Body;
+import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.BrokerageAccount;
 import ua.com.gfalcon.financier.ibkr.model.Conid;
 import ua.com.gfalcon.financier.ibkr.model.Contract;
 import ua.com.gfalcon.financier.ibkr.model.HistoryData;
-import ua.com.gfalcon.financier.ibkr.model.BooleanConfirmed;
 import ua.com.gfalcon.financier.ibkr.model.MarketDataCancelSingle;
 import ua.com.gfalcon.financier.ibkr.model.ModifyOrder;
 import ua.com.gfalcon.financier.ibkr.model.OrderRequest;
 import ua.com.gfalcon.financier.ibkr.model.OrderStatus;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
+import ua.com.gfalcon.financier.ibkr.model.ScannerParamsList;
+import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 import ua.com.gfalcon.financier.ibkr.model.SecdefInfo;
 import ua.com.gfalcon.financier.ibkr.model.SetAccount;
 import ua.com.gfalcon.financier.ibkr.model.SwitchAccount;
@@ -606,36 +608,37 @@ public class IserverApiController implements IserverApi {
         return new ResponseEntity<List<Object>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Object> iserverScannerParamsGet() {
+    public ResponseEntity<ScannerParamsList> iserverScannerParamsGet() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Object>(
-                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}", Object.class),
-                        HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<ScannerParamsList>(
+                        objectMapper.readValue("{  \"bytes\": [    123,    125  ],  \"empty\": false}",
+                                ScannerParamsList.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<ScannerParamsList>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<ScannerParamsList>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<List<Object>> iserverScannerRunPost(
+    public ResponseEntity<List<ScannerResult>> iserverScannerRunPost(
             @ApiParam(value = "scanner-params request", required = true) @Valid @RequestBody ScannerParams body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<Object>>(objectMapper.readValue("{}", List.class),
-                        HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<List<ScannerResult>>(
+                        (List<ScannerResult>) objectMapper.readerForListOf(ScannerResult.class)
+                                .readValue("{}"), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<List<ScannerResult>>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<List<Object>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<ScannerResult>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<List<SecdefInfo>> iserverSecdefInfoGet(

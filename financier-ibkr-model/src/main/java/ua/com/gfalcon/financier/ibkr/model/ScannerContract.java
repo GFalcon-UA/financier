@@ -14,18 +14,25 @@
  *    limitations under the License.
  */
 
-package ua.com.gfalcon.financier.ibkr.server.jaxrs.api;
+package ua.com.gfalcon.financier.ibkr.model;
 
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
-import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import lombok.Data;
 
-public abstract class HmdsApiService {
-    public abstract Response hmdsHistoryGet(@NotNull Integer conid, @NotNull String period, String bar,
-            Boolean outsideRth, SecurityContext securityContext) throws NotFoundException;
+@Data
+public class ScannerContract {
 
-    public abstract Response hmdsScannerPost(ScannerDirect body,
-            SecurityContext securityContext) throws NotFoundException;
+    @JsonProperty("inScanTime")
+    @SerializedName("inScanTime")
+    private String inScanTime;
+
+    @JsonProperty("distance")
+    @SerializedName("distance")
+    private String distance;
+
+    @JsonProperty("contractID")
+    @SerializedName("contractID")
+    private Integer contractId;
 }

@@ -34,8 +34,10 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirectResult;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
+import ua.com.gfalcon.financier.ibkr.model.ScannerParamsList;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
 /**
@@ -49,42 +51,42 @@ public class ScannerApiTest {
 
     /**
      * Run Scanner (Beta)
-     * <p>
+     * <p/>
      * Using a direct connection to the market data farm, will provide results to the requested scanner.
      *
      * @throws Exception if the Api call fails
      */
     @Test
     public void hmdsScannerPostTest() throws Exception {
-        DirectScanner body = null;
-        ScannerResult response = api.hmdsScannerPost(body);
+        ScannerDirect body = null;
+        ScannerDirectResult response = api.hmdsScannerPost(body);
 
         // TODO: test validations
     }
 
     /**
-     * Scanner Parameters
-     * <p>
+     * Scanner Parameters.
+     * <p/>
      * Returns an object contains four lists contain all parameters for scanners
      *
      * @throws Exception if the Api call fails
      */
     @Test
     public void iserverScannerParamsGetTest() throws Exception {
-        Object response = api.iserverScannerParamsGet();
+        ScannerParamsList response = api.iserverScannerParamsGet();
 
         // TODO: test validations
     }
 
     /**
-     * run scanner to get a list of contracts
+     * run scanner to get a list of contracts.
      *
      * @throws Exception if the Api call fails
      */
     @Test
     public void iserverScannerRunPostTest() throws Exception {
         ScannerParams body = null;
-        List<Object> response = api.iserverScannerRunPost(body);
+        List<ScannerResult> response = api.iserverScannerRunPost(body);
 
         // TODO: test validations
     }

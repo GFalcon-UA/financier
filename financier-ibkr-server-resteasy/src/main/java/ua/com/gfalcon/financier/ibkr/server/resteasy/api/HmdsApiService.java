@@ -19,11 +19,11 @@ package ua.com.gfalcon.financier.ibkr.server.resteasy.api;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
 
 public interface HmdsApiService {
     Response hmdsHistoryGet(Integer conid, String period, String bar, Boolean outsideRth,
             SecurityContext securityContext) throws NotFoundException;
 
-    Response hmdsScannerPost(DirectScanner body, SecurityContext securityContext) throws NotFoundException;
+    Response hmdsScannerPost(ScannerDirect body, SecurityContext securityContext) throws NotFoundException;
 }

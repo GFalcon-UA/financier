@@ -27,8 +27,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import ua.com.gfalcon.financier.ibkr.model.DirectScanner;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirect;
+import ua.com.gfalcon.financier.ibkr.model.ScannerDirectResult;
 import ua.com.gfalcon.financier.ibkr.model.ScannerParams;
+import ua.com.gfalcon.financier.ibkr.model.ScannerParamsList;
 import ua.com.gfalcon.financier.ibkr.model.ScannerResult;
 
 /**
@@ -51,20 +53,22 @@ public interface ScannerApi {
     @ApiOperation(value = "Run Scanner (Beta)", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "Valid result",
-            response = ScannerResult.class), @ApiResponse(code = 400, message = "Bad request")})
-    public ScannerResult hmdsScannerPost(DirectScanner body);
+            response = ScannerDirectResult.class), @ApiResponse(code = 400, message = "Bad request")})
+    public ScannerDirectResult hmdsScannerPost(ScannerDirect body);
 
     /**
-     * Scanner Parameters
-     * <p>
+     * Scanner Parameters.
+     * <p/>
      * Returns an object contains four lists contain all parameters for scanners
      */
     @GET
     @Path("/iserver/scanner/params")
     @Produces({"application/json"})
     @ApiOperation(value = "Scanner Parameters", tags = {})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "An object contains lists", response = Object.class)})
-    public Object iserverScannerParamsGet();
+    @ApiResponses(value = {@ApiResponse(code = 200,
+            message = "An object contains lists",
+            response = ScannerParamsList.class)})
+    public ScannerParamsList iserverScannerParamsGet();
 
     /**
      * run scanner to get a list of contracts
@@ -75,8 +79,8 @@ public interface ScannerApi {
     @ApiOperation(value = "run scanner to get a list of contracts", tags = {})
     @ApiResponses(value = {@ApiResponse(code = 200,
             message = "returns an array",
-            response = Object.class,
+            response = ScannerResult.class,
             responseContainer = "List")})
-    public List<Object> iserverScannerRunPost(ScannerParams body);
+    public List<ScannerResult> iserverScannerRunPost(ScannerParams body);
 }
 
