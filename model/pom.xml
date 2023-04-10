@@ -45,15 +45,26 @@
             <artifactId>money-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
-            <type>pom</type>
+            <groupId>org.javamoney.moneta</groupId>
+            <artifactId>moneta-convert-ecb</artifactId>
+            <version>1.4.2</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-agroal</artifactId>
-            <type>pom</type>
+            <groupId>org.javamoney.moneta</groupId>
+            <artifactId>moneta-core</artifactId>
+            <version>1.4.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.javamoney.moneta</groupId>
+            <artifactId>moneta-convert</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javamoney.moneta</groupId>
+            <artifactId>moneta-convert-imf</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
     </dependencies>
 
 </project>
