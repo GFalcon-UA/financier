@@ -5,8 +5,7 @@
     <parent>
         <artifactId>financier</artifactId>
         <groupId>ua.com.gfalcon</groupId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
