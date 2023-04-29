@@ -69,9 +69,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/front/node/
-/front/node_modules/
-/front/dist
+/node/
+/dist
 
 #HELP.md
 target/
@@ -106,3 +105,20 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+
+# Node
+/node_modules
+
+# IDEs and editors
+.idea/
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+
