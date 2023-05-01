@@ -39,6 +39,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DailyBarId implements Serializable {
 
+    private static final long serialVersionUID = 7687897637441545443L;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticker", foreignKey = @ForeignKey(name = "fk_instrument_ticker"))
     private Instrument ticker;

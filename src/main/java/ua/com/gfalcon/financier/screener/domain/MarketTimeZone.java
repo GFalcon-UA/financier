@@ -16,6 +16,9 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
+import java.util.TimeZone;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -37,8 +40,9 @@ import lombok.Setter;
 @Entity(name = "MarketTimeZone")
 @Table(name = "time_zones")
 @NoArgsConstructor
-public class MarketTimeZone extends VersionedEntity {
+public class MarketTimeZone extends VersionedEntity implements Serializable {
 
+    private static final long serialVersionUID = -5393980131169585516L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "time_zones_seq")
     @Column(name = "id", nullable = false)
@@ -48,6 +52,14 @@ public class MarketTimeZone extends VersionedEntity {
     @Column(name = "name", nullable = false, length = 50, unique = true)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
+
+    public MarketTimeZone(String name) {
+        this.name = name;
+    }
+
+    public MarketTimeZone(TimeZone tz) {
+        this(tz.getID());
+    }
 
 }
 

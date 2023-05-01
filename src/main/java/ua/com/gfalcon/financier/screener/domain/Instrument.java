@@ -16,6 +16,7 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.hibernate.Length;
@@ -41,7 +42,9 @@ import lombok.Setter;
 @Entity(name = "Instrument")
 @Table(name = "instruments")
 @NoArgsConstructor
-public class Instrument extends VersionedEntity {
+public class Instrument extends VersionedEntity implements Serializable {
+
+    private static final long serialVersionUID = 3820633312033108114L;
 
     @Id
     @Column(name = "ticker", length = 20)
