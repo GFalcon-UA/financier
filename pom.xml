@@ -33,6 +33,8 @@
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
         <ossindex-maven-plugin.version>3.2.0</ossindex-maven-plugin.version>
+        <pitest-maven.version>1.13.0</pitest-maven.version>
+        <pitest-junit5-plugin.version>1.1.2</pitest-junit5-plugin.version>
 <!--        <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>-->
     </properties>
     <dependencies>
@@ -588,8 +590,75 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <executions>
+                </executions>
+            </plugin>
+
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>${pitest-maven.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.pitest</groupId>
+                            <artifactId>pitest-junit5-plugin</artifactId>
+                            <version>${pitest-junit5-plugin.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <mutators>
+                            <mutator>ALL</mutator>
+                        </mutators>
+                        <threads>4</threads>
+                        <timestampedReports>false</timestampedReports>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pitest</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>mutationCoverage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <reportsDirectory>${project.build.directory}/pit-custom-output-dir</reportsDirectory>
+                    <sourceDataFormats>
+                        <sourceDataFormat>HTML</sourceDataFormat>
+                    </sourceDataFormats>
+                    <siteReportName>my-pit-report-name</siteReportName>
+                    <siteReportDescription>my pit report custom description</siteReportDescription>
+                    <siteReportDirectory>pit-custom-site-directory</siteReportDirectory>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
