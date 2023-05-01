@@ -16,8 +16,11 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.ListPagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.Instrument;
@@ -26,5 +29,11 @@ import ua.com.gfalcon.financier.screener.domain.Instrument;
  * Instrument DAO.
  */
 @Repository
-public interface InstrumentRepository extends CrudRepository<Instrument, String>,
-        PagingAndSortingRepository<Instrument, String> {}
+public interface InstrumentRepository extends ListCrudRepository<Instrument, String>,
+        ListPagingAndSortingRepository<Instrument, String> {
+
+    @Query(value = "SELECT i.ticker FROM instruments as i", nativeQuery = true)
+    List<String> getTickers();
+
+
+}

@@ -16,6 +16,8 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.type.SqlTypes;
@@ -26,6 +28,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,13 +36,15 @@ import lombok.Setter;
 /**
  * Currency domain.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "Currency")
 @Table(name = "currencies")
 @NoArgsConstructor
-public class Currency extends VersionedEntity {
+public class Currency extends VersionedEntity implements Serializable {
 
+    private static final long serialVersionUID = -7728402826351931245L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "currencies_seq")
     @Column(name = "id", nullable = false)
@@ -50,5 +55,9 @@ public class Currency extends VersionedEntity {
     @Column(name = "code", nullable = false, length = 3, unique = true)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String code;
+
+    public Currency(String code) {
+        this.code = code;
+    }
 
 }

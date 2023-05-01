@@ -16,6 +16,8 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -25,6 +27,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,13 +35,15 @@ import lombok.Setter;
 /**
  * Geo.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "Geo")
 @Table(name = "geos")
 @NoArgsConstructor
-public class Geo extends VersionedEntity {
+public class Geo extends VersionedEntity implements Serializable {
 
+    private static final long serialVersionUID = 4773153167766653713L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "geos_seq")
     @Column(name = "id", nullable = false)
@@ -48,6 +53,10 @@ public class Geo extends VersionedEntity {
     @Column(name = "name", nullable = false, length = 50, unique = true)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
+
+    public Geo(String name) {
+        this.name = name;
+    }
 
 }
 

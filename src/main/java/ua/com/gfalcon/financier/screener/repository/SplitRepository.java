@@ -16,7 +16,7 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.Split;
@@ -25,4 +25,6 @@ import ua.com.gfalcon.financier.screener.domain.Split;
  * Split DAO.
  */
 @Repository
-public interface SplitRepository extends CrudRepository<Split, Integer> {}
+public interface SplitRepository extends ListCrudRepository<Split, Integer> {
+
+}

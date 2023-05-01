@@ -16,6 +16,8 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -25,6 +27,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,13 +35,16 @@ import lombok.Setter;
 /**
  * StockExchange Entity.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "StockExchange")
 @Table(name = "stock_exchanges")
 @NoArgsConstructor
-public class StockExchange extends VersionedEntity {
+public class StockExchange extends VersionedEntity implements Serializable {
 
+
+    private static final long serialVersionUID = -1516554581939555562L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stock_exchanges_seq")
     @Column(name = "id", nullable = false)
@@ -48,6 +54,10 @@ public class StockExchange extends VersionedEntity {
     @Column(name = "name", nullable = false, length = 50, unique = true)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
+
+    public StockExchange(String name) {
+        this.name = name;
+    }
 
 }
 

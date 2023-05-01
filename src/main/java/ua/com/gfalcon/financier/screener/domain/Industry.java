@@ -16,6 +16,8 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -28,6 +30,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,13 +38,15 @@ import lombok.Setter;
 /**
  * Industry.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "Industry")
 @Table(name = "industries")
 @NoArgsConstructor
-public class Industry extends VersionedEntity {
+public class Industry extends VersionedEntity implements Serializable {
 
+    private static final long serialVersionUID = -7295296563020875587L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "industries_seq")
     @Column(name = "id", nullable = false)
@@ -54,4 +59,19 @@ public class Industry extends VersionedEntity {
     @ManyToOne
     @JoinColumn(name = "sector_id", foreignKey = @ForeignKey(name = "INDUSTRIES_sectors_id_fk"))
     private Sector sector;
+
+    /**
+     * Constructor.
+     *
+     * @param industry name of industry
+     * @param sector sector object
+     */
+    public Industry(String industry, Sector sector) {
+        this.name = industry;
+        this.sector = sector;
+        if (sector.getIndustries() != null) {
+            sector.getIndustries().add(this);
+        }
+    }
+
 }

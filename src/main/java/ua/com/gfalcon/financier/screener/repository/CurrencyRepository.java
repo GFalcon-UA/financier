@@ -16,8 +16,10 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import java.util.Optional;
+
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.ListPagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.Currency;
@@ -27,5 +29,9 @@ import ua.com.gfalcon.financier.screener.domain.Currency;
  * Currency DAO.
  */
 @Repository
-public interface CurrencyRepository extends CrudRepository<Currency, Integer>,
-        PagingAndSortingRepository<Currency, Integer> {}
+public interface CurrencyRepository extends ListCrudRepository<Currency, Integer>,
+        ListPagingAndSortingRepository<Currency, Integer> {
+
+    Optional<Currency> findByCode(String code);
+
+}

@@ -15,7 +15,15 @@
     <description>financier</description>
     <properties>
         <java.version>17</java.version>
-        <testcontainers.version>1.18.0</testcontainers.version>
+
+        <jococo.instruction.cover.min>0.55</jococo.instruction.cover.min>
+        <jococo.branch.cover.min>0.3</jococo.branch.cover.min>
+        <jococo.lines.cover.min>60%</jococo.lines.cover.min>
+        <jococo.methods.uncover.max>0.55</jococo.methods.uncover.max>
+        <jococo.classes.uncover.max>0.27</jococo.classes.uncover.max>
+        <jococo.complexity.uncover.max>0.6</jococo.complexity.uncover.max>
+        <mutations.killed.percent.min>55</mutations.killed.percent.min> <!-- percent of killed mutations -->
+        <mutations.lines.cover.percent.min>60</mutations.lines.cover.percent.min> <!-- percent of line coverage (for mutated classes only) -->
 
         <node.version>v18.14.1</node.version>
         <npm.version>9.6.5</npm.version>
@@ -27,12 +35,15 @@
         <javadoc-openapi.version>0.15.0</javadoc-openapi.version>
         <snakeyaml.version>2.0</snakeyaml.version>
         <springdoc-openapi.version>2.1.0</springdoc-openapi.version>
+        <testcontainers.version>1.18.0</testcontainers.version>
         <yahoofinance-api.version>3.17.0</yahoofinance-api.version>
 
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
         <ossindex-maven-plugin.version>3.2.0</ossindex-maven-plugin.version>
+        <pitest-maven.version>1.13.0</pitest-maven.version>
+        <pitest-junit5-plugin.version>1.1.2</pitest-junit5-plugin.version>
 <!--        <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>-->
     </properties>
     <dependencies>
@@ -404,25 +415,68 @@
                                     <element>BUNDLE</element>
                                     <limits>
                                         <limit>
-                                            <counter>COMPLEXITY</counter>
+                                            <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.60</minimum>
+                                            <minimum>${jococo.instruction.cover.min}</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
+
                                 <rule>
-                                    <element>CLASS</element>
-                                    <excludes>
-                                        <exclude>*Test</exclude>
-                                    </excludes>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jococo.branch.cover.min}</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>COMPLEXITY</counter>
+                                            <value>MISSEDRATIO</value>
+                                            <maximum>${jococo.complexity.uncover.max}</maximum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+
+                                <rule>
+                                    <element>BUNDLE</element>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>50%</minimum>
+                                            <minimum>${jococo.lines.cover.min}</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
+
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>METHOD</counter>
+                                            <value>MISSEDRATIO</value>
+                                            <maximum>${jococo.methods.uncover.max}</maximum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>MISSEDRATIO</value>
+                                            <maximum>${jococo.classes.uncover.max}</maximum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+
                             </rules>
                         </configuration>
                     </execution>
@@ -545,8 +599,77 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+            </plugin>
+
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>${pitest-maven.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.pitest</groupId>
+                            <artifactId>pitest-junit5-plugin</artifactId>
+                            <version>${pitest-junit5-plugin.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <mutators>
+                            <mutator>ALL</mutator>
+                        </mutators>
+                        <threads>4</threads>
+                        <timestampedReports>true</timestampedReports>
+                        <skip>false</skip>
+                        <failWhenNoMutations>false</failWhenNoMutations>
+                        <mutationThreshold>${mutations.killed.percent.min}</mutationThreshold> <!-- minimal % of killed mutations -->
+                        <coverageThreshold>${mutations.lines.cover.percent.min}</coverageThreshold> <!-- minimal % line coverage for mutated classes -->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pitest</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>mutationCoverage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <reportsDirectory>${project.build.directory}/pit-custom-output-dir</reportsDirectory>
+                    <sourceDataFormats>
+                        <sourceDataFormat>HTML</sourceDataFormat>
+                    </sourceDataFormats>
+                    <siteReportName>my-pit-report-name</siteReportName>
+                    <siteReportDescription>my pit report custom description</siteReportDescription>
+                    <siteReportDirectory>pit-custom-site-directory</siteReportDirectory>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>

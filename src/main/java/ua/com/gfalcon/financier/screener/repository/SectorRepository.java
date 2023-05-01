@@ -16,7 +16,9 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.Sector;
@@ -25,4 +27,8 @@ import ua.com.gfalcon.financier.screener.domain.Sector;
  * Sector DAO.
  */
 @Repository
-public interface SectorRepository extends CrudRepository<Sector, Integer> {}
+public interface SectorRepository extends ListCrudRepository<Sector, Integer> {
+
+    Optional<Sector> findByName(String name);
+
+}
