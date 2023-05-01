@@ -22,6 +22,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ import lombok.Setter;
 /**
  * DailyBar.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "DailyBar")

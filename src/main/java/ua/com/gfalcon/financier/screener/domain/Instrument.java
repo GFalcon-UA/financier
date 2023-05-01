@@ -30,6 +30,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +38,7 @@ import lombok.Setter;
 /**
  * Instrument.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "Instrument")
@@ -88,5 +90,9 @@ public class Instrument extends VersionedEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "daily_history_provider")
     private DataProvider dailyHistoryProvider;
+
+    public Instrument(String ticker) {
+        this.ticker = ticker;
+    }
 
 }

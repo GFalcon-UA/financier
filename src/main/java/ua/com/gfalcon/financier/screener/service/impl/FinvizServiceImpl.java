@@ -31,7 +31,9 @@ public class FinvizServiceImpl implements FinvizService {
 
     @Override
     public FinvizStock getStock(String ticker) {
+        log.info("Request stock data from Finviz for ticker {}", ticker);
         Stock stock = new Stock(ticker);
+        log.info("Received stock data from Finviz for ticker {}", ticker);
         return FinvizStock.builder()
                 .ticker(stock.getTicker())
                 .name(stock.getCompanyName())

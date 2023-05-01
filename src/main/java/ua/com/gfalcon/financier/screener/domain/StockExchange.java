@@ -27,6 +27,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,7 @@ import lombok.Setter;
 /**
  * StockExchange Entity.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "StockExchange")

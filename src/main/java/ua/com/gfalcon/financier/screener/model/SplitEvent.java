@@ -5,8 +5,10 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import lombok.Builder;
+import lombok.Generated;
 
 @Builder
+@Generated
 public record SplitEvent(String ticker, LocalDate date, BigDecimal numerator, BigDecimal denominator) {
 
     /**

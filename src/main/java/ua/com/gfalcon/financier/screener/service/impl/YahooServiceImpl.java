@@ -51,6 +51,9 @@ public class YahooServiceImpl implements YahooService {
 
         try {
             Stock stock = YahooFinance.get(ticker, false);
+            if (stock == null) {
+                throw new YahooFinanceException("YahooFinance return null for ticker ");
+            }
             List<HistoricalSplit> splitList = stock.getSplitHistory(calendar);
             List<HistoricalQuote> history = stock.getHistory(calendar, Interval.DAILY);
             stockBuilder.ticker(stock.getSymbol());

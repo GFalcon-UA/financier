@@ -5,8 +5,10 @@ import java.util.SortedSet;
 import java.util.TimeZone;
 
 import lombok.Builder;
+import lombok.Generated;
 
 @Builder
+@Generated
 public record YahooStock(String ticker, String name, String currency, Set<SplitEvent> splitHistory,
                          SortedSet<Bar> history, String stockExchange, TimeZone timeZone) implements Stock,
         SplitHistory, MarketHistory {

@@ -1,8 +1,10 @@
 package ua.com.gfalcon.financier.screener.model;
 
 import lombok.Builder;
+import lombok.Generated;
 
 @Builder
+@Generated
 public record FinvizStock(String ticker, String name, String sector, String industry, String geo, String index,
                           String pe, String eps, String insiderOwn, String shsOutstand, String perfWeek,
                           String marketCap, String forwardPE, String epsNextY, String insiderTrans, String shsFloat,

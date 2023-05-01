@@ -3,6 +3,7 @@ package ua.com.gfalcon.financier.screener.service;
 import java.util.List;
 
 import lombok.AccessLevel;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 import ua.com.gfalcon.finviz.screener.filter.FilterParameter;
 import ua.com.gfalcon.finviz.screener.filter.params.AverageTrueRange;
@@ -15,6 +16,7 @@ import ua.com.gfalcon.finviz.screener.filter.params.Price;
 /**
  * Finviz screener preset configurations.
  */
+@Generated
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FinvizPresets {
 
