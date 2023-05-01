@@ -31,7 +31,7 @@
 
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+        <maven-checkstyle-plugin.version>3.2.2</maven-checkstyle-plugin.version>
         <ossindex-maven-plugin.version>3.2.0</ossindex-maven-plugin.version>
 <!--        <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>-->
     </properties>
