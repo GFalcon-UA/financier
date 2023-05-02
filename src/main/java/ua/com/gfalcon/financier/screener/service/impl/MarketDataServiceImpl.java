@@ -35,7 +35,7 @@ import ua.com.gfalcon.financier.screener.repository.MarketTimeZoneRepository;
 import ua.com.gfalcon.financier.screener.repository.SectorRepository;
 import ua.com.gfalcon.financier.screener.repository.SplitRepository;
 import ua.com.gfalcon.financier.screener.repository.StockExchangeRepository;
-import static ua.com.gfalcon.financier.screener.service.FinvizPresets.FOR_TRADING_FILTER;
+import ua.com.gfalcon.financier.screener.service.FinvizPresets;
 import ua.com.gfalcon.financier.screener.service.FinvizService;
 import ua.com.gfalcon.financier.screener.service.MarketDataService;
 import ua.com.gfalcon.financier.screener.service.YahooService;
@@ -66,7 +66,7 @@ public class MarketDataServiceImpl implements MarketDataService {
     @Scheduled(cron = "0 30 6 * * TUE-SAT")
     public long loadMarketData() {
         log.info("Start load daily data");
-        Set<String> tickers = finviz.findTickers(FOR_TRADING_FILTER);
+        Set<String> tickers = finviz.findTickers(FinvizPresets.FOR_TRADING_FILTER);
 
         int i = 0;
         for (String ticker : tickers) {

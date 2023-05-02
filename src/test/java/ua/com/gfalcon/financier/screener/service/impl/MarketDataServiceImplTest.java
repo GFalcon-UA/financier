@@ -20,11 +20,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 import ua.com.gfalcon.financier.screener.domain.Currency;
 import ua.com.gfalcon.financier.screener.domain.Geo;
 import ua.com.gfalcon.financier.screener.domain.Industry;
@@ -52,10 +51,11 @@ import ua.com.gfalcon.financier.screener.service.YahooService;
 
 @SpringBootTest
 @Transactional
+@RequiredArgsConstructor
 class MarketDataServiceImplTest {
 
-    private final YahooService yahoo;
-    private final FinvizService finviz;
+    private YahooService yahoo;
+    private FinvizService finviz;
     private final InstrumentRepository instrumentRepository;
     private final CurrencyRepository currencyRepository;
     private final StockExchangeRepository stockExchangeRepository;
@@ -66,31 +66,13 @@ class MarketDataServiceImplTest {
     private final SplitRepository splitRepository;
     private final DailyBarRepository dailyBarRepository;
 
-    private final EntityManager entityManager;
-
     private MarketDataService service;
 
-    @Autowired
-    public MarketDataServiceImplTest(InstrumentRepository instrumentRepository, CurrencyRepository currencyRepository,
-            StockExchangeRepository stockExchangeRepository, MarketTimeZoneRepository marketTimeZoneRepository,
-            IndustryRepository industryRepository, SectorRepository sectorRepository, GeoRepository geoRepository,
-            SplitRepository splitRepository, DailyBarRepository dailyBarRepository, EntityManager entityManager) {
-        this.instrumentRepository = instrumentRepository;
-        this.currencyRepository = currencyRepository;
-        this.stockExchangeRepository = stockExchangeRepository;
-        this.marketTimeZoneRepository = marketTimeZoneRepository;
-        this.industryRepository = industryRepository;
-        this.sectorRepository = sectorRepository;
-        this.geoRepository = geoRepository;
-        this.splitRepository = splitRepository;
-        this.dailyBarRepository = dailyBarRepository;
-        this.entityManager = entityManager;
-        this.yahoo = Mockito.mock(YahooService.class);
-        this.finviz = Mockito.mock(FinvizService.class);
-    }
 
     @BeforeEach
     void setUp() {
+        this.yahoo = Mockito.mock(YahooService.class);
+        this.finviz = Mockito.mock(FinvizService.class);
         service = new MarketDataServiceImpl(yahoo, finviz, instrumentRepository, currencyRepository,
                 stockExchangeRepository, marketTimeZoneRepository, industryRepository, sectorRepository, geoRepository,
                 splitRepository, dailyBarRepository);
@@ -141,7 +123,7 @@ class MarketDataServiceImplTest {
                         .high(BigDecimal.ONE)
                         .open(BigDecimal.ONE)
                         .close(BigDecimal.ONE)
-                        .volume(2l)
+                        .volume(2L)
                         .build(), Bar.builder()
                         .ticker(ticker)
                         .timestamp(lastBar.minusDays(1))
@@ -150,7 +132,7 @@ class MarketDataServiceImplTest {
                         .high(BigDecimal.ONE)
                         .open(BigDecimal.ONE)
                         .close(BigDecimal.ONE)
-                        .volume(2l)
+                        .volume(2L)
                         .build(), Bar.builder()
                         .ticker(ticker)
                         .timestamp(lastBar.minusDays(2))
@@ -159,7 +141,7 @@ class MarketDataServiceImplTest {
                         .high(BigDecimal.ONE)
                         .open(BigDecimal.ONE)
                         .close(BigDecimal.ONE)
-                        .volume(2l)
+                        .volume(2L)
                         .build())))
                 .build();
         Instrument instrument = instrumentRepository.save(new Instrument(ticker));
