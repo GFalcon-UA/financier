@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static ua.com.gfalcon.financier.screener.service.FinvizPresets.FOR_TRADING_FILTER;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ua.com.gfalcon.financier.screener.domain.Currency;
@@ -35,6 +35,7 @@ import ua.com.gfalcon.financier.screener.repository.MarketTimeZoneRepository;
 import ua.com.gfalcon.financier.screener.repository.SectorRepository;
 import ua.com.gfalcon.financier.screener.repository.SplitRepository;
 import ua.com.gfalcon.financier.screener.repository.StockExchangeRepository;
+import static ua.com.gfalcon.financier.screener.service.FinvizPresets.FOR_TRADING_FILTER;
 import ua.com.gfalcon.financier.screener.service.FinvizService;
 import ua.com.gfalcon.financier.screener.service.MarketDataService;
 import ua.com.gfalcon.financier.screener.service.YahooService;
@@ -62,6 +63,7 @@ public class MarketDataServiceImpl implements MarketDataService {
 
     @Override
     @Transactional
+    @Scheduled(cron = "0 30 6 * * TUE-SAT")
     public long loadMarketData() {
         log.info("Start load daily data");
         Set<String> tickers = finviz.findTickers(FOR_TRADING_FILTER);
@@ -70,7 +72,6 @@ public class MarketDataServiceImpl implements MarketDataService {
         for (String ticker : tickers) {
             try {
                 this.load(ticker);
-                log.info("===========================================");
                 log.info("{} is LOADED : {} / {}", ticker, ++i, tickers.size());
                 log.info("===========================================");
                 Thread.sleep(5_000);
@@ -155,8 +156,8 @@ public class MarketDataServiceImpl implements MarketDataService {
             instrument.setLastBarDate(max);
             instrument.setDailyHistoryProvider(DataProvider.YAHOO);
             Instrument save = instrumentRepository.save(instrument);
-            log.info("Instrument {} is updated v {}; last saved bar {}",
-                    save.getTicker(), save.getVersion(), save.getLastBarDate());
+            log.info("Instrument {}; last saved bar {}",
+                    save.getTicker(), save.getLastBarDate());
             return save;
         } else {
             log.info("No bars for {}", instrument.getTicker());
