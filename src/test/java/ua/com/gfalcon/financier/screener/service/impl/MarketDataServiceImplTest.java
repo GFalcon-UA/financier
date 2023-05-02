@@ -20,10 +20,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.RequiredArgsConstructor;
 import ua.com.gfalcon.financier.screener.domain.Currency;
 import ua.com.gfalcon.financier.screener.domain.Geo;
 import ua.com.gfalcon.financier.screener.domain.Industry;
@@ -51,11 +52,10 @@ import ua.com.gfalcon.financier.screener.service.YahooService;
 
 @SpringBootTest
 @Transactional
-@RequiredArgsConstructor
 class MarketDataServiceImplTest {
 
-    private YahooService yahoo;
-    private FinvizService finviz;
+    private final YahooService yahoo = Mockito.mock(YahooService.class);
+    private final FinvizService finviz = Mockito.mock(FinvizService.class);
     private final InstrumentRepository instrumentRepository;
     private final CurrencyRepository currencyRepository;
     private final StockExchangeRepository stockExchangeRepository;
@@ -68,11 +68,21 @@ class MarketDataServiceImplTest {
 
     private MarketDataService service;
 
+    @Autowired
+    public MarketDataServiceImplTest(ApplicationContext context) {
+        this.instrumentRepository = context.getBean(InstrumentRepository.class);
+        this.currencyRepository = context.getBean(CurrencyRepository.class);
+        this.stockExchangeRepository = context.getBean(StockExchangeRepository.class);
+        this.marketTimeZoneRepository = context.getBean(MarketTimeZoneRepository.class);
+        this.industryRepository = context.getBean(IndustryRepository.class);
+        this.sectorRepository = context.getBean(SectorRepository.class);
+        this.geoRepository = context.getBean(GeoRepository.class);
+        this.splitRepository = context.getBean(SplitRepository.class);
+        this.dailyBarRepository = context.getBean(DailyBarRepository.class);
+    }
 
     @BeforeEach
     void setUp() {
-        this.yahoo = Mockito.mock(YahooService.class);
-        this.finviz = Mockito.mock(FinvizService.class);
         service = new MarketDataServiceImpl(yahoo, finviz, instrumentRepository, currencyRepository,
                 stockExchangeRepository, marketTimeZoneRepository, industryRepository, sectorRepository, geoRepository,
                 splitRepository, dailyBarRepository);
