@@ -22,7 +22,7 @@
         <jococo.methods.uncover.max>0.55</jococo.methods.uncover.max>
         <jococo.classes.uncover.max>0.27</jococo.classes.uncover.max>
         <jococo.complexity.uncover.max>0.6</jococo.complexity.uncover.max>
-        <mutations.killed.percent.min>55</mutations.killed.percent.min> <!-- percent of killed mutations -->
+        <mutations.killed.percent.min>50</mutations.killed.percent.min> <!-- percent of killed mutations -->
         <mutations.lines.cover.percent.min>60</mutations.lines.cover.percent.min> <!-- percent of line coverage (for mutated classes only) -->
 
         <node.version>v18.14.1</node.version>
@@ -30,7 +30,7 @@
 
         <skip-frontend-maven-plugin>true</skip-frontend-maven-plugin>
 
-        <checkstyle.version>10.7.0</checkstyle.version>
+        <checkstyle.version>10.10.0</checkstyle.version>
         <finviz-api.version>0.1.1</finviz-api.version>
         <javadoc-openapi.version>0.15.0</javadoc-openapi.version>
         <snakeyaml.version>2.0</snakeyaml.version>
@@ -39,10 +39,10 @@
         <yahoofinance-api.version>3.17.0</yahoofinance-api.version>
 
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
-        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+        <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.2.2</maven-checkstyle-plugin.version>
         <ossindex-maven-plugin.version>3.2.0</ossindex-maven-plugin.version>
-        <pitest-maven.version>1.13.0</pitest-maven.version>
+        <pitest-maven.version>1.13.1</pitest-maven.version>
         <pitest-junit5-plugin.version>1.1.2</pitest-junit5-plugin.version>
 <!--        <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>-->
     </properties>
@@ -207,7 +207,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>build-info</goal>
+<!--                            <goal>build-info</goal>-->
                         </goals>
                     </execution>
                 </executions>

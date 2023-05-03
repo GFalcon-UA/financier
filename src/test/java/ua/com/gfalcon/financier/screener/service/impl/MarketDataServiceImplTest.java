@@ -22,9 +22,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityManager;
 import ua.com.gfalcon.financier.screener.domain.Currency;
 import ua.com.gfalcon.financier.screener.domain.Geo;
 import ua.com.gfalcon.financier.screener.domain.Industry;
@@ -54,8 +54,8 @@ import ua.com.gfalcon.financier.screener.service.YahooService;
 @Transactional
 class MarketDataServiceImplTest {
 
-    private final YahooService yahoo;
-    private final FinvizService finviz;
+    private final YahooService yahoo = Mockito.mock(YahooService.class);
+    private final FinvizService finviz = Mockito.mock(FinvizService.class);
     private final InstrumentRepository instrumentRepository;
     private final CurrencyRepository currencyRepository;
     private final StockExchangeRepository stockExchangeRepository;
@@ -66,27 +66,19 @@ class MarketDataServiceImplTest {
     private final SplitRepository splitRepository;
     private final DailyBarRepository dailyBarRepository;
 
-    private final EntityManager entityManager;
-
     private MarketDataService service;
 
     @Autowired
-    public MarketDataServiceImplTest(InstrumentRepository instrumentRepository, CurrencyRepository currencyRepository,
-            StockExchangeRepository stockExchangeRepository, MarketTimeZoneRepository marketTimeZoneRepository,
-            IndustryRepository industryRepository, SectorRepository sectorRepository, GeoRepository geoRepository,
-            SplitRepository splitRepository, DailyBarRepository dailyBarRepository, EntityManager entityManager) {
-        this.instrumentRepository = instrumentRepository;
-        this.currencyRepository = currencyRepository;
-        this.stockExchangeRepository = stockExchangeRepository;
-        this.marketTimeZoneRepository = marketTimeZoneRepository;
-        this.industryRepository = industryRepository;
-        this.sectorRepository = sectorRepository;
-        this.geoRepository = geoRepository;
-        this.splitRepository = splitRepository;
-        this.dailyBarRepository = dailyBarRepository;
-        this.entityManager = entityManager;
-        this.yahoo = Mockito.mock(YahooService.class);
-        this.finviz = Mockito.mock(FinvizService.class);
+    public MarketDataServiceImplTest(ApplicationContext context) {
+        this.instrumentRepository = context.getBean(InstrumentRepository.class);
+        this.currencyRepository = context.getBean(CurrencyRepository.class);
+        this.stockExchangeRepository = context.getBean(StockExchangeRepository.class);
+        this.marketTimeZoneRepository = context.getBean(MarketTimeZoneRepository.class);
+        this.industryRepository = context.getBean(IndustryRepository.class);
+        this.sectorRepository = context.getBean(SectorRepository.class);
+        this.geoRepository = context.getBean(GeoRepository.class);
+        this.splitRepository = context.getBean(SplitRepository.class);
+        this.dailyBarRepository = context.getBean(DailyBarRepository.class);
     }
 
     @BeforeEach
@@ -141,7 +133,7 @@ class MarketDataServiceImplTest {
                         .high(BigDecimal.ONE)
                         .open(BigDecimal.ONE)
                         .close(BigDecimal.ONE)
-                        .volume(2l)
+                        .volume(2L)
                         .build(), Bar.builder()
                         .ticker(ticker)
                         .timestamp(lastBar.minusDays(1))
@@ -150,7 +142,7 @@ class MarketDataServiceImplTest {
                         .high(BigDecimal.ONE)
                         .open(BigDecimal.ONE)
                         .close(BigDecimal.ONE)
-                        .volume(2l)
+                        .volume(2L)
                         .build(), Bar.builder()
                         .ticker(ticker)
                         .timestamp(lastBar.minusDays(2))
@@ -159,7 +151,7 @@ class MarketDataServiceImplTest {
                         .high(BigDecimal.ONE)
                         .open(BigDecimal.ONE)
                         .close(BigDecimal.ONE)
-                        .volume(2l)
+                        .volume(2L)
                         .build())))
                 .build();
         Instrument instrument = instrumentRepository.save(new Instrument(ticker));
