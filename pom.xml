@@ -35,6 +35,7 @@
         <javadoc-openapi.version>0.15.0</javadoc-openapi.version>
         <snakeyaml.version>2.0</snakeyaml.version>
         <springdoc-openapi.version>2.1.0</springdoc-openapi.version>
+        <ta4j.version>0.15</ta4j.version>
         <testcontainers.version>1.18.0</testcontainers.version>
         <yahoofinance-api.version>3.17.0</yahoofinance-api.version>
 
@@ -185,6 +186,12 @@
             <artifactId>YahooFinanceAPI</artifactId>
             <version>${yahoofinance-api.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.ta4j</groupId>
+            <artifactId>ta4j-core</artifactId>
+            <version>${ta4j.version}</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
