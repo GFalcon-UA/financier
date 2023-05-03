@@ -53,7 +53,7 @@ public class DailyBar implements Comparable<DailyBar> {
     @Column(name = "close", nullable = false)
     private BigDecimal close;
 
-    @Column(name = "value", nullable = false)
+    @Column(name = "volume", nullable = false)
     private Long value;
 
 
