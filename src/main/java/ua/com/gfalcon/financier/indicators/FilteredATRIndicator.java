@@ -43,24 +43,14 @@ public class FilteredATRIndicator extends CachedIndicator<Num> {
 
     @Override
     protected Num calculate(int index) {
-        List<Num> atrs = new ArrayList<>();
+        int trIndex = index - 1;
+        List<Num> filtered = new ArrayList<>();
 
-        int trIndex = -1;
-        Num atr = trIndicator.getValue(trIndex);
-
-        Result firstIteration = fill(new ArrayList<>(), trIndex);
-        trIndex = firstIteration.ind();
-        List<Num> filtered = firstIteration.atrs();
-
-        if (filtered.size() == period) {
-            return getAverage(filtered);
-        }
-
-        while (filtered.size() < period) {
+        do {
             Result result = fill(filtered, trIndex);
             filtered = result.atrs();
             trIndex = result.ind();
-        }
+        } while (filtered.size() < period);
 
         return getAverage(filtered);
     }
@@ -69,7 +59,8 @@ public class FilteredATRIndicator extends CachedIndicator<Num> {
         int ind = trIndex;
         List<Num> list = new ArrayList<>(atrs);
         while (list.size() < period) {
-            list.add(trIndicator.getValue(ind));
+            Num tr = trIndicator.getValue(ind);
+            list.add(tr);
             ind = ind - 1;
         }
         Num finalAtr = getAverage(list);
@@ -87,7 +78,7 @@ public class FilteredATRIndicator extends CachedIndicator<Num> {
         return sum.dividedBy(DecimalNum.valueOf(atrs.size()));
     }
 
-    private static boolean isNotParanormalBar(Num atr, Num barTr) {
+    protected static boolean isNotParanormalBar(Num atr, Num barTr) {
         return !barTr.isGreaterThanOrEqual(atr.multipliedBy(DecimalNum.valueOf(2)))
                 && !barTr.isLessThan(atr.dividedBy(DecimalNum.valueOf(3)));
     }

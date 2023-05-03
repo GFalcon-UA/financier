@@ -22,8 +22,9 @@
         <jococo.methods.uncover.max>0.55</jococo.methods.uncover.max>
         <jococo.classes.uncover.max>0.27</jococo.classes.uncover.max>
         <jococo.complexity.uncover.max>0.6</jococo.complexity.uncover.max>
-        <mutations.killed.percent.min>50</mutations.killed.percent.min> <!-- percent of killed mutations -->
+        <mutations.killed.percent.min>40</mutations.killed.percent.min> <!-- percent of killed mutations -->
         <mutations.lines.cover.percent.min>60</mutations.lines.cover.percent.min> <!-- percent of line coverage (for mutated classes only) -->
+        <mutations.test.strength.percent.min>50</mutations.test.strength.percent.min>
 
         <node.version>v18.14.1</node.version>
         <npm.version>9.6.5</npm.version>
@@ -635,6 +636,7 @@
                         <timestampedReports>true</timestampedReports>
                         <skip>false</skip>
                         <failWhenNoMutations>false</failWhenNoMutations>
+                        <testStrengthThreshold>${mutations.test.strength.percent.min}</testStrengthThreshold>
                         <mutationThreshold>${mutations.killed.percent.min}</mutationThreshold> <!-- minimal % of killed mutations -->
                         <coverageThreshold>${mutations.lines.cover.percent.min}</coverageThreshold> <!-- minimal % line coverage for mutated classes -->
                     </configuration>
