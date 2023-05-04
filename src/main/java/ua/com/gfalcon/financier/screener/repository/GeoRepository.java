@@ -16,7 +16,9 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.Geo;
@@ -25,4 +27,8 @@ import ua.com.gfalcon.financier.screener.domain.Geo;
  * Geo DAO.
  */
 @Repository
-public interface GeoRepository extends CrudRepository<Geo, Integer> {}
+public interface GeoRepository extends ListCrudRepository<Geo, Integer> {
+
+    Optional<Geo> findByName(String name);
+
+}

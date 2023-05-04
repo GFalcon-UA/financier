@@ -16,7 +16,11 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.StockExchange;
@@ -25,4 +29,9 @@ import ua.com.gfalcon.financier.screener.domain.StockExchange;
  * StockExchange DAO.
  */
 @Repository
-public interface StockExchangeRepository extends CrudRepository<StockExchange, Integer> {}
+public interface StockExchangeRepository extends ListCrudRepository<StockExchange, Integer> {
+
+    @Query("select s from StockExchange s where s.name = ?1")
+    Optional<StockExchange> findByName(@NonNull String name);
+
+}

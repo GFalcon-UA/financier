@@ -16,7 +16,9 @@
 
 package ua.com.gfalcon.financier.screener.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.MarketTimeZone;
@@ -25,4 +27,8 @@ import ua.com.gfalcon.financier.screener.domain.MarketTimeZone;
  * Time zone DAO.
  */
 @Repository
-public interface MarketTimeZoneRepository extends CrudRepository<MarketTimeZone, Integer> {}
+public interface MarketTimeZoneRepository extends ListCrudRepository<MarketTimeZone, Integer> {
+
+    Optional<MarketTimeZone> findMarketTimeZoneByName(String name);
+
+}

@@ -24,12 +24,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Abstract class for Entities with versioning.
  */
+@Generated
 @Getter
 @Setter
 @MappedSuperclass

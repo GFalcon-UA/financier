@@ -16,6 +16,8 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -29,6 +31,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,13 +39,15 @@ import lombok.Setter;
 /**
  * Sector Entity.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "Sector")
 @Table(name = "sectors")
 @NoArgsConstructor
-public class Sector extends VersionedEntity {
+public class Sector extends VersionedEntity implements Serializable {
 
+    private static final long serialVersionUID = -2252684314906136081L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sectors_seq")
     @Column(name = "id", nullable = false)
@@ -54,4 +59,10 @@ public class Sector extends VersionedEntity {
 
     @OneToMany(mappedBy = "sector", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<Industry> industries;
+
+    public Sector(String name) {
+        this.name = name;
+        this.industries = new HashSet<>();
+    }
+
 }

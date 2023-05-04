@@ -27,6 +27,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,10 +35,13 @@ import lombok.Setter;
 /**
  * DailyBarId.
  */
+@Generated
 @Getter
 @Embeddable
 @NoArgsConstructor
 public class DailyBarId implements Serializable {
+
+    private static final long serialVersionUID = 7687897637441545443L;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticker", foreignKey = @ForeignKey(name = "fk_instrument_ticker"))

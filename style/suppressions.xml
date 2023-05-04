@@ -21,7 +21,7 @@
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
-    <!-- can't split long messages between lines -->
+    <!-- can't splitEvent long messages between lines -->
     <suppress id="lineLengthXml" files="google_checks\.xml" lines="56,126"/>
     <!-- don't validate generated files -->
     <suppress id="lineLengthXml" files="releasenotes\.xml"/>

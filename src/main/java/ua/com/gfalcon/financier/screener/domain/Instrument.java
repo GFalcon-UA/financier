@@ -16,6 +16,7 @@
 
 package ua.com.gfalcon.financier.screener.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.hibernate.Length;
@@ -29,6 +30,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,12 +38,15 @@ import lombok.Setter;
 /**
  * Instrument.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "Instrument")
 @Table(name = "instruments")
 @NoArgsConstructor
-public class Instrument extends VersionedEntity {
+public class Instrument extends VersionedEntity implements Serializable {
+
+    private static final long serialVersionUID = 3820633312033108114L;
 
     @Id
     @Column(name = "ticker", length = 20)
@@ -85,5 +90,9 @@ public class Instrument extends VersionedEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "daily_history_provider")
     private DataProvider dailyHistoryProvider;
+
+    public Instrument(String ticker) {
+        this.ticker = ticker;
+    }
 
 }

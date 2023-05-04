@@ -17,8 +17,8 @@
 package ua.com.gfalcon.financier.screener.repository;
 
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.ListPagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.DailyBar;
@@ -29,5 +29,7 @@ import ua.com.gfalcon.financier.screener.domain.DailyBarId;
  * Daily bars DAO.
  */
 @Repository
-public interface DailyBarRepository extends CrudRepository<DailyBar, DailyBarId>,
-        PagingAndSortingRepository<DailyBar, DailyBarId> {}
+public interface DailyBarRepository extends ListCrudRepository<DailyBar, DailyBarId>,
+        ListPagingAndSortingRepository<DailyBar, DailyBarId> {
+
+}

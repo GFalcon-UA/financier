@@ -22,6 +22,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ import lombok.Setter;
 /**
  * DailyBar.
  */
+@Generated
 @Getter
 @Setter
 @Entity(name = "DailyBar")
@@ -51,7 +53,7 @@ public class DailyBar implements Comparable<DailyBar> {
     @Column(name = "close", nullable = false)
     private BigDecimal close;
 
-    @Column(name = "value", nullable = false)
+    @Column(name = "volume", nullable = false)
     private Long value;
 
 
@@ -66,4 +68,45 @@ public class DailyBar implements Comparable<DailyBar> {
                 .compareTo(o.getId()
                         .getDate());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DailyBar dailyBar = (DailyBar) o;
+
+        if (!getId().equals(dailyBar.getId())) {
+            return false;
+        }
+        if (!getOpen().equals(dailyBar.getOpen())) {
+            return false;
+        }
+        if (!getLow().equals(dailyBar.getLow())) {
+            return false;
+        }
+        if (!getHigh().equals(dailyBar.getHigh())) {
+            return false;
+        }
+        if (!getClose().equals(dailyBar.getClose())) {
+            return false;
+        }
+        return getValue().equals(dailyBar.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getOpen().hashCode();
+        result = 31 * result + getLow().hashCode();
+        result = 31 * result + getHigh().hashCode();
+        result = 31 * result + getClose().hashCode();
+        result = 31 * result + getValue().hashCode();
+        return result;
+    }
+
 }
