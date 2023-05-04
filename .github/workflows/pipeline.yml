@@ -23,7 +23,7 @@ on:
 
 jobs:
   mvn-verify:
-    name: Analyze Checkstyle
+    name: Maven verify
     runs-on: ubuntu-latest
 
     steps:
