@@ -2,6 +2,7 @@ package ua.com.gfalcon.financier.screener.service.impl;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -69,17 +70,57 @@ public class MarketDataServiceImpl implements MarketDataService {
         Set<String> tickers = finviz.findTickers(FinvizPresets.FOR_TRADING_FILTER);
 
         int i = 0;
+        List<String> failed = new ArrayList<>();
         for (String ticker : tickers) {
             try {
                 this.load(ticker);
                 log.info("{} is LOADED : {} / {}", ticker, ++i, tickers.size());
                 log.info("===========================================");
-                Thread.sleep(5_000);
+                Thread.sleep(2_500);
             } catch (Exception e) {
                 log.error("ERROR load data for ticker " + ticker, e);
+                failed.add(ticker);
             }
         }
-        log.info("End load daily data. Successful result : {} / {}", i, tickers.size());
+        if (failed.isEmpty()) {
+            log.info("End load daily data. Successful result : {} / {}", i, tickers.size());
+            return tickers.size();
+        }
+        int timeout = 5_000;
+        for (int retry = 0; retry < 3; retry++) {
+            List<String> forRetry = new ArrayList<>(failed);
+            failed = new ArrayList<>();
+            try {
+                Thread.sleep(timeout);
+                for (String ticker : forRetry) {
+                    try {
+                        this.load(ticker);
+                        log.info("{} is LOADED with retry iteration {} : {} / {}", ticker, retry, ++i, tickers.size());
+                        log.info("===========================================");
+                        Thread.sleep(2_500);
+                    } catch (Exception e) {
+                        log.error("ERROR load data for ticker " + ticker, e);
+                        failed.add(ticker);
+                    }
+                }
+            } catch (Exception e) {
+                log.error("EXCEPTION : " + e.getMessage(), e);
+            }
+            if (failed.isEmpty()) {
+                break;
+            } else {
+                timeout = timeout * 2;
+            }
+        }
+        if (!failed.isEmpty()) {
+            if (failed.size() == 1) {
+                log.warn("The ticker is not updated: {}", failed);
+            } else {
+                log.warn("The tickers were not updated: {}", failed);
+            }
+        } else {
+            log.info("End load daily data with retrying. Result : {} / {}", i, tickers.size());
+        }
         return tickers.size();
     }
 
