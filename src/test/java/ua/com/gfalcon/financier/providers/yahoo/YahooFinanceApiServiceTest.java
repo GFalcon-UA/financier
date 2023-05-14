@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package ua.com.gfalcon.financier;
+package ua.com.gfalcon.financier.providers.yahoo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.client.RestTemplate;
 
-/**
- * Financier application.
- */
-@SpringBootApplication
-@EnableScheduling
-public class FinancierApplication {
+@SpringBootTest
+class YahooFinanceApiServiceTest {
 
-    public static void main(String[] args) {
-        System.setProperty("yahoofinance.baseurl.quotesquery1v7", "https://query1.finance.yahoo.com/v6/finance/quote");
-        SpringApplication.run(FinancierApplication.class, args);
+    private YahooFinanceApiService service;
+
+    @Autowired
+    public YahooFinanceApiServiceTest(RestTemplate yahooRestTemplate) {
+        this.service = new YahooFinanceApiService(yahooRestTemplate);
     }
+
 
 }

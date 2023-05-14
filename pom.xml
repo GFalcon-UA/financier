@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016-2023 Oleksii Khalikov @GFalcon-UA (http://gfalcon.com.ua)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -16,12 +32,12 @@
     <properties>
         <java.version>17</java.version>
 
-        <jococo.instruction.cover.min>0.55</jococo.instruction.cover.min>
-        <jococo.branch.cover.min>0.3</jococo.branch.cover.min>
-        <jococo.lines.cover.min>60%</jococo.lines.cover.min>
-        <jococo.methods.uncover.max>0.55</jococo.methods.uncover.max>
-        <jococo.classes.uncover.max>0.27</jococo.classes.uncover.max>
-        <jococo.complexity.uncover.max>0.6</jococo.complexity.uncover.max>
+        <jococo.instruction.cover.min>0.6</jococo.instruction.cover.min>
+        <jococo.branch.cover.min>0.35</jococo.branch.cover.min>
+        <jococo.lines.cover.min>65%</jococo.lines.cover.min>
+        <jococo.methods.uncover.max>0.30</jococo.methods.uncover.max>
+        <jococo.classes.uncover.max>0.20</jococo.classes.uncover.max>
+        <jococo.complexity.uncover.max>0.4</jococo.complexity.uncover.max>
         <mutations.killed.percent.min>40</mutations.killed.percent.min> <!-- percent of killed mutations -->
         <mutations.lines.cover.percent.min>60</mutations.lines.cover.percent.min> <!-- percent of line coverage (for mutated classes only) -->
         <mutations.test.strength.percent.min>50</mutations.test.strength.percent.min>

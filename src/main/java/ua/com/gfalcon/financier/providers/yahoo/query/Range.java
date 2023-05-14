@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package ua.com.gfalcon.financier;
+package ua.com.gfalcon.financier.providers.yahoo.query;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import lombok.Generated;
+import lombok.Getter;
 
 /**
- * Financier application.
+ * Range.
  */
-@SpringBootApplication
-@EnableScheduling
-public class FinancierApplication {
+@Generated
+public enum Range {
+    MAX("max"), PREVIOUS("previous");
 
-    public static void main(String[] args) {
-        System.setProperty("yahoofinance.baseurl.quotesquery1v7", "https://query1.finance.yahoo.com/v6/finance/quote");
-        SpringApplication.run(FinancierApplication.class, args);
+    @Getter
+    private String value;
+
+    Range(String s) {
+        this.value = s;
     }
-
 }

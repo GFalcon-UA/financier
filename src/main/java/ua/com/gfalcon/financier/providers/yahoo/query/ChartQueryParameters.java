@@ -14,22 +14,29 @@
  * limitations under the License.
  */
 
-package ua.com.gfalcon.financier;
+package ua.com.gfalcon.financier.providers.yahoo.query;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-/**
- * Financier application.
- */
-@SpringBootApplication
-@EnableScheduling
-public class FinancierApplication {
+@Generated
+@SuperBuilder
+@Getter
+public class ChartQueryParameters extends HistoryQueryParameters {
 
-    public static void main(String[] args) {
-        System.setProperty("yahoofinance.baseurl.quotesquery1v7", "https://query1.finance.yahoo.com/v6/finance/quote");
-        SpringApplication.run(FinancierApplication.class, args);
+    /**
+     * The range for which the data is returned.
+     */
+    private Range range;
+
+    private Boolean dividendsEvents;
+
+    private Boolean splitEvents;
+
+    private Boolean includePrePost;
+
+    private ChartQueryParameters() {
+        super();
     }
-
 }

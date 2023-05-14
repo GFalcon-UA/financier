@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package ua.com.gfalcon.financier;
+package ua.com.gfalcon.financier.providers.yahoo.query;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import lombok.Generated;
+import lombok.Getter;
 
 /**
- * Financier application.
+ * The time interval between two data points.
  */
-@SpringBootApplication
-@EnableScheduling
-public class FinancierApplication {
+@Generated
+public enum Interval {
+    M1("1m"), M2("2m"), M5("5m"), M15("15m"), M30("30m"), M60("60m"), M90("90m"), H1("1h"), D("1d"), D5("5d"), W("1wk"),
+    MO_1("1mo"), MON_3("3mo");
 
-    public static void main(String[] args) {
-        System.setProperty("yahoofinance.baseurl.quotesquery1v7", "https://query1.finance.yahoo.com/v6/finance/quote");
-        SpringApplication.run(FinancierApplication.class, args);
+    @Getter
+    private String value;
+
+    Interval(String s) {
+        this.value = s;
     }
-
 }

@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package ua.com.gfalcon.financier;
+package ua.com.gfalcon.financier.providers;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.http.ResponseEntity;
+
+import net.minidev.json.JSONObject;
 
 /**
- * Financier application.
+ * REST API for downstream providers.
  */
-@SpringBootApplication
-@EnableScheduling
-public class FinancierApplication {
+public interface ApiService {
 
-    public static void main(String[] args) {
-        System.setProperty("yahoofinance.baseurl.quotesquery1v7", "https://query1.finance.yahoo.com/v6/finance/quote");
-        SpringApplication.run(FinancierApplication.class, args);
-    }
+    ResponseEntity<JSONObject> getRequest(String url);
 
 }

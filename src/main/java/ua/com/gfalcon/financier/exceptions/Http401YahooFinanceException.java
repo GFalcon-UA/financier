@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package ua.com.gfalcon.financier;
+package ua.com.gfalcon.financier.exceptions;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import lombok.Generated;
 
 /**
- * Financier application.
+ * Exception with HTTP code 401.
  */
-@SpringBootApplication
-@EnableScheduling
-public class FinancierApplication {
+@Generated
+public class Http401YahooFinanceException extends YahooFinanceException {
 
-    public static void main(String[] args) {
-        System.setProperty("yahoofinance.baseurl.quotesquery1v7", "https://query1.finance.yahoo.com/v6/finance/quote");
-        SpringApplication.run(FinancierApplication.class, args);
+    private static final long serialVersionUID = -827640601148802987L;
+
+    public Http401YahooFinanceException(String message, Throwable cause) {
+        super(message, cause);
     }
-
 }

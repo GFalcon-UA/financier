@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2016-2023 Oleksii Khalikov @GFalcon-UA (http://gfalcon.com.ua)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ua.com.gfalcon.financier.screener.service.impl;
 
 import java.time.LocalDate;
@@ -14,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ua.com.gfalcon.financier.exceptions.Http401YahooFinanceException;
 import ua.com.gfalcon.financier.screener.domain.Currency;
 import ua.com.gfalcon.financier.screener.domain.DailyBar;
 import ua.com.gfalcon.financier.screener.domain.DailyBarId;
@@ -49,6 +66,7 @@ import ua.com.gfalcon.financier.screener.service.YahooService;
 @RequiredArgsConstructor
 public class MarketDataServiceImpl implements MarketDataService {
 
+    public static final LocalDate SINCE = LocalDate.of(2015, Month.JANUARY, 1);
     private final YahooService yahoo;
     private final FinvizService finviz;
     private final InstrumentRepository instrumentRepository;
@@ -70,16 +88,19 @@ public class MarketDataServiceImpl implements MarketDataService {
         Set<String> tickers = finviz.findTickers(FinvizPresets.FOR_TRADING_FILTER);
 
         int i = 0;
-        List<String> failed = new ArrayList<>();
+        List<String> failed = new ArrayList<>(tickers);
         for (String ticker : tickers) {
             try {
                 this.load(ticker);
                 log.info("{} is LOADED : {} / {}", ticker, ++i, tickers.size());
                 log.info("===========================================");
+                failed.remove(ticker);
                 Thread.sleep(2_500);
+            } catch (Http401YahooFinanceException e) {
+                log.error("ERROR load data for ticker " + ticker, e);
+                break;
             } catch (Exception e) {
                 log.error("ERROR load data for ticker " + ticker, e);
-                failed.add(ticker);
             }
         }
         if (failed.isEmpty()) {
@@ -89,7 +110,7 @@ public class MarketDataServiceImpl implements MarketDataService {
         int timeout = 5_000;
         for (int retry = 0; retry < 3; retry++) {
             List<String> forRetry = new ArrayList<>(failed);
-            failed = new ArrayList<>();
+            failed = new ArrayList<>(forRetry);
             try {
                 Thread.sleep(timeout);
                 for (String ticker : forRetry) {
@@ -97,10 +118,13 @@ public class MarketDataServiceImpl implements MarketDataService {
                         this.load(ticker);
                         log.info("{} is LOADED with retry iteration {} : {} / {}", ticker, retry, ++i, tickers.size());
                         log.info("===========================================");
+                        failed.remove(ticker);
                         Thread.sleep(2_500);
+                    } catch (Http401YahooFinanceException e) {
+                        log.error("ERROR load data for ticker " + ticker, e);
+                        break;
                     } catch (Exception e) {
                         log.error("ERROR load data for ticker " + ticker, e);
-                        failed.add(ticker);
                     }
                 }
             } catch (Exception e) {
@@ -210,7 +234,7 @@ public class MarketDataServiceImpl implements MarketDataService {
     @Transactional
     public Instrument createStock(String ticker) {
         log.info("Start create Instrument {}", ticker);
-        YahooStock yhStock = yahoo.getStock(ticker, LocalDate.of(2015, Month.JANUARY, 1));
+        YahooStock yhStock = yahoo.getStock(ticker, SINCE);
 
         Currency currency = createCurrency(yhStock);
         StockExchange stockExchange = createStockExchange(yhStock);

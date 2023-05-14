@@ -17,8 +17,12 @@
 package ua.com.gfalcon.financier.screener.repository;
 
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.ListPagingAndSortingRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import ua.com.gfalcon.financier.screener.domain.DailyBar;
@@ -31,5 +35,8 @@ import ua.com.gfalcon.financier.screener.domain.DailyBarId;
 @Repository
 public interface DailyBarRepository extends ListCrudRepository<DailyBar, DailyBarId>,
         ListPagingAndSortingRepository<DailyBar, DailyBarId> {
+
+    @Query("select d from DailyBar d where d.id.ticker.ticker = ?1 order by d.id.date DESC limit 1")
+    Optional<DailyBar> findLatestBarByTicker(@NonNull String ticker);
 
 }
