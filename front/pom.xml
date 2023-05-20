@@ -66,6 +66,7 @@
         <version>1.9.1</version>
         <configuration>
           <nodeVersion>v12.16.2</nodeVersion>
+          <skip>true</skip>
         </configuration>
         <executions>
           <execution>

@@ -64,7 +64,13 @@ public class CurrencyCodeTest {
     @Test
     @Parameters(method = "getCurrencyCodes")
     public void fillingCurrencyEnumTest(String code) {
-        Assert.assertNotNull(String.format("Currency code %s is not present", code), CurrencyCode.valueOf(code));
+        CurrencyCode object = null;
+        try {
+            object = CurrencyCode.valueOf(code);
+        } catch (Exception e) {
+            System.out.println(code);
+        }
+        Assert.assertNotNull(String.format("Currency code %s is not present", code), object);
     }
 
 }

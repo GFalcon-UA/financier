@@ -250,5 +250,7 @@ public enum CurrencyCode {
     BWP,
     EUR,
     CZK,
+    SLE,
+    VED,
     SGD
 }
