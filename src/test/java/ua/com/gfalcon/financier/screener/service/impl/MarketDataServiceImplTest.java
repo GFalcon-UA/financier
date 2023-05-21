@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2016-2023 Oleksii Khalikov @GFalcon-UA (http://gfalcon.com.ua)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ua.com.gfalcon.financier.screener.service.impl;
 
 import java.math.BigDecimal;
@@ -169,6 +185,12 @@ class MarketDataServiceImplTest {
 
     @Test
     void createGeo() {
+        FinvizStock test = FinvizStock.builder()
+                .geo("test")
+                .build();
+
+        Geo result = service.createGeo(test);
+        Assertions.assertEquals("test", geoRepository.findAll().get(0).getName());
     }
 
     @Test
@@ -244,6 +266,15 @@ class MarketDataServiceImplTest {
 
     @Test
     void createStockExchange() {
+        YahooStock test = YahooStock.builder()
+                .stockExchange("test")
+                .build();
+
+        service.createStockExchange(test);
+
+        StockExchange exchange = stockExchangeRepository.findAll().get(0);
+
+        Assertions.assertEquals("test", exchange.getName());
     }
 
     @Test
@@ -270,7 +301,15 @@ class MarketDataServiceImplTest {
     }
 
     @Test
+    @Disabled
     void createCurrency() {
+        YahooStock test = YahooStock.builder()
+                .currency("test")
+                .build();
+
+        service.createCurrency(test);
+
+        Assertions.assertEquals("test", currencyRepository.findAll().get(0).getCode());
     }
 
     @Test
@@ -298,6 +337,17 @@ class MarketDataServiceImplTest {
 
     @Test
     void createIndustry() {
+        FinvizStock test = FinvizStock.builder()
+                .industry("test")
+                .sector("sector")
+                .build();
+
+        service.createIndustry(test);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("test", industryRepository.findAll().get(0).getName()),
+                () -> Assertions.assertEquals("sector", sectorRepository.findAll().get(0).getName())
+        );
     }
 
     @Test

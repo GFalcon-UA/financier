@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2016-2023 Oleksii Khalikov @GFalcon-UA (http://gfalcon.com.ua)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ua.com.gfalcon.financier.screener.service.impl;
 
 import java.io.IOException;
@@ -19,6 +35,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import ua.com.gfalcon.financier.exceptions.Http401YahooFinanceException;
 import ua.com.gfalcon.financier.exceptions.YahooFinanceException;
 import ua.com.gfalcon.financier.screener.model.Bar;
 import ua.com.gfalcon.financier.screener.model.Period;
@@ -68,7 +85,11 @@ public class YahooServiceImpl implements YahooService {
                     .orElse(TimeZone.getDefault()));
         } catch (IOException e) {
             log.error("YahooFinance ERROR load Stock {}", ticker);
-            throw new YahooFinanceException("Error to load stock data for ticker " + ticker, e);
+            String message = "Error to load stock data for ticker " + ticker;
+            if (e.getMessage().startsWith("Server returned HTTP response code: 401")) {
+                throw new Http401YahooFinanceException(message, e);
+            }
+            throw new YahooFinanceException(message, e);
         }
         log.info("YahooFinance Complete load Stock {}", ticker);
         return stockBuilder.build();
