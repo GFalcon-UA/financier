@@ -26,7 +26,8 @@ hs_err_pid*
 target/*
 */target/*
 
-*/.resourceCache
+*/.resourceCache/
+.resourceCache/
 
 # compiled output
 /tmp
@@ -122,3 +123,4 @@ build/
 /.angular/cache
 .sass-cache/
 
+/model/.resourceCache/
