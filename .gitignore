@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+logs/
 
 # BlueJ files
 *.ctxt
@@ -22,17 +23,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# Jetbrains IDEA
-.idea/
-*.iml
-
 target/*
 */target/*
 
-server/.resourceCache
+*/.resourceCache/
+.resourceCache/
 
 # compiled output
-/dist/
 /tmp
 /out-tsc
 # Only exists if Bazel was run
@@ -46,8 +43,6 @@ chrome-profiler-events*.json
 
 # IDEs and editors
 /.idea
-.project
-.classpath
 .c9/
 *.launch
 .settings/
@@ -75,6 +70,57 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/front/node/
-/front/node_modules/
-/front/dist
+/node/
+/dist
+
+#HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+
+# Node
+/node_modules
+
+# IDEs and editors
+.idea/
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+
+/model/.resourceCache/
