@@ -98,7 +98,7 @@
         <spring-shell.version>3.0.3</spring-shell.version>
         <springdoc-openapi.version>2.1.0</springdoc-openapi.version>
         <ta4j.version>0.15</ta4j.version>
-        <testcontainers.version>1.18.1</testcontainers.version>
+        <testcontainers.version>1.18.3</testcontainers.version>
         <yahoofinance-api.version>3.17.0</yahoofinance-api.version>
 
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
