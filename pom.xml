@@ -96,7 +96,7 @@
         <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <spring-shell.version>3.0.3</spring-shell.version>
-        <springdoc-openapi.version>2.1.0</springdoc-openapi.version>
+        <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
         <ta4j.version>0.15</ta4j.version>
         <testcontainers.version>1.18.1</testcontainers.version>
         <yahoofinance-api.version>3.17.0</yahoofinance-api.version>
